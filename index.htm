@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>256gl Neurons v 1.0</title>
+</head>
+
+<body onload='load_completed()'>
+    <div>
+        <input type="text" id="Phrase" style="width:180px" onkeydown="if (event.keyCode == 13) Submit_Phrase();">&nbsp;<input type="button" onclick="Submit_Phrase();" value="OK" />&nbsp;<input type="button" onclick="Reset();" value="Reset" /><br>
+    </div>
+    <br />
+
+    <div id="Result">
+    </div>
+
+    <script src='neurons.js'></script>
+    <script>
+        var generic_triggers_url = "triggers/triggers_generic.xml";
+        var headache_triggers_url = "triggers/triggers_headache.xml";
+        var wines_triggers_url = "triggers/triggers_wines.xml";
+        var cars_triggers_url = "triggers/triggers_cars.xml";
+
+        var linguistic_URLs = [];
+        var layers = [];
+        var layer = null;
+        var url;
+
+        var words_layer = Add_Neuro_Layer(1, -1, 1, 50000, "words");
+        var generic_triggers_layer = Build_Neural_Layer(generic_triggers_url);
+
+
+        function load_completed() {
+
+            generic_triggers_layer.Disharged_CallBack = Show_Neural_State;
+            linguistic_URLs = Restore_Linguistics_URLs();
+
+            if (linguistic_URLs != null) {
+                for (var i = 0; i < linguistic_URLs.length; i++) {
+                    url = linguistic_URLs[i];
+                    layer = Build_Neural_Layer(url);
+                    layers.push(layer);
+                    Save_Linguistics_URL(url);
+                }
+            } else {
+                url = generic_triggers_url;
+                layer = Build_Neural_Layer(url);
+                layers.push(layer);
+                Save_Linguistics_URL(url);
+            }
+
+            //       neural_triggers_parser ntp = new neural_triggers_parser();
+            //       ntp.run(neurons);
+
+            Restore_Neural_State(generic_triggers_layer);
+            for (var i = 0; i < layers.length; i++) {
+                Restore_Neural_State(layers[i]);
+            }
+            Show_Neural_State();
+            linguistic_URLs = Restore_Linguistics_URLs();
+            window.onload = function() {
+                document.getElementById("Phrase").focus();
+            }
+        }
+
+        function Reset() {
+            Reset_Neurons(null);
+            localStorage.clear();
+            document.getElementById("Result").innerHTML = "";
+        }
+
+        function add_Layer(linguistic_triggers_url) {
+            if (linguistic_URLs == null) {
+                layer = Build_Neural_Layer(linguistic_triggers_url);
+                layers.push(layer);
+                Show_Neural_State();
+            } else {
+                for (var k = 0; k < linguistic_URLs.length; k++) {
+                    if (linguistic_URLs[k] == linguistic_triggers_url) return;
+                }
+                layer = Build_Neural_Layer(linguistic_triggers_url);
+                layers.push(layer);
+                Save_Linguistics_URL(linguistic_triggers_url);
+                linguistic_URLs = Restore_Linguistics_URLs();
+                Show_Neural_State();
+            }
+        }
+
+        function check_Controls() {
+            var g_neurons = Get_Excited_Neurons(generic_triggers_layer);
+
+            for (var i = 0; i < g_neurons.length; i++) {
+                var nl = g_neurons[i];
+                var splitter = nl.Name.split(':');
+
+                if (nl.Name.toLowerCase() == "health:headache") {
+                    add_Layer(headache_triggers_url);
+                }
+
+                if (nl.Name.toLowerCase() == "shopping:wine") {
+                    add_Layer(wines_triggers_url);
+                }
+
+                if (nl.Name.toLowerCase() == "shopping:car") {
+                    add_Layer(cars_triggers_url);
+                }
+
+                if (nl.Name.toLowerCase() == "clean:clean") {
+                    localStorage.clear();
+                    document.getElementById("Phrase").value = "";
+                    document.getElementById("Result").innerHTML = "";
+                }
+            }
+        }
+
+        function Submit_Phrase() {
+            Reset_Neurons(generic_triggers_layer);
+            for (var i = 0; i < layers.length; i++) {
+                var layer = layers[i];
+                Reset_Half_Charged_Neurons(layer);
+            }
+
+            document.getElementById("Result").innerHTML = "";
+            var phrase = document.getElementById("Phrase").value;
+            phrase = phrase.toLowerCase();
+            var l = phrase.length - 1;
+            var q = phrase.indexOf('?');
+
+            Excite_Word(".");
+            if (phrase == "") phrase = "*enter*";
+            phrase = phrase.replace('?', ' ? ');
+            Excite_Phrase(phrase);
+
+            localStorage.removeItem(generic_triggers_layer.Name);
+
+            Save_Neural_State(generic_triggers_layer);
+            for (var i = 0; i < layers.length; i++) {
+                Save_Neural_State(layers[i]);
+            }
+            Show_Neural_State();
+            check_Controls();
+            document.getElementById("Phrase").value = "";
+        }
+
+        function Show_Neural_State() {
+            var neurons = Get_Excited_Neurons(generic_triggers_layer);
+            var str_result = "";
+            for (var i = 0; i < layers.length; i++) {
+                var layer = layers[i];
+                var c_triggers = Get_Charged_Triggers(layer);
+                str_result = str_result + "<hr>";
+                str_result = str_result + "<b>" + layer.Name + " known triggers:</b><br>"
+
+                for (var j = 0; j < c_triggers.length; j++) {
+                    str_result = str_result + "<i>" + c_triggers[j] + "</i><br>";
+                }
+
+                var d_triggers = Get_Discharged_Triggers(layer);
+                str_result = str_result + "<hr>";
+                str_result = str_result + "<b>" + layer.Name + " unresolved triggers:</b><br>"
+
+                for (var j = 0; j < d_triggers.length; j++) {
+                    str_result = str_result + "<i>" + d_triggers[j] + "</i><br>";
+                }
+            }
+            document.getElementById("Result").innerHTML = str_result;
+        }
+    </script>
+
+</body>
+
+</html>

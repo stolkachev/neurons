@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE neuro_triggers 
+[
+	<!ELEMENT neuro_triggers (neuro_trigger+)>
+	<!ATTLIST neuro_triggers name CDATA #REQUIRED>
+	<!ELEMENT neuro_trigger (state+)>
+	<!ATTLIST neuro_trigger name CDATA #REQUIRED>
+	<!ELEMENT state (item+)>
+	<!ATTLIST state name CDATA #REQUIRED>
+	<!ELEMENT item (#PCDATA)>
+	<!ATTLIST item word CDATA #REQUIRED>
+	<!ATTLIST item weight CDATA #REQUIRED>
+]>
+
+<neuro_triggers name="Resumes">
+
+  <neuro_trigger name="Industries">
+    <state name="IT">
+      <item word="software" weight="1.0"></item>
+      <item word="computers" weight="1.0"></item>
+    </state>
+    <state name="Manufacturing">
+      <item word="manufacturing" weight="1.0"></item>
+      <item word="production" weight="1.0"></item>
+    </state>
+    <state name="Electronics">
+      <item word="electronics" weight="1.0"></item>
+      <item word="hardware" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Education">
+    <state name="Doctoral">
+      <item word="phd" weight="1.0"></item>
+      <item word="doctoral" weight="1.0"></item>
+    </state>
+    <state name="Master">
+      <item word="md" weight="1.0"></item>
+      <item word="master" weight="1.0"></item>
+    </state>
+    <state name="Colledge">
+      <item word="colledge" weight="1.0"></item>
+      <item word="bachelor" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Skils">
+    <state name="Programming">
+      <item word="c#" weight="1.0"></item>
+      <item word="javascript" weight="1.0"></item>
+    </state>
+    <state name="DB SQL">
+      <item word="sql" weight="1.0"></item>
+    </state>
+    <state name="DB OTHER">
+      <item word="hadup" weight="1.0"></item>
+      <item word="nosql" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Authorization">
+    <state name="Citizien">
+      <item word="citizien" weight="1.0"></item>
+    </state>
+    <state name="Green Card">
+      <item word="green" weight="0.5"></item>
+      <item word="card" weight="0.5"></item>
+    </state>
+    <state name="H1">
+      <item word="h1" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Compensation">
+    <state name="60k">
+      <item word="60k" weight="1.0"></item>
+    </state>
+    <state name="70k">
+      <item word="70k" weight="1.0"></item>
+    </state>
+    <state name="80k">
+      <item word="80k" weight="1.0"></item>
+    </state>
+    <state name="90k">
+      <item word="90k" weight="1.0"></item>
+    </state>
+    <state name="100k">
+      <item word="100k" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+
+</neuro_triggers>
+
