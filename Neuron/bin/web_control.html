@@ -1,0 +1,237 @@
+<HTML>
+    <HEAD>
+        <TITLE>Neural Network Development</TITLE>
+    </HEAD>
+    <BODY>
+        <FONT COLOR=GREEN><B>Port:&nbsp;
+            <INPUT TYPE="TEXT" id="o_Port" SIZE="10"
+                MAXLENGTH="100" VALUE="10000">
+        </B></FONT> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <A href="#" onclick="javascript:New_Layer();return 0;">
+            <FONT COLOR=GREEN><B>New Layer</FONT></B></A> &nbsp;
+        <BR>
+        <BR>
+        <A href="#" onclick="javascript:load_Neuron_Page1();return 0;">
+            Clone neuron</A> &nbsp;
+        <INPUT TYPE="TEXT" id="o_Clone_ID" SIZE="3"
+        MAXLENGTH="10" VALUE="0"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <INPUT TYPE="TEXT" id="o_Times" SIZE="3"
+        MAXLENGTH="10" VALUE="1"/>
+        <FONT color="#006699">&nbsp;&nbsp;times </FONT>
+        <BR>
+        <BR>
+        <A href="#" onclick="javascript:load_Neuron_Page(o_Select_ID.value, 's');return 0;">
+            Select neuron</A> &nbsp;
+        <INPUT TYPE="TEXT" id="o_Select_ID" SIZE="3"
+        MAXLENGTH="10" VALUE="0"/>
+        <BR>
+        <BR>
+        <A href="#" onclick="javascript:load_Neuron_Page(o_Excite_ID.value, 'e');return 0;">
+            Excite neuron</A> &nbsp;
+        <INPUT TYPE="TEXT" id="o_Excite_ID" SIZE="3"
+        MAXLENGTH="10" VALUE="0"/>
+        <BR>
+        <BR>
+        <A href="#" onclick="javascript:mod_Nerve(o_ID1.value, o_ID2.value, o_W1.value);return 0;">
+            Modify nerve</A> &nbsp;
+        <FONT color="#006699">ID1:&nbsp;<INPUT TYPE="TEXT" id="o_ID1" SIZE="3"
+            MAXLENGTH="10" VALUE="0"/>
+            ID2:&nbsp;<INPUT TYPE="TEXT" id="o_ID2" SIZE="3"
+            MAXLENGTH="10" VALUE="0"/>
+            W:&nbsp;<INPUT TYPE="TEXT" id="o_W1" SIZE="3"
+            MAXLENGTH="10" VALUE="0"/></FONT>
+        <BR>
+        <BR>
+        <A href="#" onclick="javascript:link_Neuron(o_Link_ID.value, 'l');return 0;">
+            Link neuron</A> &nbsp;&nbsp;&nbsp;&nbsp;
+        <INPUT TYPE="TEXT" id="o_Link_ID" SIZE="3"
+        MAXLENGTH="10" VALUE="0"/>
+        <BR>
+        <FONT color="#006699">W:</FONT>
+        <INPUT TYPE="TEXT" id="o_W" SIZE="3"
+        MAXLENGTH="10" VALUE="1.0"/>
+        <FONT color="#006699"> &nbsp;&nbsp;&nbsp;URL:</FONT>
+        <INPUT TYPE="TEXT" id="o_URL" SIZE="45"
+        STYLE='font-size: 9pt; font-family: verdana; color: BROWN'
+        MAXLENGTH="80" VALUE="nnod.com:8080/NNT/neuron/neural.jsp"/>
+        
+        <BR>
+        <BR>
+        <A href="#" onclick="javascript:link_Neuron_2(o_Link_ID_2.value, 'l');return 0;">
+            Link neuron</A> &nbsp;&nbsp;&nbsp;&nbsp;
+        <INPUT TYPE="TEXT" id="o_Link_ID_2" SIZE="3"
+        MAXLENGTH="10" VALUE="0"/>
+        <BR>
+        <FONT color="#006699">W:</FONT>
+        <INPUT TYPE="TEXT" id="o_W_2" SIZE="3"
+        MAXLENGTH="10" VALUE="1.0"/>
+        <FONT color="#006699"> &nbsp;&nbsp;&nbsp;URL:</FONT>
+        <INPUT TYPE="TEXT" id="o_URL_2" SIZE="45"
+        STYLE='font-size: 9pt; font-family: verdana; color: BROWN'
+        MAXLENGTH="80" VALUE="localhost:10001/1=E"/>
+        
+        <BR>
+        <BR>
+        <A href="#" onclick="javascript:big_Bang();return 0;">
+            Start Big Bang</A> &nbsp;
+        <BR>
+        <BR>
+        
+        <HR SIZE=1>
+        <TABLE BORDER=0 WIDTH="100%">
+            <TR>
+                <TD>
+                    <FONT COLOR=GREEN><B>Port:&nbsp;
+                        <INPUT TYPE="TEXT" id="o_Port_R" SIZE="3"
+                        MAXLENGTH="10" VALUE="10000"/>
+                    </B></FONT>
+                </TD>
+                <TD>
+                    <A href="#" onclick="javascript:Reset_Model();">
+                        <B><FONT COLOR=RED>Reset Model</B>
+                    </A>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <A href="#" onclick="javascript:Clear_Model();">
+                        <B><FONT COLOR=RED>Clean Model</B>
+                    </A>
+                </TD>
+                <TD>
+                    <A href="#" onclick="javascript:Save_Model();">
+                        <B><FONT COLOR=RED>Save Model</B>
+                    </A>
+                </TD>
+            </TR>
+        </TABLE>
+        
+        <HR SIZE=1>
+        <TABLE BORDER=0 WIDTH="100%">
+            <TR>
+                <TD ALIGN=RIGHT>
+                    <A href="#" onclick="javascript:Previous_Example();">
+                        <B>Previous demo</B>
+                    </A>
+                </TD>
+                <TD ALIGN=RIGHT>
+                    <A href="#" onclick="javascript:Next_Example();">
+                        <B>Next demo</B>
+                    </A>
+                </TD>
+            </TR>
+        </TABLE>
+        <iframe id="Background" style="visibility:hidden;display:none" ></iframe>
+        <SCRIPT>
+            Host = "http://localhost:";
+            N = 0;
+            ID = 0;
+            function Next_Example()
+            {
+                location.href = "../Example_2/loader2.htm";
+            }
+        
+        function big_Bang_Continue()
+        {
+            URL = Host + o_Port.value + "/1=c" ;
+            document.getElementById('Background').src = URL;
+        }
+        function Submit_to_Data_Base()
+        {
+            N--;
+            if (N > 0)
+            {
+                more_Clones();
+            }else
+            {
+                URL = "blank.htm";
+                document.getElementById('Background').src = URL;
+            }
+        }
+        function more_Clones()
+        {
+            URL = Host + o_Port.value + "/" + ID + "=c" ;
+            document.getElementById('Background').src = URL;
+            var wait = window.setTimeout('Submit_to_Data_Base();', 500);
+        }
+        function load_Neuron_Page1()
+        {
+            ID = o_Clone_ID.value;
+            N = o_Times.value;
+            more_Clones();
+        }
+        
+        function load_Neuron_Page(ID, op)
+        {
+            URL = Host + o_Port.value + "/" + ID + "=" + op ;
+            document.getElementById('Background').src = URL;
+        }
+        
+        
+        function more_Connections(port)
+        {
+            // http://nnod.com:10000/1=L=1=http://nnod.com:10001/1=E
+            URL = Host + current_Port + "/" + N + "=l=1.0=http://localhost:" +
+            port + "/" + N + "=E";
+            document.getElementById('Background').src = URL;
+            var wait = window.setTimeout('Submit_Connection(' + port + ');', 1000);
+        }
+        
+        function mod_Nerve(ID1, ID2, W)
+        {
+            URL = Host + o_Port.value + "/" + ID1 + "=" + ID2 + "=" + W + "=MW";
+            document.getElementById('Background').src = URL;
+        }
+        
+        function link_Neuron(ID, op)
+        {
+            external_URL = o_URL.value;
+            W = o_W.value;
+            URL = Host + o_Port.value + "/" + ID + "=l=" + W + "=" + external_URL;
+            document.getElementById('Background').src = URL;
+        }
+        
+        function link_Neuron_2(ID, op)
+        {
+            external_URL = o_URL_2.value;
+            W = o_W_2.value;
+            URL = Host + o_Port.value + "/" + ID + "=l=" + W + "=" + external_URL;
+            document.getElementById('Background').src = URL;
+        }
+        
+        function big_Bang()
+        
+        {
+            URL = Host + o_Port.value + "/0=c" ;
+            document.getElementById('Background').src = URL;
+            var wait = window.setTimeout('big_Bang_Continue();', 500);
+        }
+        
+        function Clear_Model()
+        {
+            URL = Host + o_Port_R.value + "/" + "=CLEAR" ;
+            document.getElementById('Background').src = URL;
+        }
+        
+        function Reset_Model()
+        {
+            URL = Host + o_Port_R.value + "/" + "=RESET" ;
+            document.getElementById('Background').src = URL;
+        }
+        
+        function Save_Model()
+        {
+            URL = Host + o_Port_R.value + "/" + "=SAVE" ;
+            document.getElementById('Background').src = URL;
+        }
+        
+        function New_Layer()
+        {
+            URL = Host + o_Port_R.value + "/" + "=LAYER" ;
+            document.getElementById('Background').src = URL;
+        }
+        
+        </SCRIPT>
+        
+    </BODY>
+</HTML>
+</HTML>
