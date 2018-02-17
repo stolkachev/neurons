@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE neuro_triggers 
+[
+  <!ELEMENT neuro_triggers (neuro_trigger+)>
+  <!ATTLIST neuro_triggers name CDATA #REQUIRED>
+  <!ELEMENT neuro_trigger (state+)>
+  <!ATTLIST neuro_trigger name CDATA #REQUIRED>
+  <!ATTLIST neuro_trigger prompt CDATA #IMPLIED>
+  <!ELEMENT state (item+)>
+  <!ATTLIST state name CDATA #REQUIRED>
+  <!ATTLIST state discharge CDATA #IMPLIED>
+  <!ATTLIST state func CDATA #IMPLIED>
+  <!ATTLIST state url CDATA #IMPLIED>
+  <!ELEMENT item (#PCDATA)>
+  <!ATTLIST item word CDATA #REQUIRED>
+  <!ATTLIST item weight CDATA #REQUIRED>
+]>
+
+<neuro_triggers name="Generic">
+
+  <neuro_trigger name="Clause">
+    <state name="Question">
+      <item word="who" weight="1.0"></item>
+      <item word="whom" weight="1.0"></item>
+      <item word="whose" weight="1.0"></item>
+      <item word="what" weight="1.0"></item>
+      <item word="which" weight="1.0"></item>
+      <item word="when" weight="1.0"></item>
+      <item word="where" weight="1.0"></item>
+      <item word="why" weight="1.0"></item>
+      <item word="how" weight="1.0"></item>
+      <item word="?" weight="1.0"></item>
+    </state>
+    <state name="Declarative">
+      <item word="." weight="1.0"></item>
+    </state>
+    <state name="Enter">
+      <item word="*enter*" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Question">
+    <state name="Who">
+      <item word="who" weight="1.0"></item>
+      <item word="whom" weight="1.0"></item>
+      <item word="whose" weight="1.0"></item>
+    </state>
+    <state name="What">
+      <item word="what" weight="1.0"></item>
+      <item word="which" weight="1.0"></item>
+    </state>
+    <state name="When">
+      <item word="when" weight="1.0"></item>
+    </state>
+    <state name="Where">
+      <item word="where" weight="1.0"></item>
+    </state>
+    <state name="Why">
+      <item word="why" weight="1.0"></item>
+    </state>
+    <state name="How">
+      <item word="how" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Help">
+    <state name="Help">
+      <item word="help" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Reset">
+    <state name="Reset">
+      <item word="reset" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Hello" prompt="You can say - Hello world or привет">
+    <state name="Hello" func="Hello_World"  discharge="10">
+      <item word="hello" weight="0.5"></item>
+      <item word="world" weight="0.5"></item>
+      <item word="привет" weight="0.5"></item>
+      <item word="прив" weight="0.5"></item>
+      <item word="мир" weight="0.5"></item>
+      <item word="你好" weight="0.5"></item>
+      <item word="世界" weight="0.5"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="User_Name" prompt="my name is ...">
+    <state name="User_Name" func="User_Name">
+      <item word="my" weight="0.5"></item>
+      <item word="name" weight="0.5"></item>
+      <item word="меня" weight="0.5"></item>
+      <item word="мен" weight="0.5"></item>
+      <item word="зовут" weight="0.5"></item>
+      <item word="мое" weight="0.5"></item>
+      <item word="имя" weight="0.5"></item>
+      <item word="мо" weight="0.5"></item>
+      <item word="им" weight="0.5"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Fuzzy" prompt="around $20K or under 20,000">
+    <state name="Around" func="Fuzzy_Around">
+      <item word="around" weight="1.0"></item>
+    </state>
+    <state name="Less" func="Fuzzy_Around">
+      <item word="under" weight="1.0"></item>
+      <item word="less" weight="1.0"></item>
+    </state>
+    <state name="Better" func="Fuzzy_Around">
+      <item word="better" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Location" prompt="i am at home.">
+    <state name="Home" func="Home">
+      <item word="home" weight="0.5"></item>
+      <item word="at" weight="0.5"></item>
+      <item word="я" weight="0.5"></item>
+      <item word="дома" weight="0.5"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Shopping" prompt="wine or car">
+    <state name="Wine">
+      <item word="wine" weight="1.0"></item>
+      <item word="вино" weight="1.0"></item>
+      <item word="вин" weight="1.0"></item>
+      <item word="红" weight="0.5"></item>
+      <item word="酒" weight="0.5"></item>
+    </state>
+    <state name="Car" prompt="my name is ...">
+      <item word="car" weight="1.0"></item>
+      <item word="cars" weight="1.0"></item>
+      <item word="автомашина" weight="1.0"></item>
+      <item word="автомашин" weight="1.0"></item>
+      <item word="машина" weight="1.0"></item>
+      <item word="машин" weight="1.0"></item>
+      <item word="汽车" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Health" prompt="headache/pain/feel bad/heartbeat">
+    <state name="Blood Pressure">
+      <item word="blood" weight="0.5"></item>
+      <item word="pressure" weight="0.5"></item>
+      <item word="давление" weight="1.0"></item>
+      <item word="давл" weight="1.0"></item>
+      <item word="血压" weight="1.0"></item>
+    </state>
+    <state name="Headache">
+      <item word="headache" weight="1.0"></item>
+      <item word="голова" weight="0.5"></item>
+      <item word="болит" weight="0.5"></item>
+      <item word="голов" weight="0.5"></item>
+      <item word="бол" weight="0.5"></item>
+      <item word="головн" weight="0.5"></item>
+      <item word="головная" weight="0.5"></item>
+      <item word="боль" weight="0.5"></item>
+      <item word="головной" weight="0.5"></item>
+      <item word="болью" weight="0.5"></item>
+      <item word="боли" weight="0.5"></item>
+      <item word="头痛" weight="1.0"></item>
+      <item word="头疼" weight="1.0"></item>
+    </state>
+    <state name="Pain">
+      <item word="pain" weight="1.0"></item>
+      <item word="больно" weight="1.0"></item>
+      <item word="больн" weight="1.0"></item>
+      <item word="疼痛" weight="1.0"></item>
+    </state>
+    <state name="Heart">
+      <item word="heart" weight="1.0"></item>
+      <item word="сердце" weight="1.0"></item>
+      <item word="心" weight="1.0"></item>
+    </state>
+    <state name="Тhroat">
+      <item word="throat" weight="1.0"></item>
+      <item word="горло" weight="1.0"></item>
+      <item word="гор" weight="1.0"></item>
+      <item word="喉咙" weight="1.0"></item>
+    </state>
+    <state name="Back">
+      <item word="back" weight="1.0"></item>
+      <item word="спина" weight="1.0"></item>
+      <item word="спин" weight="1.0"></item>
+      <item word="背部" weight="1.0"></item>
+    </state>
+    <state name="Feel Bad">
+      <item word="feel" weight="0.5"></item>
+      <item word="bad" weight="0.5"></item>
+      <item word="horrible" weight="0.5"></item>
+      <item word="плохо" weight="0.5"></item>
+      <item word="плох" weight="0.5"></item>
+      <item word="ужасно" weight="0.5"></item>
+      <item word="ужасн" weight="0.5"></item>
+      <item word="чувствую" weight="0.5"></item>
+      <item word="чувств" weight="0.5"></item>
+      <item word="感觉" weight="0.5"></item>
+      <item word="不好" weight="0.5"></item>
+    </state>
+    <state name="Feel Dizzy">
+      <item word="feel" weight="0.5"></item>
+      <item word="dizzy" weight="0.5"></item>
+      <item word="dizziness" weight="1.0"></item>
+      <item word="головокружение" weight="1.0"></item>
+      <item word="головокруж" weight="1.0"></item>
+      <item word="头晕" weight="1.0"></item>
+      <item word="眼晕" weight="1.0"></item>
+      <item word="晕" weight="0.5"></item>
+      <item word="头" weight="0.5"></item>
+      <item word="眼" weight="0.5"></item>
+    </state>
+    <state name="Heartbeat">
+      <item word="heart" weight="0.5"></item>
+      <item word="beat" weight="0.5"></item>
+      <item word="heartbeat" weight="1.0"></item>
+      <item word="сердцебиение" weight="1.0"></item>
+      <item word="сердцеби" weight="1.0"></item>
+      <item word="心跳" weight="1.0"></item>
+      <item word="心" weight="0.5"></item>
+      <item word="跳" weight="0.5"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Clear" prompt="clear or clean">
+    <state name="Clearn" func="Clean">
+      <item word="clear" weight="1.0"></item>
+      <item word="clean" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Alert" prompt="alert / call sergey">
+    <state name="Alert" func="Alert">
+      <item word="alert" weight="1.0"></item>
+      <item word="call" weight="0.5"></item>
+      <item word="sergei" weight="0.5"></item>
+      <item word="sergey" weight="0.5"></item>
+      <item word="позвон" weight="0.5"></item>
+      <item word="серг" weight="0.5"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Assist" prompt="assist me with ...">
+    <state name="Assist" func="Assist">
+      <item word="assist" weight="0.5"></item>
+      <item word="me" weight="0.5"></item>
+      <item word="помоги" weight="0.5"></item>
+      <item word="мне" weight="0.5"></item>
+      <item word="помог" weight="0.5"></item>
+      <item word="мн" weight="0.5"></item>
+      <item word="帮助" weight="1.0"></item>
+      <item word="帮我" weight="1.0"></item>
+      <item word="救救" weight="1.0"></item>
+      <item word="协助" weight="1.0"></item>
+      <item word="我" weight="0.5"></item>
+      <item word="帮" weight="0.5"></item>
+      <item word="助" weight="0.5"></item>
+    </state>
+  </neuro_trigger>
+
+</neuro_triggers>
+

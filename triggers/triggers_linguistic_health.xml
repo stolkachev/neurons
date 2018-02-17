@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE neuro_triggers 
+[
+	<!ELEMENT neuro_triggers (neuro_trigger+)>
+	<!ATTLIST neuro_triggers name CDATA #REQUIRED>
+	<!ELEMENT neuro_trigger (state+)>
+	<!ATTLIST neuro_trigger name CDATA #REQUIRED>
+	<!ELEMENT state (item+)>
+	<!ATTLIST state name CDATA #REQUIRED>
+	<!ATTLIST state discharge CDATA #IMPLIED>
+	<!ELEMENT item (#PCDATA)>
+	<!ATTLIST item word CDATA #REQUIRED>
+	<!ATTLIST item weight CDATA #REQUIRED>
+]>
+
+<neuro_triggers name="Health">
+
+	<neuro_trigger name="Person">
+
+		<state name="Tolkachev">
+			<item word="sergey" weight="1.0"></item>
+			<item word="tolkachev" weight="1.0"></item>
+		</state>
+
+		<state name="Felonyuk">
+			<item word="larisa" weight="1.0"></item>
+			<item word="larissa" weight="1.0"></item>
+			<item word="lara" weight="1.0"></item>
+		</state>
+
+		<state name="Raykhman">
+			<item word="raykhman" weight="1.0"></item>
+			<item word="lenny" weight="1.0"></item>
+			<item word="leonid" weight="1.0"></item>
+		</state>
+
+		<state name="Barzilay">
+			<item word="eli" weight="1.0"></item>
+			<item word="barzilay" weight="1.0"></item>
+		</state>
+
+		<state name="Hafford">
+			<item word="hafford" weight="1.0"></item>
+			<item word="patrick" weight="1.0"></item>
+		</state>
+
+		<state name="Dupee">
+			<item word="dupee" weight="1.0"></item>
+			<item word="jeffrey" weight="1.0"></item>
+			<item word="jeff" weight="1.0"></item>
+		</state>
+
+		<state name="Buonocore">
+			<item word="buonocore," weight="1.0"></item>
+			<item word="dominic" weight="1.0"></item>
+		</state>
+
+		<state name="Yekelchik">
+			<item word="yekelchik" weight="1.0"></item>
+			<item word="victor" weight="1.0"></item>
+			<item word="vic" weight="1.0"></item>
+		</state>
+
+	</neuro_trigger>
+
+	<neuro_trigger name="Status">
+
+		<state name="New">
+			<item word="new" weight="1.0"></item>
+		</state>
+
+		<state name="New plan">
+			<item word="new" weight="0.8"></item>
+			<item word="plan" weight="0.8"></item>
+		</state>
+
+		<state name="New group plan">
+			<item word="new" weight="0.7"></item>
+			<item word="group" weight="0.7"></item>
+			<item word="plan" weight="0.7"></item>
+		</state>
+
+		<state name="Cancel">
+			<item word="cancel" weight="1.0"></item>
+		</state>
+
+		<state name="Enroll">
+			<item word="enroll" weight="1.0"></item>
+		</state>
+
+		<state name="Change">
+			<item word="change" weight="1.0"></item>
+		</state>
+
+	</neuro_trigger>
+
+	<neuro_trigger name="Year">
+
+		<state name="2013">
+			<item word="2013" weight="1"></item>
+		</state>
+
+		<state name="2014">
+			<item word="2014" weight="1"></item>
+		</state>
+
+		<state name="2015">
+			<item word="2015" weight="1"></item>
+		</state>
+
+	</neuro_trigger>
+
+
+</neuro_triggers>
+

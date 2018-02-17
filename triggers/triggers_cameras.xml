@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE neuro_triggers
+[
+<!ELEMENT neuro_triggers (neuro_trigger+)>
+<!ATTLIST neuro_triggers name CDATA #REQUIRED>
+<!ELEMENT neuro_trigger (state+)>
+<!ATTLIST neuro_trigger name CDATA #REQUIRED>
+<!ELEMENT state (item+)>
+<!ATTLIST state name CDATA #REQUIRED>
+<!ELEMENT item (#PCDATA)>
+<!ATTLIST item word CDATA #REQUIRED>
+<!ATTLIST item weight CDATA #REQUIRED>
+]>
+
+<neuro_triggers name="Cameras">
+    
+    <neuro_trigger name="Geek">
+        
+        <state name="Sergey Tolkachev">
+            <item word="sergey" weight="1.0"></item>
+        </state>
+        
+        <state name="Larissa Felonyuk">
+            <item word="larisa" weight="1.0"></item>
+            <item word="larissa" weight="1.0"></item>
+            <item word="lara" weight="1.0"></item>
+        </state>
+        
+    </neuro_trigger>
+    
+    <neuro_trigger name="Camera_Preowned">
+        
+        <state name="New">
+            <item word="new" weight="1.0"></item>
+        </state>
+        
+        <state name="Used">
+            <item word="used" weight="1.0"></item>
+            <item word="preowned" weight="1.0"></item>
+        </state>
+        
+    </neuro_trigger>
+    
+    <neuro_trigger name="Camera_Year">
+        
+        <state name="2013">
+            <item word="2013" weight="1"></item>
+        </state>
+        
+        <state name="2012">
+            <item word="2012" weight="1"></item>
+        </state>
+        
+        <state name="2011">
+            <item word="2011" weight="1"></item>
+        </state>
+        
+        <state name="2010">
+            <item word="2010" weight="1"></item>
+        </state>
+        
+        <state name="2009">
+            <item word="2009" weight="1"></item>
+        </state>
+        
+        <state name="2008">
+            <item word="2008" weight="1"></item>
+        </state>
+        
+        <state name="2007">
+            <item word="2007" weight="1"></item>
+        </state>
+        
+        <state name="2006">
+            <item word="2006" weight="1"></item>
+        </state>
+        
+        <state name="2005">
+            <item word="2005" weight="1"></item>
+        </state>
+        
+        <state name="2004">
+            <item word="2004" weight="1"></item>
+        </state>
+        
+        <state name="2003">
+            <item word="2003" weight="1"></item>
+        </state>
+        
+        <state name="2002">
+            <item word="2002" weight="1"></item>
+        </state>
+        
+        <state name="2001">
+            <item word="2001" weight="1"></item>
+        </state>
+        
+    </neuro_trigger>
+    
+    <neuro_trigger name="Camera_Color">
+        
+        <state name="Black">
+            <item word="Black" weight="1"></item>
+            <item word="Ebony" weight="1"></item>
+            <item word="Nighthawk" weight="1"></item>
+            <item word="Graphite" weight="1"></item>
+        </state>
+        
+        <state name="Red">
+            <item word="Red" weight="1"></item>
+            <item word="Ruby" weight="1"></item>
+            <item word="Merlot" weight="1"></item>
+            <item word="Redfire" weight="1"></item>
+            <item word="Rallye" weight="1"></item>
+            <item word="Redrock" weight="1"></item>
+        </state>
+        
+        <state name="Pink">
+            <item word="Pink" weight="1"></item>
+        </state>
+        
+        <state name="White">
+            <item word="White" weight="1"></item>
+            <item word="Diamond" weight="1"></item>
+            <item word="Opal" weight="1"></item>
+        </state>
+        
+        <state name="Gray">
+            <item word="Gray" weight="1"></item>
+            <item word="Grey" weight="1"></item>
+            <item word="Granite" weight="1"></item>
+            <item word="Carbon" weight="1"></item>
+            <item word="Chrome" weight="1"></item>
+            <item word="Charcoal" weight="1"></item>
+        </state>
+        
+        <state name="Purple">
+            <item word="Purple" weight="1"></item>
+            <item word="Radish" weight="1"></item>
+            <item word="Plum" weight="1"></item>
+        </state>
+        
+        <state name="Tan">
+            <item word="Tan" weight="1"></item>
+            <item word="Champagne" weight="1"></item>
+            <item word="Bronze" weight="1"></item>
+            <item word="Brown" weight="1"></item>
+        </state>
+        
+        <state name="Silver">
+            <item word="Silver" weight="1"></item>
+            <item word="Frost" weight="1"></item>
+            <item word="Titanium" weight="1"></item>
+        </state>
+        
+        <state name="Blue">
+            <item word="Blue" weight="1"></item>
+            <item word="Water" weight="1"></item>
+        </state>
+        
+        <state name="Green">
+            <item word="Green" weight="1"></item>
+        </state>
+        
+        <state name="Orange">
+            <item word="Orange" weight="1"></item>
+        </state>
+        
+    </neuro_trigger>
+    
+    <neuro_trigger name="Camera_Manufacturer">
+        
+        <state name="Canon">
+            <item word="Canon" weight="1"></item>
+            <item word="Cannon" weight="1"></item>
+            <item word="EOS" weight="1"></item>
+            <item word="Rebel" weight="1"></item>
+            <item word="PowerShot" weight="1"></item>
+        </state>
+        
+        <state name="Casio">
+            <item word="Casio" weight="1"></item>
+            <item word="EXILIM" weight="1"></item>
+        </state>
+        
+        <state name="FUJIFILM">
+            <item word="FUJIFILM" weight="1"></item>
+            <item word="FUJI" weight="0.1"></item>
+            <item word="FinePix" weight="0.1"></item>
+        </state>
+        
+        <state name="GE" >
+            <item word="GE" weight="1"></item>
+            <item word="General" weight="0.5"></item>
+            <item word="Electric" weight="0.5"></item>
+        </state>
+        
+        <state name="HP" >
+            <item word="HP" weight="1"></item>
+            <item word="H-P" weight="1"></item>
+            <item word="Hewlett-Packard" weight="1"></item>
+            <item word="Hewlett" weight="0.5"></item>
+            <item word="Packard" weight="0.5"></item>
+        </state>
+        
+        <state name="Insignia">
+            <item word="Insignia" weight="1"></item>
+        </state>
+        
+        <state name="Kodak">
+            <item word="Kodak" weight="1"></item>
+            <item word="Codak" weight="1"></item>
+            <item word="EasyShare" weight="1"></item>
+        </state>
+        
+        <state name="Nikon">
+            <item word="Nikon" weight="1"></item>
+            <item word="Nicon" weight="1"></item>
+            <item word="Nickon" weight="1"></item>
+            <item word="Coolpix" weight="1"></item>
+        </state>
+        
+        <state name="Olympus">
+            <item word="Olympus" weight="1"></item>
+            <item word="Stylus" weight="1"></item>
+        </state>
+        
+        <state name="Panasonic">
+            <item word="Panasonic" weight="1"></item>
+            <item word="Lumix" weight="1"></item>
+        </state>
+        
+        <state name="PENTAX">
+            <item word="PENTAX" weight="1"></item>
+            <item word="Optio" weight="1"></item>
+        </state>
+        
+        <state name="Samsung">
+            <item word="Samsung" weight="1"></item>
+            <item word="Samsun" weight="1"></item>
+        </state>
+        
+        <state name="Sony">
+            <item word="Sony" weight="1"></item>
+            <item word="Cyber-Shot" weight="1"></item>
+            <item word="Cyber" weight="1"></item>
+        </state>
+        
+        <state name="Vivitar">
+            <item word="Vivitar" weight="1"></item>
+        </state>
+        
+    </neuro_trigger>
+    
+    <neuro_trigger name="Camera_Type">
+        
+        <state name="SLR">
+            <item word="SLR" weight="1"></item>
+            <item word="DSLR" weight="1"></item>
+            <item word="professional" weight="1"></item>
+            <item word="pro" weight="1"></item>
+        </state>
+        
+        <state name="Easy">
+            <item word="Easy" weight="1"></item>
+        </state>
+        
+        <state name="Semi Pro">
+            <item word="semi" weight="1"></item>
+            <item word="pro" weight="0.5"></item>
+        </state>
+        
+    </neuro_trigger>
+    
+    <neuro_trigger name="Camera_Zoom">
+        
+        <state name="5x">
+            <item word="2x" weight="1"></item>
+            <item word="3x" weight="1"></item>
+            <item word="4x" weight="1"></item>
+            <item word="5x" weight="1"></item>
+            <item word="6x" weight="1"></item>
+            <item word="7x" weight="1"></item>
+        </state>
+        
+        <state name="10x">
+            <item word="8x" weight="1"></item>
+            <item word="9x" weight="1"></item>
+            <item word="10x" weight="1"></item>
+            <item word="11x" weight="1"></item>
+            <item word="12x" weight="1"></item>
+            <item word="13x" weight="1"></item>
+            <item word="14x" weight="1"></item>
+        </state>
+        
+        <state name="15x">
+            <item word="15x" weight="1"></item>
+            <item word="16x" weight="1"></item>
+            <item word="16x" weight="1"></item>
+            <item word="17x" weight="1"></item>
+        </state>
+        
+        <state name="20x">
+            <item word="18x" weight="1"></item>
+            <item word="19x" weight="1"></item>
+            <item word="20x" weight="1"></item>
+            <item word="21x" weight="1"></item>
+            <item word="22x" weight="1"></item>
+            <item word="23x" weight="1"></item>
+            <item word="24x" weight="1"></item>
+        </state>
+        
+        <state name="25x">
+            <item word="25x" weight="1"></item>
+            <item word="26x" weight="1"></item>
+            <item word="27x" weight="1"></item>
+            <item word="28x" weight="1"></item>
+            <item word="29x" weight="1"></item>
+        </state>
+        
+        <state name="30x">
+            <item word="30x" weight="1"></item>
+            <item word="31x" weight="1"></item>
+            <item word="32x" weight="1"></item>
+            <item word="33x" weight="1"></item>
+            <item word="34x" weight="1"></item>
+            <item word="35x" weight="1"></item>
+            <item word="36x" weight="1"></item>
+            <item word="37x" weight="1"></item>
+            <item word="38x" weight="1"></item>
+            <item word="39x" weight="1"></item>
+        </state>
+        
+        <state name="40x">
+            <item word="40x" weight="1"></item>
+            <item word="41x" weight="1"></item>
+            <item word="42x" weight="1"></item>
+            <item word="43x" weight="1"></item>
+            <item word="44x" weight="1"></item>
+            <item word="45x" weight="1"></item>
+            <item word="46x" weight="1"></item>
+            <item word="47x" weight="1"></item>
+            <item word="48x" weight="1"></item>
+            <item word="49x" weight="1"></item>
+        </state>
+        
+    </neuro_trigger>
+    
+    <neuro_trigger name="Camera_Memory">
+        
+        <state name="6MP">
+            <item word="10mp" weight="1"></item>
+            <item word="5." weight="1"></item>
+            <item word="5.0" weight="1"></item>
+            <item word="5.1" weight="1"></item>
+            <item word="6." weight="1"></item>
+            <item word="6.0" weight="1"></item>
+            <item word="6.1" weight="1"></item>
+        </state>
+        
+        <state name="7MP">
+            <item word="10mp" weight="1"></item>
+            <item word="7." weight="1"></item>
+            <item word="7.0" weight="1"></item>
+            <item word="7.1" weight="1"></item>
+        </state>
+        
+        <state name="8MP">
+            <item word="10mp" weight="1"></item>
+            <item word="8." weight="1"></item>
+            <item word="8.0" weight="1"></item>
+            <item word="8.1" weight="1"></item>
+        </state>
+        
+        <state name="9MP">
+            <item word="9mp" weight="1"></item>
+            <item word="9." weight="1"></item>
+            <item word="9.0" weight="1"></item>
+            <item word="9.1" weight="1"></item>
+        </state>
+        
+        <state name="10MP">
+            <item word="10mp" weight="1"></item>
+            <item word="10." weight="1"></item>
+            <item word="10.0" weight="1"></item>
+            <item word="10.1" weight="1"></item>
+            <item word="10.2" weight="1"></item>
+            <item word="10.3" weight="1"></item>
+        </state>
+        
+        <state name="11MP">
+            <item word="11MP" weight="1"></item>
+            <item word="11." weight="1"></item>
+            <item word="11.0" weight="1"></item>
+            <item word="11.1" weight="1"></item>
+            <item word="11.2" weight="1"></item>
+            <item word="11.3" weight="1"></item>
+        </state>
+        
+        <state name="12MP">
+            <item word="12MP" weight="1"></item>
+            <item word="12." weight="1"></item>
+            <item word="12.0" weight="1"></item>
+            <item word="12.1" weight="1"></item>
+            <item word="12.2" weight="1"></item>
+            <item word="12.3" weight="1"></item>
+            <item word="12.4" weight="1"></item>
+        </state>
+        
+        <state name="14MP">
+            <item word="14MP" weight="1"></item>
+            <item word="14." weight="1"></item>
+            <item word="14.0" weight="1"></item>
+            <item word="14.1" weight="1"></item>
+            <item word="14.2" weight="1"></item>
+            <item word="14.3" weight="1"></item>
+            <item word="14.4" weight="1"></item>
+            <item word="14.6" weight="1"></item>
+        </state>
+        
+        <state name="15MP">
+            <item word="15MP" weight="1"></item>
+            <item word="15." weight="1"></item>
+            <item word="15.0" weight="1"></item>
+            <item word="15.1" weight="1"></item>
+            <item word="15.2" weight="1"></item>
+            <item word="15.3" weight="1"></item>
+            <item word="15.4" weight="1"></item>
+        </state>
+        
+        <state name="18MP">
+            <item word="18MP" weight="1"></item>
+            <item word="18." weight="1"></item>
+            <item word="18.0" weight="1"></item>
+            <item word="18.1" weight="1"></item>
+            <item word="18.2" weight="1"></item>
+            <item word="18.3" weight="1"></item>
+            <item word="18.4" weight="1"></item>
+        </state>
+        
+        <state name="20MP">
+            <item word="20MP" weight="1"></item>
+            <item word="20." weight="1"></item>
+            <item word="20.0" weight="1"></item>
+            <item word="20.1" weight="1"></item>
+            <item word="20.2" weight="1"></item>
+            <item word="20.3" weight="1"></item>
+            <item word="20.4" weight="1"></item>
+        </state>
+        
+        <state name="21MP">
+            <item word="21MP" weight="1"></item>
+            <item word="21." weight="1"></item>
+            <item word="21.0" weight="1"></item>
+            <item word="21.1" weight="1"></item>
+            <item word="21.2" weight="1"></item>
+            <item word="21.3" weight="1"></item>
+            <item word="21.4" weight="1"></item>
+        </state>
+        
+    </neuro_trigger>
+    
+</neuro_triggers>
+

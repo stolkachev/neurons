@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE neuro_triggers 
+[
+<!ELEMENT neuro_triggers (neuro_trigger+)>
+<!ATTLIST neuro_triggers name CDATA #REQUIRED>
+<!ELEMENT neuro_trigger (state+)>
+<!ATTLIST neuro_trigger name CDATA #REQUIRED>
+<!ELEMENT state (item+)>
+<!ATTLIST state name CDATA #REQUIRED>
+<!ELEMENT item (#PCDATA)>
+<!ATTLIST item word CDATA #REQUIRED>
+<!ATTLIST item weight CDATA #REQUIRED>
+]>
+
+<neuro_triggers name="Neuro Layer 1">
+
+<neuro_trigger name="Help">
+</neuro_trigger>
+
+<neuro_trigger name="Slide Show">
+</neuro_trigger>
+
+<neuro_trigger name="History">
+</neuro_trigger>
+
+<neuro_trigger name="256gl">
+</neuro_trigger>
+
+<neuro_trigger name="State">
+
+<state name="Current">
+  <item word="Current" weight="1.0"></item>
+  <item word="Now" weight="1.0"></item>
+</state>
+
+<state name="Old">
+  <item word="old" weight="1.0"></item>
+</state>
+
+<state name="Future">
+  <item word="future" weight="1.0"></item>
+</state>
+
+</neuro_trigger>
+
+<neuro_trigger name="Year">
+
+<state name="2013">
+  <item word="2013" weight="1"></item>
+</state>
+
+<state name="2014">
+  <item word="2013" weight="1"></item>
+</state>
+
+<state name="2012">
+  <item word="2012" weight="1"></item>
+</state>
+
+<state name="2011">
+  <item word="2011" weight="1"></item>
+</state>
+
+<state name="2010">
+  <item word="2010" weight="1"></item>
+</state>
+
+<state name="2009">
+  <item word="2009" weight="1"></item>
+</state>
+
+<state name="2008">
+  <item word="2008" weight="1"></item>
+</state>
+
+<state name="2007">
+  <item word="2007" weight="1"></item>
+</state>
+
+<state name="2006">
+  <item word="2006" weight="1"></item>
+</state>
+
+<state name="2005">
+  <item word="2005" weight="1"></item>
+</state>
+
+<state name="2004">
+<item word="2004" weight="1"></item>
+</state>
+
+<state name="2003">
+  <item word="2003" weight="1"></item>
+</state>
+
+<state name="2002">
+  <item word="2002" weight="1"></item>
+</state>
+
+<state name="2001">
+  <item word="2001" weight="1"></item>
+</state>
+
+</neuro_trigger>
+
+<neuro_trigger name="Competitors">
+
+<state name="Apple">
+  <item word="apple" weight="1"></item>
+</state>
+
+<state name="Microsoft">
+  <item word="microsoft" weight="1"></item>
+</state>
+
+<state name="IBM">
+  <item word="ibm" weight="1"></item>
+</state>
+
+<state name="Google">
+  <item word="google" weight="1"></item>
+</state>
+
+<state name="American" >
+  <item word="american" weight="1"></item>
+  <item word="domestic" weight="1"></item>
+  <item word="американская" weight="1"></item>
+  <item word="американские" weight="1"></item>
+</state>
+
+<state name="European">
+  <item word="european" weight="1"></item>
+  <item word="import" weight="1"></item>
+  <item word="европейские" weight="1"></item>
+  <item word="европейская" weight="1"></item>
+</state>
+
+<state name="Japanese">
+  <item word="japanese" weight="1"></item>
+  <item word="import" weight="1"></item>
+  <item word="японские" weight="1"></item>
+  <item word="японская" weight="1"></item>
+</state>
+
+</neuro_trigger>
+
+
+</neuro_triggers>
+
+ 

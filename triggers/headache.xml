@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<neuro_triggers name="Headache">
+
+  <neuro_trigger name="Onset">
+    <state name="Morning">
+      <item word="morning" weight="1.0"></item>
+    </state>
+    <state name="Day">
+      <item word="day" weight="1.0"></item>
+    </state>
+    <state name="Evening">
+      <item word="evening" weight="1.0"></item>
+    </state>
+    <state name="Night">
+      <item word="night" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Activities">
+    <state name="Weather">
+      <item word="weather" weight="1.0"></item>
+    </state>
+    <state name="Work">
+      <item word="work" weight="1.0"></item>
+    </state>
+    <state name="Social">
+      <item word="social" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Location">
+    <state name="Left">
+      <item word="left" weight="1.0"></item>
+    </state>
+    <state name="Right">
+      <item word="right" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Pain">
+    <state name="1">
+      <item word="1" weight="1.0"></item>
+      <item word="mild" weight="1.0"></item>
+      <item word="minor" weight="1.0"></item>
+    </state>
+    <state name="2">
+      <item word="2" weight="1.0"></item>
+      <item word="discomforting" weight="1.0"></item>
+    </state>
+    <state name="3">
+      <item word="3" weight="1.0"></item>
+      <item word="tolerable" weight="1.0"></item>
+    </state>
+    <state name="4">
+      <item word="4" weight="1.0"></item>
+      <item word="distressing" weight="1.0"></item>
+    </state>
+    <state name="5">
+      <item word="5" weight="1.0"></item>
+      <item word="moderate" weight="1.0"></item>
+    </state>
+    <state name="6">
+      <item word="6" weight="1.0"></item>
+      <item word="intense" weight="1.0"></item>
+    </state>
+    <state name="7">
+      <item word="7" weight="1.0"></item>
+      <item word="very" weight="0.5"></item>
+      <item word="intense" weight="0.5"></item>
+    </state>
+    <state name="8">
+      <item word="8" weight="1.0"></item>
+      <item word="unbearable" weight="1.0"></item>
+    </state>
+    <state name="9">
+      <item word="9" weight="1.0"></item>
+      <item word="severe" weight="1.0"></item>
+      <item word="crying" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Trigger">
+    <state name="Caffeine">
+      <item word="coffee" weight="1.0"></item>
+    </state>
+    <state name="Alchogol">
+      <item word="alchogol" weight="1.0"></item>
+      <item word="wine" weight="1.0"></item>
+      <item word="drink" weight="1.0"></item>
+    </state>
+    <state name="Chocolate">
+      <item word="chocolate" weight="1.0"></item>
+    </state>
+    <state name="Menses">
+      <item word="menses" weight="1.0"></item>
+    </state>
+    <state name="Stress">
+      <item word="stress" weight="1.0"></item>
+    </state>
+    <state name="Sleep">
+      <item word="sleep" weight="1.0"></item>
+    </state>
+    <state name="Barometric Changes">
+      <item word="weather" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Location">
+    <state name="Side">
+      <item word="side" weight="1.0"></item>
+    </state>
+    <state name="Back">
+      <item word="back" weight="1.0"></item>
+    </state>
+    <state name="Front">
+      <item word="front" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+</neuro_triggers>
+
