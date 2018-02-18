@@ -1,9 +1,9 @@
 # NNOD API - Neural Networks On Demand
 
 # Chat bot example:
-# http://localhost/neurons/nnod_page.htm
 # https://youtu.be/6LhytTDCvaA
+# Install and run - http://localhost/neurons/nnod_page.htm
 #
-# Interactor:
+# InterActor with Siri interface:
 # https://itunes.apple.com/ca/app/interactor/id1310219187
 # https://youtu.be/wmWfwIolLV0
