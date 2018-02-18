@@ -18,7 +18,7 @@
 
 <neuro_triggers name="Headache">
 
-  <neuro_trigger name="Onset">
+  <neuro_trigger name="Onset" prompt="Morning, Evening...">
     <state name="Morning">
       <item word="morning" weight="1.0"></item>
     </state>
@@ -33,7 +33,7 @@
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="Activities">
+  <neuro_trigger name="Activities" prompt="Weather, Work...">
     <state name="Weather">
       <item word="weather" weight="1.0"></item>
     </state>
@@ -45,16 +45,7 @@
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="Location">
-    <state name="Left">
-      <item word="left" weight="1.0"></item>
-    </state>
-    <state name="Right">
-      <item word="right" weight="1.0"></item>
-    </state>
-  </neuro_trigger>
-
-  <neuro_trigger name="Pain">
+  <neuro_trigger name="Pain" prompt="Minor, Acute, 1, 9...">
     <state name="1">
       <item word="1" weight="1.0"></item>
       <item word="mild" weight="1.0"></item>
@@ -79,6 +70,7 @@
     <state name="6">
       <item word="6" weight="1.0"></item>
       <item word="intense" weight="1.0"></item>
+      <item word="acute" weight="1.0"></item>
     </state>
     <state name="7">
       <item word="7" weight="1.0"></item>
@@ -96,12 +88,14 @@
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="Trigger">
+  <neuro_trigger name="Trigger" prompt="Alcohol, Stress, Weather">
     <state name="Caffeine">
       <item word="coffee" weight="1.0"></item>
     </state>
-    <state name="Alchogol">
-      <item word="alchogol" weight="1.0"></item>
+    <state name="Alcohol">
+      <item word="alcohol" weight="1.0"></item>
+      <item word="drink" weight="1.0"></item>
+      <item word="drinks" weight="1.0"></item>
       <item word="wine" weight="1.0"></item>
       <item word="drink" weight="1.0"></item>
     </state>
@@ -122,7 +116,7 @@
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="Location">
+  <neuro_trigger name="Location" prompt="Side, Front...">
     <state name="Side">
       <item word="side" weight="1.0"></item>
     </state>

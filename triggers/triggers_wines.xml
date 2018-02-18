@@ -16,7 +16,6 @@
   <!ATTLIST item weight CDATA #REQUIRED>
 ]>
 
-
 <neuro_triggers name="Wines">
 
   <neuro_trigger name="Vintage" prompt="2015..1927">

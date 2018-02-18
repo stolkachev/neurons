@@ -75,7 +75,7 @@
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="Hello" prompt="You can say - Hello world or привет">
+  <neuro_trigger name="Hello" prompt="You can say - 'Hello world' or 'привет'">
     <state name="Hello" func="Hello_World"  discharge="10">
       <item word="hello" weight="0.5"></item>
       <item word="world" weight="0.5"></item>
@@ -87,7 +87,7 @@
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="User_Name" prompt="my name is ...">
+  <neuro_trigger name="User_Name" prompt="My name is ...">
     <state name="User_Name" func="User_Name">
       <item word="my" weight="0.5"></item>
       <item word="name" weight="0.5"></item>
@@ -101,7 +101,7 @@
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="Fuzzy" prompt="around $20K or under 20,000">
+  <neuro_trigger name="Fuzzy" prompt="'around $20K' or 'under 20,000'">
     <state name="Around" func="Fuzzy_Around">
       <item word="around" weight="1.0"></item>
     </state>
@@ -114,7 +114,7 @@
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="Location" prompt="i am at home.">
+  <neuro_trigger name="Location" prompt="I am at home.">
     <state name="Home" func="Home">
       <item word="home" weight="0.5"></item>
       <item word="at" weight="0.5"></item>
@@ -123,7 +123,7 @@
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="Shopping" prompt="wine or car">
+  <neuro_trigger name="Shopping" prompt="'wine' or 'car'">
     <state name="Wine">
       <item word="wine" weight="1.0"></item>
       <item word="вино" weight="1.0"></item>
@@ -131,7 +131,7 @@
       <item word="红" weight="0.5"></item>
       <item word="酒" weight="0.5"></item>
     </state>
-    <state name="Car" prompt="my name is ...">
+    <state name="Car">
       <item word="car" weight="1.0"></item>
       <item word="cars" weight="1.0"></item>
       <item word="автомашина" weight="1.0"></item>
@@ -142,7 +142,7 @@
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="Health" prompt="headache/pain/feel bad/heartbeat">
+  <neuro_trigger name="Health" prompt="'headache' or 'pain' or 'feel bad' or 'heartbeat'">
     <state name="Blood Pressure">
       <item word="blood" weight="0.5"></item>
       <item word="pressure" weight="0.5"></item>
@@ -225,14 +225,14 @@
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="Clear" prompt="clear or clean">
+  <neuro_trigger name="Clear" prompt="'clear' or 'clean'">
     <state name="Clearn" func="Clean">
       <item word="clear" weight="1.0"></item>
       <item word="clean" weight="1.0"></item>
     </state>
   </neuro_trigger>
 
-  <neuro_trigger name="Alert" prompt="alert / call sergey">
+  <neuro_trigger name="Alert" prompt="'alert' or 'call sergey'">
     <state name="Alert" func="Alert">
       <item word="alert" weight="1.0"></item>
       <item word="call" weight="0.5"></item>

@@ -149,18 +149,20 @@
                 var layer = layers[i];
                 var c_triggers = Get_Charged_Triggers(layer);
                 str_result = str_result + "<hr>";
-                str_result = str_result + "<b>" + layer.Name + " known triggers:</b><br>"
+                str_result = str_result + "<b><font color=black>" + layer.Name + " known triggers:</font></b><br>"
 
                 for (var j = 0; j < c_triggers.length; j++) {
-                    str_result = str_result + "<i>" + c_triggers[j] + "</i><br>";
+                    var splitter = c_triggers[j].split(":")
+                    str_result = str_result + "<i>" + splitter[0] + ":<font color=red>&nbsp;&nbsp;" + splitter[1] + "</font></i><br>";
                 }
 
                 var d_triggers = Get_Discharged_Triggers(layer);
                 str_result = str_result + "<hr>";
-                str_result = str_result + "<b>" + layer.Name + " unresolved triggers:</b><br>"
+                str_result = str_result + "<b><font color=black>" + layer.Name + " unresolved triggers:</font></b><br>"
 
                 for (var j = 0; j < d_triggers.length; j++) {
-                    str_result = str_result + "<i>" + d_triggers[j] + "</i><br>";
+                    var splitter = d_triggers[j].split(":")
+                    str_result = str_result + "<i>" + splitter[0] + ":<font color=blue>&nbsp;&nbsp;" + splitter[1] + "</font></i><br>";
                 }
             }
             document.getElementById("Result").innerHTML = str_result;
