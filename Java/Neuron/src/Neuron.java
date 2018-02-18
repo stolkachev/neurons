@@ -633,9 +633,9 @@ class Neuro_Layer extends Frame implements ActionListener, ItemListener,
 		slider_TreshHold = new Scrollbar(Scrollbar.HORIZONTAL, 101, 1, 0, 101);
 		slider_Discharge = new Scrollbar(Scrollbar.HORIZONTAL, 101, 1, 0, 101);
 
-		textField_Weight = new TextField("1.00", 2);
-		textField_TreshHold = new TextField("1.00", 2);
-		textField_Discharge = new TextField("1.00", 2);
+		textField_Weight = new TextField("1.00", 5);
+		textField_TreshHold = new TextField("1.00", 5);
+		textField_Discharge = new TextField("1.00", 5);
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		GridBagLayout aLayout = new GridBagLayout();
