@@ -93,6 +93,16 @@ proto_neuron.E = 0;
 proto_neuron.Curent_E = 0;
 proto_neuron.Charged = false;
 
+function Clean_Personal_Neural_Net()
+{
+    personal_Neural_Net = new Personal_Neural_Net();
+    proto_neuron = new Neuron();
+    proto_neuron.Name = "Proto Neuron";
+    proto_neuron.E = 0;
+    proto_neuron.Curent_E = 0;
+    proto_neuron.Charged = false;
+}
+
 function Clone_Neuron(neuro_layer: Neuro_Layer, external_id: number, name: string)
 {
     var neuron = new Neuron();
@@ -195,6 +205,11 @@ function Set_Neuron_Name(i: number, name: string)
 {
     var n = personal_Neural_Net.neurons[i];
     n.Name = name;
+}
+
+function Set_Neuron_Func(i: number, func: string) {
+    var n = personal_Neural_Net.neurons[i];
+    n.Func = func;
 }
 
 function Set_Neuron_Prompt(i: number, prompt: string) {
@@ -352,6 +367,12 @@ function Excite_Me(neuron: Neuron, e_d: number)
     if (neuron.D > 0)
     {
         Set_Discharge_Time(neuron, neuron.D, neuron.Neuro_Layer.Disharged_CallBack);
+    }
+    if (neuron.Curent_E == 1 && neuron.Func != "" && neuron.Func != null)
+    {
+        try {
+            window["" + neuron.Func](neuron);
+        } catch (Error) { }
     }
 }
 
@@ -580,10 +601,16 @@ function Build_Neural_Layer(layer_url: string)
             if (y.childNodes.length < 1) continue;
             var state_name = (<HTMLScriptElement>y).getAttribute("name");
             var discharge = (<HTMLScriptElement>y).getAttribute("discharge");
+            var func = (<HTMLScriptElement>y).getAttribute("func");
             var j_sema = Find_Neuron_Id_By_External_Id(this_trigger_id, neuro_layer);
             if (j_sema > 0) {
                 Set_Neuron_Name(j_sema, state_name);
                 Set_Neuron_Name(j_sema + number_of_states, trigger_name + ":" + state_name);
+                if (func != null && func != "")
+                {
+                    Set_Neuron_Func(j_sema + number_of_states, func);
+                    console.log(j_sema + number_of_states, func)
+                }
                 if (trigger_prompt != null) {
                     Set_Neuron_Prompt(j_sema + number_of_states, trigger_prompt);
                 }

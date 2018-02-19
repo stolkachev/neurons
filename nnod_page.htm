@@ -26,31 +26,29 @@
         var layer = null;
         var url;
 
-        var words_layer = Add_Neuro_Layer(1, -1, 1, 50000, "words");
-        var generic_triggers_layer = Build_Neural_Layer(generic_triggers_url);
+        var words_layer = null;
+        var generic_triggers_layer = null;
 
 
-        function load_completed() {
-
+        function load_completed()
+        {
+            words_layer = Add_Neuro_Layer(1, -1, 1, 50000, "words");
+            generic_triggers_layer = Build_Neural_Layer(generic_triggers_url);
             generic_triggers_layer.Disharged_CallBack = Show_Neural_State;
+            layers.push(generic_triggers_layer);
+            Save_Linguistics_URL(generic_triggers_url);
+
             linguistic_URLs = Restore_Linguistics_URLs();
 
             if (linguistic_URLs != null) {
                 for (var i = 0; i < linguistic_URLs.length; i++) {
                     url = linguistic_URLs[i];
+                    if (url == generic_triggers_url) continue;
                     layer = Build_Neural_Layer(url);
                     layers.push(layer);
                     Save_Linguistics_URL(url);
                 }
-            } else {
-                url = generic_triggers_url;
-                layer = Build_Neural_Layer(url);
-                layers.push(layer);
-                Save_Linguistics_URL(url);
             }
-
-            //       neural_triggers_parser ntp = new neural_triggers_parser();
-            //       ntp.run(neurons);
 
             Restore_Neural_State(generic_triggers_layer);
             for (var i = 0; i < layers.length; i++) {
@@ -58,15 +56,19 @@
             }
             Show_Neural_State();
             linguistic_URLs = Restore_Linguistics_URLs();
-            window.onload = function() {
-                document.getElementById("Phrase").focus();
-            }
         }
 
         function Reset() {
             Reset_Neurons(null);
             localStorage.clear();
             document.getElementById("Result").innerHTML = "";
+            linguistic_URLs = [];
+            layers = [];
+            layer = null;
+
+            Clean_Personal_Neural_Net();
+            load_completed();
+            Show_Neural_State();
         }
 
         function add_Layer(linguistic_triggers_url) {
@@ -88,7 +90,7 @@
 
         function check_Controls() {
             var g_neurons = Get_Excited_Neurons(generic_triggers_layer);
-
+            if (g_neurons == null) return;
             for (var i = 0; i < g_neurons.length; i++) {
                 var nl = g_neurons[i];
                 var splitter = nl.Name.split(':');
@@ -114,7 +116,7 @@
         }
 
         function Submit_Phrase() {
-            Reset_Neurons(generic_triggers_layer);
+  //          Reset_Neurons(generic_triggers_layer);
             for (var i = 0; i < layers.length; i++) {
                 var layer = layers[i];
                 Reset_Half_Charged_Neurons(layer);
@@ -130,13 +132,15 @@
             if (phrase == "") phrase = "*enter*";
             phrase = phrase.replace('?', ' ? ');
             Excite_Phrase(phrase);
+            try {
+                localStorage.removeItem(generic_triggers_layer.Name);
 
-            localStorage.removeItem(generic_triggers_layer.Name);
+                Save_Neural_State(generic_triggers_layer);
+                for (var i = 0; i < layers.length; i++) {
+                    Save_Neural_State(layers[i]);
+                }
+            } catch (Error) { }
 
-            Save_Neural_State(generic_triggers_layer);
-            for (var i = 0; i < layers.length; i++) {
-                Save_Neural_State(layers[i]);
-            }
             Show_Neural_State();
             check_Controls();
             document.getElementById("Phrase").value = "";
@@ -166,6 +170,16 @@
                 }
             }
             document.getElementById("Result").innerHTML = str_result;
+        }
+
+// NEURON'S FUNCTIONS
+        function Help()
+        {
+            alert("Help was activated!")
+        }
+        function Hello_World()
+        {
+            alert("Hello_World was activated!")
         }
     </script>
 

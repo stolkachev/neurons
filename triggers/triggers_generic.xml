@@ -64,7 +64,7 @@
   </neuro_trigger>
 
   <neuro_trigger name="Help">
-    <state name="Help">
+    <state name="Help" func="Help">
       <item word="help" weight="1.0"></item>
     </state>
   </neuro_trigger>
@@ -76,8 +76,8 @@
   </neuro_trigger>
 
   <neuro_trigger name="Hello" prompt="You can say - 'Hello world' or 'привет'">
-    <state name="Hello" func="Hello_World"  discharge="10">
-      <item word="hello" weight="0.5"></item>
+    <state name="Hello" func="Hello_World">
+      <item word="hello" weight="1.0"></item>
       <item word="world" weight="0.5"></item>
       <item word="привет" weight="0.5"></item>
       <item word="прив" weight="0.5"></item>
