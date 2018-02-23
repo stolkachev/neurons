@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE neuro_triggers 
+[
+  <!ELEMENT neuro_triggers (neuro_trigger+)>
+  <!ATTLIST neuro_triggers name CDATA #REQUIRED>
+  <!ELEMENT neuro_trigger (state+)>
+  <!ATTLIST neuro_trigger name CDATA #REQUIRED>
+  <!ELEMENT state (item+)>
+  <!ATTLIST state name CDATA #REQUIRED>
+  <!ELEMENT item (#PCDATA)>
+  <!ATTLIST item word CDATA #REQUIRED>
+  <!ATTLIST item weight CDATA #REQUIRED>
+]>
+
+<neuro_triggers name="Wines">
+
+  <neuro_trigger name="Vintage">
+    <state name="2015">
+      <item word="2015" weight="1"></item>
+    </state>
+    <state name="2014">
+      <item word="2014" weight="1"></item>
+    </state>
+    <state name="2013">
+      <item word="2013" weight="1"></item>
+    </state>
+    <state name="2012">
+      <item word="2012" weight="1"></item>
+    </state>
+    <state name="2011">
+      <item word="2011" weight="1"></item>
+    </state>
+    <state name="2010">
+      <item word="2010" weight="1"></item>
+    </state>
+    <state name="2009">
+      <item word="2009" weight="1"></item>
+    </state>
+    <state name="2008">
+      <item word="2008" weight="1"></item>
+    </state>
+    <state name="2007">
+      <item word="2007" weight="1"></item>
+    </state>
+    <state name="2006">
+      <item word="2006" weight="1"></item>
+    </state>
+    <state name="2005">
+      <item word="2005" weight="1"></item>
+    </state>
+    <state name="2004">
+      <item word="2004" weight="1"></item>
+    </state>
+    <state name="2003">
+      <item word="2003" weight="1"></item>
+    </state>
+    <state name="2002">
+      <item word="2002" weight="1"></item>
+    </state>
+    <state name="2001">
+      <item word="2001" weight="1"></item>
+    </state>
+    <state name="2000">
+      <item word="2000" weight="1"></item>
+    </state>
+    <state name="1999">
+      <item word="1999" weight="1"></item>
+    </state>
+    <state name="1998">
+      <item word="1998" weight="1"></item>
+    </state>
+    <state name="1997">
+      <item word="1997" weight="1"></item>
+    </state>
+    <state name="1996">
+      <item word="1996" weight="1"></item>
+    </state>
+    <state name="1995">
+      <item word="1995" weight="1"></item>
+    </state>
+    <state name="1994">
+      <item word="1994" weight="1"></item>
+    </state>
+    <state name="1993">
+      <item word="1992" weight="1"></item>
+    </state>
+    <state name="1990">
+      <item word="1990" weight="1"></item>
+    </state>
+    <state name="1989">
+      <item word="1989" weight="1"></item>
+    </state>
+    <state name="1988">
+      <item word="1988" weight="1"></item>
+    </state>
+    <state name="1987">
+      <item word="1987" weight="1"></item>
+    </state>
+    <state name="1986">
+      <item word="1986" weight="1"></item>
+    </state>
+    <state name="1985">
+      <item word="1985" weight="1"></item>
+    </state>
+    <state name="1983">
+      <item word="1983" weight="1"></item>
+    </state>
+    <state name="1981">
+      <item word="1981" weight="1"></item>
+    </state>
+    <state name="1976">
+      <item word="1976" weight="1"></item>
+    </state>
+    <state name="1975">
+      <item word="1975" weight="1"></item>
+    </state>
+    <state name="1970">
+      <item word="1970" weight="1"></item>
+    </state>
+    <state name="1969">
+      <item word="1969" weight="1"></item>
+    </state>
+    <state name="1963">
+      <item word="1963" weight="1"></item>
+    </state>
+    <state name="1937">
+      <item word="1937" weight="1"></item>
+    </state>
+    <state name="1927">
+      <item word="1927" weight="1"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Color">
+    <state name="Red">
+      <item word="red" weight="1"></item>
+      <item word="ruby" weight="1"></item>
+      <item word="maroon" weight="1"></item>
+      <item word="burgundy" weight="1"></item>
+      <item word="merlot" weight="1"></item>
+      <item word="красный" weight="1"></item>
+      <item word="красная" weight="1"></item>
+      <item word="красные" weight="1"></item>
+    </state>
+    <state name="White">
+      <item word="white" weight="1"></item>
+      <item word="diamond" weight="1"></item>
+      <item word="opal" weight="1"></item>
+      <item word="белое" weight="1"></item>
+    </state>
+    <state name="Rose">
+      <item word="rose" weight="1.0"></item>
+    </state>
+    <state name="Amber">
+      <item word="amber" weight="1.0"></item>
+    </state>
+    <state name="Gold">
+      <item word="gold" weight="1.0"></item>
+    </state>
+    <state name="Silver">
+      <item word="silver" weight="1"></item>
+      <item word="серебристое" weight="1"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Taste">
+    <state name="Fruit">
+      <item word="fruit" weight="1.0"></item>
+      <item word="fruity" weight="1.0"></item>
+    </state>
+    <state name="Spice">
+      <item word="spice" weight="1.0"></item>
+      <item word="spicy" weight="1.0"></item>
+    </state>
+    <state name="Sweet">
+      <item word="sweet" weight="1.0"></item>
+    </state>
+    <state name="Smooth">
+      <item word="smooth" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Sparkling">
+    <state name="Sparkling">
+      <item word="champagne" weight="1.0"></item>
+      <item word="sparkling" weight="1.0"></item>
+      <item word="sparklin" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="With Food">
+    <state name="Duck">
+      <item word="duck" weight="1.0"></item>
+    </state>
+    <state name="Cheeses">
+      <item word="cheeses" weight="1.0"></item>
+      <item word="cheese" weight="1.0"></item>
+      <item word="chees" weight="1.0"></item>
+    </state>
+    <state name="Chicken">
+      <item word="chicken" weight="1.0"></item>
+    </state>
+    <state name="Pasta">
+      <item word="pasta" weight="1.0"></item>
+      <item word="macaroni" weight="1.0"></item>
+    </state>
+    <state name="Fish">
+      <item word="fish" weight="1.0"></item>
+    </state>
+    <state name="Meat">
+      <item word="meat" weight="1.0"></item>
+      <item word="beef" weight="1.0"></item>
+    </state>
+    <state name="Aperitif">
+      <item word="aperitif" weight="1.0"></item>
+    </state>
+    <state name="Lamb">
+      <item word="lamb" weight="1.0"></item>
+    </state>
+    <state name="Pork">
+      <item word="pork" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Category">
+    <state name="Beer">
+      <item word="beer" weight="1.0"></item>
+    </state>
+    <state name="Wine">
+      <item word="wine" weight="1.0"></item>
+    </state>
+    <state name="Spirits">
+      <item word="spirits" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Kosher">
+    <state name="Kosher">
+      <item word="kosher" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Country">
+    <state name="Venezuela">
+      <item word="Venezuela" weight="1.0"></item>
+    </state>
+    <state name="US">
+      <item word="us" weight="1.0"></item>
+      <item word="american" weight="1.0"></item>
+      <item word="domestic" weight="1.0"></item>
+      <item word="local" weight="1.0"></item>
+    </state>
+    <state name="Uruguay">
+      <item word="uruguay" weight="1.0"></item>
+    </state>
+    <state name="Turkey">
+      <item word="turkey" weight="1.0"></item>
+    </state>
+    <state name="Trinidad">
+      <item word="trinidad" weight="1.0"></item>
+    </state>
+    <state name="Switzerland">
+      <item word="switzerland" weight="1.0"></item>
+      <item word="swiss" weight="1.0"></item>
+    </state>
+    <state name="Sweden">
+      <item word="sweden" weight="1.0"></item>
+    </state>
+    <state name="Spain">
+      <item word="spain" weight="1.0"></item>
+    </state>
+    <state name="South Africa">
+      <item word="africa" weight="1.0"></item>
+    </state>
+    <state name="Slovenia">
+      <item word="slovenia" weight="1.0"></item>
+    </state>
+    <state name="Slovakia">
+      <item word="slovakia" weight="1.0"></item>
+    </state>
+    <state name="Serbia">
+      <item word="serbia" weight="1.0"></item>
+    </state>
+    <state name="Scotland">
+      <item word="scotland" weight="1.0"></item>
+    </state>
+    <state name="Russia">
+      <item word="russia" weight="1.0"></item>
+    </state>
+    <state name="Portual">
+      <item word="portugal" weight="1.0"></item>
+    </state>
+    <state name="Poland">
+      <item word="poland" weight="1.0"></item>
+    </state>
+    <state name="New Zealand">
+      <item word="zealand" weight="1.0"></item>
+    </state>
+    <state name="Japan">
+      <item word="japan" weight="1.0"></item>
+    </state>
+    <state name="Jamaica">
+      <item word="jamaica" weight="1.0"></item>
+    </state>
+    <state name="Italy">
+      <item word="italy" weight="1.0"></item>
+      <item word="italian" weight="1.0"></item>
+    </state>
+    <state name="Israel">
+      <item word="israel" weight="1.0"></item>
+    </state>
+    <state name="Greece">
+      <item word="greece" weight="1.0"></item>
+    </state>
+    <state name="Germany">
+      <item word="germany" weight="1.0"></item>
+    </state>
+    <state name="France">
+      <item word="france" weight="1.0"></item>
+      <item word="french" weight="1.0"></item>
+    </state>
+    <state name="England">
+      <item word="england" weight="1.0"></item>
+      <item word="english" weight="1.0"></item>
+    </state>
+    <state name="Belgium">
+      <item word="belgium" weight="1.0"></item>
+    </state>
+    <state name="Australia">
+      <item word="australia" weight="1.0"></item>
+    </state>
+    <state name="Armenia">
+      <item word="armenia" weight="1.0"></item>
+      <item word="armenian" weight="1.0"></item>
+    </state>
+    <state name="Argentina">
+      <item word="argentina" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+</neuro_triggers>

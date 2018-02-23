@@ -1,0 +1,48 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, initial-scale=1.0" />
+    <meta name="viewport" content="user-scalable=yes">
+
+    <title>256gl NNOD</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script type="text/javascript">
+        function openThumbnailLink(url) {
+            window.open(url, "_blank", "toolbar=no, scrollbars=yes, resizable=yes, top=10, left=10, width=800, height=800");
+            return true;
+        };
+    </script>
+</head>
+
+<body style="background-color:#999999;">
+    <div id="demo"></div>
+    <script>
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var myObj = JSON.parse(this.responseText);
+                var result = myObj.products;
+                var x = "";
+                for (i in result) {
+                    x = x + "<div class=\"thumbnail_wrapper\"><table cellspacing=\"0\" cellpadding=\"0\"><tr>\n" +
+                        "<td id=\"td_thumbnail_" + i + "\" class=\"td_thumbnail_image\">\n" +
+                        "<a href=\"#\"><img src=\"" + result[i].image + "\" height='70' width='95' " +
+                        "\" onclick=\"javascript:openThumbnailLink('" + result[i].url + "'); return false;\"></a></td>\n" +
+                        "</tr><tr><td id=\"td_thumbtitle_" + i + "\" class=\"td_thumbnail_title\">\n" + " " + result[i].name + "<br>$" + result[i].regularPrice + "\n" +
+                        "</td></tr></table></div> \n\n";
+                }
+                document.getElementById("demo").innerHTML = x;
+            }
+        };
+        url = "https://api.bestbuy.com/v1/products(customerReviewAverage>=4&regularPrice>150&regularPrice<250&(categoryPath.id=abcat0401000))?apiKey=7ksBhjryZ5hxofJSEk2VBO7u&sort=name.asc&show=manufacturer,name,image,url,regularPrice&facet=regularPrice,50&pageSize=100&format=json";
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    </script>
+</body>
+
+</html>
