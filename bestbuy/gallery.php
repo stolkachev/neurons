@@ -23,7 +23,7 @@ function openThumbnailLink(url)
 <body style="background-color:#999999;">
 
 <?php
-$url = "https://api.bestbuy.com/v1/products(customerReviewAverage>=4&regularPrice>100&regularPrice<300&(categoryPath.id=abcat0401000))?apiKey=7ksBhjryZ5hxofJSEk2VBO7u&sort=name.asc&show=manufacturer,name,image,url,regularPrice&facet=regularPrice,50&pageSize=100&format=json";
+$url = "https://api.bestbuy.com/v1/products(customerReviewAverage>=4&regularPrice>100&regularPrice<300&(categoryPath.id=abcat0401000))?apiKey=xxxxxxxxxxxxxxxxxxx&sort=name.asc&show=manufacturer,name,image,url,regularPrice&facet=regularPrice,50&pageSize=100&format=json";
 
 $data = file_get_contents($url);
 $json = json_decode($data, true);
