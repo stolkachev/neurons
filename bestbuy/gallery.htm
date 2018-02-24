@@ -22,6 +22,86 @@
 <body style="background-color:#999999;">
     <div id="demo"></div>
     <script>
+        var get_arguments = (function(a) 
+        {
+            if (a == "") return {};
+            var b = {};
+            for (var i = 0; i < a.length; ++i)
+            {
+                var p=a[i].split('=', 2);
+                if (p.length == 1)
+                    b[p[0]] = "";
+                else
+                    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+            }
+            return b;
+        })(window.location.search.substr(1).split('&'));
+
+
+// http://localhost/neurons/bestbuy/gallery.htm?color=silver&manufacturer=apple&customerReviewAverage=5&price=500
+        var api_key = "7ksBhjryZ5hxofJSEk2VBO7u";
+        var baseURL = "https://api.bestbuy.com/v1/products";
+        var categoryId = get_arguments["categoryId"];
+        if (categoryId === undefined)  categoryId = "abcat0502000";
+//        abcat0502000 - Laptops
+//        abcat0501000 - Computers
+//        abcat0401000 - Cameras
+//        pcmcat209400050001 - phones
+//        abcat0204000 - Hesad phones
+//        pcmcat241600050001 - Home Audio
+//        pcmcat254000050002 - Home Automation
+//        pcmcat209000050006 - iPads
+//        abcat0904000 - Ovens
+//        abcat0901000 - Refrigirators
+//        abcat0101000 - TVs
+//        abcat0910000 - Washers
+//        pcmcat310200050004 -Speakers
+
+        var customerReviewAverage = get_arguments["customerReviewAverage"];
+        if (customerReviewAverage === undefined)  
+        {
+            customerReviewAverage = "";
+        }else
+        {
+            customerReviewAverage = customerReviewAverage - 0.1
+            customerReviewAverage = "&customerReviewAverage>=" + customerReviewAverage;
+        }
+        var manufacturer = get_arguments["manufacturer"];
+        if (manufacturer === undefined)  
+        {
+            manufacturer = "";
+        }else
+        {
+            manufacturer = "&manufacturer=" + manufacturer;
+        }
+        var color = get_arguments["color"];
+        if (color === undefined)  
+        {
+            color = "";
+        }else
+        {
+            color = "&color=" + color;
+        }
+
+        var regularPrice_gt = 0;
+        var regularPrice_lt = 100000;
+        var price = get_arguments["price"];
+        if (price === undefined || price === "")  
+        {
+            price = "regularPrice>=" + regularPrice_gt + "&regularPrice<=" + regularPrice_lt;
+        }else
+        {
+            regularPrice_gt = Math.round(price) - Math.round(price / 4);
+            regularPrice_lt = Math.round(price) + Math.round(price / 4);
+            price = "regularPrice>=" + regularPrice_gt + "&regularPrice<=" + regularPrice_lt;
+            
+        }
+
+        var url = baseURL + "(" + price + customerReviewAverage + manufacturer + color +
+        "&(categoryPath.id=" + categoryId + "))" + 
+        "?apiKey=" + api_key + 
+        "&sort=name.asc&show=manufacturer,name,image,url,regularPrice&facet=regularPrice,50&pageSize=100&format=json";
+
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -30,18 +110,29 @@
                 var x = "";
                 for (i in result) {
                     x = x + "<div class=\"thumbnail_wrapper\"><table cellspacing=\"0\" cellpadding=\"0\"><tr>\n" +
-                        "<td id=\"td_thumbnail_" + i + "\" class=\"td_thumbnail_image\">\n" +
+                        "<td class=\"td_thumbnail_image\">" +
                         "<a href=\"#\"><img src=\"" + result[i].image + "\" height='70' width='95' " +
                         "\" onclick=\"javascript:openThumbnailLink('" + result[i].url + "'); return false;\"></a></td>\n" +
-                        "</tr><tr><td id=\"td_thumbtitle_" + i + "\" class=\"td_thumbnail_title\">\n" + " " + result[i].name + "<br>$" + result[i].regularPrice + "\n" +
+                        "</tr><tr><td class=\"td_thumbnail_title\">\n" + " " + result[i].name + "<br>$" + result[i].regularPrice + "\n" +
                         "</td></tr></table></div> \n\n";
+                        if (i >= 100) break;
                 }
                 document.getElementById("demo").innerHTML = x;
             }
         };
-        url = "https://api.bestbuy.com/v1/products(customerReviewAverage>=4&regularPrice>150&regularPrice<250&(categoryPath.id=abcat0401000))?apiKey=xxxxxxxxxxxxxxxx&sort=name.asc&show=manufacturer,name,image,url,regularPrice&facet=regularPrice,50&pageSize=100&format=json";
+
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
+
+        function getParameterByName(name, url) 
+        {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
     </script>
 </body>
 

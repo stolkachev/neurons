@@ -3,19 +3,18 @@ div.thumbnail_wrapper {
     float: left;
     border: 3px solid #FFFFFF;
     margin: 5px;
-    width: 105px;
+    width: 120px;
 }
 td.td_thumbnail_title {
     background-color: #FFFFFF;
     padding-top: 1px;
-    height: 54px;
-    width: 105px;
+    height: 70px;
+    width: 120px;
     padding-bottom: 1px;
     font-size: 9px;
     font-family: Arial;
     color: #456069;
 	text-align: left;
-    text-wrap:inherit;
 	vertical-align: top;
 }
 td.td_thumbnail_image {
