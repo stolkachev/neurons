@@ -41,6 +41,7 @@
 // http://localhost/neurons/bestbuy/gallery.htm?color=silver&manufacturer=apple&customerReviewAverage=5&price=500
         var api_key = "";
         var baseURL = "https://api.bestbuy.com/v1/products";
+        
         var categoryId = get_arguments["categoryId"];
         if (categoryId === undefined)  categoryId = "abcat0401000";
 //        abcat0502000 - Laptops
@@ -59,10 +60,8 @@
 
 
         var api_key = get_arguments["api_key"];
-        if (api_key === undefined)  
-        {
-            api_key = "7ksBhjryZ5hxofJSEk2VBO7u";
-        }
+        if (api_key === undefined)  api_key = "7ksBhjryZ5hxofJSEk2VBO7u";
+
 
         var customerReviewAverage = get_arguments["customerReviewAverage"];
         if (customerReviewAverage === undefined)  
