@@ -1,29 +1,29 @@
-﻿
-div.thumbnail_wrapper {
+﻿div.thumbnail_wrapper {
     float: left;
     border: 3px solid #FFFFFF;
     margin: 5px;
-    width: 120px;
 }
+
 td.td_thumbnail_title {
     background-color: #FFFFFF;
     padding-top: 1px;
     height: 70px;
     width: 120px;
     padding-bottom: 1px;
-    font-size: 9px;
+    font-size: 11px;
     font-family: Arial;
     color: #456069;
-	text-align: left;
-	vertical-align: top;
+    text-align: left;
+    vertical-align: top;
 }
+
 td.td_thumbnail_image {
     background-color: #FFFFFF;
     padding: 1px;
-	text-align: center;
-	vertical-align: middle;
+    text-align: center;
+    vertical-align: middle;
 }
+
 td.td_thumbnail_image:hover {
     background-color: #456069;
 }
-
