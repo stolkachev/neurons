@@ -1,0 +1,83 @@
+﻿html,
+    body {
+        height: 100%;
+        overflow: hidden;
+        background-color: #E6E6E6;
+    }
+    
+    body {
+        padding: 0;
+        margin: 0;
+        background-color: #E6E6E6;
+    }
+    
+    #silverlightControlHost {
+        height: 100%;
+        background-color: #E6E6E6;
+    }
+    
+    .menu {
+        position: absolute;
+        width: 160px;
+        top: 10px;
+        left: 10px;
+        background: #777777;
+        visibility: hidden;
+        border: 1px solid;
+        border-color: #000000 #000000 #000000 #000000;
+        padding: 1px;
+    }
+    
+    .menuitem {
+        padding: 4px 6px 4px 6px;
+        color: #ffffff;
+        text-decoration: none;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 14px;
+        font-weight: normal;
+        display: block;
+    }
+    
+    .seperator {
+        border-top: 1px solid #999999;
+        border-bottom: 1px solid #eeeeee;
+        margin: 4px;
+    }
+    
+    a.menuitem:hover {
+        color: #0000ff;
+    }
+    
+    #tagCloud1 {
+        padding: 0px;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        width: 100%;
+    }
+    
+    .tagCloud {
+        background: transparent url("") 0 0 repeat;
+    }
+    
+    .tagCloud ul,
+    .tagCloud li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .tagCloud .tagClass a {
+        color: #666666;
+        font-family: Sans;
+        font-weight: normal;
+        padding: 0px;
+        text-align: center;
+        text-decoration: none;
+        vertical-align: middle;
+    }
+    
+    .tagCloud .tagClass a:hover {
+        border: solid 1px #eeeeee;
+        color: #0000ff;
+        text-decoration: none;
+    }

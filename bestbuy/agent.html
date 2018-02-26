@@ -1,116 +1,29 @@
-﻿<style type="text/css">
-    html,
-    body {
-        height: 100%;
-        overflow: hidden;
-        background-color: #E6E6E6;
-    }
-    
-    body {
-        padding: 0;
-        margin: 0;
-        background-color: #E6E6E6;
-    }
-    
-    #silverlightControlHost {
-        height: 100%;
-        background-color: #E6E6E6;
-    }
-    
-    .menu {
-        position: absolute;
-        width: 160px;
-        top: 10px;
-        left: 10px;
-        background: #777777;
-        visibility: hidden;
-        border: 1px solid;
-        border-color: #000000 #000000 #000000 #000000;
-        padding: 1px;
-    }
-    
-    .menuitem {
-        padding: 4px 6px 4px 6px;
-        color: #ffffff;
-        text-decoration: none;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        font-size: 14px;
-        font-weight: normal;
-        display: block;
-    }
-    
-    .seperator {
-        border-top: 1px solid #999999;
-        border-bottom: 1px solid #eeeeee;
-        margin: 4px;
-    }
-    
-    a.menuitem:hover {
-        color: #0000ff;
-    }
-    
-    #tagCloud1 {
-        padding: 0px;
-        margin-bottom: 0px;
-        padding-bottom: 0px;
-        width: 100%;
-        /* needed for IE to calc width */
-    }
-    
-    .tagCloud {
-        background: transparent url("") 0 0 repeat;
-    }
-    
-    .tagCloud ul,
-    .tagCloud li {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-    
-    .tagCloud .tagClass a {
-        color: #666666;
-        font-family: Sans;
-        font-weight: normal;
-        padding: 0px;
-        text-align: center;
-        text-decoration: none;
-        vertical-align: middle;
-    }
-    
-    .tagCloud .tagClass a:hover {
-        border: solid 1px #eeeeee;
-        color: #0000ff;
-        text-decoration: none;
-    }
-</style>
-
+﻿<link rel="stylesheet" type="text/css" href="style_a.css" />
 <link rel="STYLESHEET" type="text/css" href="codebase/dhtmlxslider.css" />
-
 <script type="text/javascript" src="codebase/dhtmlxcommon.js"></script>
 <script type="text/javascript" src="codebase/dhtmlxslider.js"></script>
 <script type="text/javascript" src="js-cumulus.js"></script>
 
 <div id="div_Menu_1" class="menu" style="position:absolute; z-index:10;" onmouseout="fixOnMouseOut(this, event);" onmouseleave="document.getElementById('div_Menu_1').style.visibility = 'hidden';return false;" ;>
-    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0502000');return false;" class="menuitem">Laptops</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0501000');return false;" class="menuitem">Computers</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0401000');return false;" class="menuitem">Cameras</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat209400050001');return false;" class="menuitem">Phones</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0204000');return false;" class="menuitem">Head phones</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat241600050001');return false;" class="menuitem">Home Audio</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat254000050002');return false;" class="menuitem">Home Automation</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat209000050006');return false;" class="menuitem">iPads</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0901000');return false;" class="menuitem">Refrigirators</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0101000');return false;" class="menuitem">TVs</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0910000');return false;" class="menuitem">Washers</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat310200050004');return false;" class="menuitem">Speakers</a>
-    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0904000');return false;" class="menuitem">Ovens</a></div>
-
-<div id="div_Select_Menu" onclick="open_menu();" style="cursor:pointer; position:absolute; left:5; top:5;
-border:1px; width:50;
-overflow:hidden; padding-left:1px;
-padding-right:1px; padding-top:5px; padding-bottom:1px; 
-font-family:arial; font-size:14px; color:#0000ff"><b>Select</b></div>
+        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0502000');return false;" class="menuitem">Laptops</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0501000');return false;" class="menuitem">Computers</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0401000');return false;" class="menuitem">Cameras</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat209400050001');return false;" class="menuitem">Phones</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0204000');return false;" class="menuitem">Head phones</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat241600050001');return false;" class="menuitem">Home Audio</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat254000050002');return false;" class="menuitem">Home Automation</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat209000050006');return false;" class="menuitem">iPads</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0901000');return false;" class="menuitem">Refrigirators</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0101000');return false;" class="menuitem">TVs</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0910000');return false;" class="menuitem">Washers</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat310200050004');return false;" class="menuitem">Speakers</a>
+        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0904000');return false;" class="menuitem">Ovens</a></div>
+    
+    <div id="div_Select_Menu" onclick="open_menu();" style="cursor:pointer; position:absolute; left:5; top:5;
+    border:1px; width:50;
+    overflow:hidden; padding-left:1px;
+    padding-right:1px; padding-top:5px; padding-bottom:1px; 
+    font-family:arial; font-size:14px; color:#0000ff"><b>Select</b></div>
 
 <div id="div_Reset_Menu" onclick="reset_search();" style="cursor:pointer; position:absolute; left:155; top:5;
 border:1px; width:60;
@@ -120,7 +33,6 @@ font-family:arial; font-size:14px; color:#0000ff"><b>Reset</b></div>
 <div id="tagCloud1" name="tagCloud1" style="cursor:pointer; height:200; "></div>
 
 <table border="0">
-
     <tr>
         <td align="left">
             <div id="div_Answer" ondblclick="select_Chunk()" ; style="height:190; width:190; vertical-align:top; border: 0px gray solid;
@@ -136,9 +48,7 @@ background-color:white; padding-left:2px;padding-right:2px; " size="20" onkeypre
             />
         </td>
     </tr>
-
 </table>
-
 
 <div id="Slider_Div">
     <table border="0" style="width:90%">
@@ -154,10 +64,9 @@ background-color:white; padding-left:2px;padding-right:2px; " size="20" onkeypre
         </tr>
     </table>
     <script type="text/javascript">
-        // SLIDER CONTROLS ////////////////////////////////////////////////////////////////////////////////////////// 
+// SLIDER CONTROLS ////////////////////////////////////////////////////////////////////////////////////////// 
 
         var slider_Pos = 0;
-        var ecancelBubble = false;
         var slider;
         window.dhx_globalImgPath = "codebase/imgs/";
         slider = new dhtmlxSlider(null, 150, "dhx_skyblue", null, 0, 1, 0, 0.05);
@@ -166,18 +75,14 @@ background-color:white; padding-left:2px;padding-right:2px; " size="20" onkeypre
         Slider_Div.onmouseup = Slider_Completed;
 
         function slider_OnChange(pos, slider) {
-            ecancelBubble = false;
             slider_Pos = pos;
             edit_Slider_Pos();
         }
 
         function Slider_Completed() {
             edit_Slider_Pos();
-            ecancelBubble = true;
-
-            parent.frm_deepzoom.current_Fuzzy_Point = slider_Pos;
-            set_Fuzzy_Number(parent.frm_deepzoom.current_Fuzzy_Number);
-            parent.frm_deepzoom.Slider_Change();
+            document.getElementById("div_Current_Fuzzy").innerHTML = "&nbsp;<img src='context_delete.png' alt='Delete price option' title='Delete price option' height=10 onclick='fuzzy_Number_Deleted()' style='cursor:pointer;' />&nbsp;&nbsp;" + formatCurrency(current_Fuzzy_Number);
+            parent.frm_deepzoom.location.href = "gallery.html?price=" + current_Fuzzy_Number;
         }
 
         function edit_Slider_Pos() {
@@ -191,30 +96,27 @@ background-color:white; padding-left:2px;padding-right:2px; " size="20" onkeypre
             if (slider_Pos == 0) d = min_price;
             if (slider_Pos == 1) d = max_price;
             d = d.toFixed(2);
+            current_Fuzzy_Number = d;
             if (d.length > 6) {
                 d = d.substr(0, d.length - 6) + "," + d.substr(d.length - 6, d.length)
             }
-            parent.frm_deepzoom.current_Fuzzy_Number = d;
             document.getElementById("div_Current_Fuzzy").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$" + d;
         }
 
         function fuzzy_Number_Deleted() {
-            ecancelBubble = true;
             slider_Pos = 0;
             slider.setValue(0);
             document.getElementById("div_Current_Fuzzy").innerHTML = "";
-            parent.frm_deepzoom.fuzzy_Number_Deleted();
-            txt = "<font color=green><b>FUZZY NUMBER DELETED.</font></b><br>";
-            update_Log(txt);
+            parent.frm_deepzoom.location.href = "gallery.html";
         }
     </script>
     <br />
 </div>
+
 <div id="div_Selected_Features" <div onclick='show_Current_Clusters()' ; style="height:20; width:190; vertical-align:top; border:1px; font-weight:bolder;
 background-color:#E6E6E6; overflow:auto; padding-left:1px;
 padding-right:1px; padding-top:1px; padding-bottom:1px; 
 font-family:verdana; font-size:12px; color:#0000ff; cursor:pointer;">&nbsp;&nbsp;Selected Features:</div>
-
 </div>
 
 <table border=0>
@@ -243,24 +145,16 @@ font-family:verdana; font-size:12px; color:#0000FF"></div>
 padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
 
 <script type="text/javascript">
-    var IE = false;
-    var Firefox = false;
-    var Safari = false;
-    var nav = navigator.userAgent.toLowerCase();
-    if (nav.indexOf("msie") > 0) IE = true;
-    if (nav.indexOf("firefox") > 0) Firefox = true;
-    if (nav.indexOf("safari") > 0) Safari = true;
+
+    var max_price = 0;
+    var min_price = 0;
+    var current_Fuzzy_Number = 0;
 
     var session_ID = "shopping_bestbuy";
 
-    var remote_control = "true";
-    var user_id = "1";
-    if (remote_control == "true") {
-        document.getElementById("div_QR").innerHTML = "<img src='http://256gl.com/notes/clientbin/get_qr_barcode.ashx?session_ID=" +
-            session_ID + "&user_id=" + user_id + "' border='0' />";
-    }
+    document.getElementById("div_QR").innerHTML = "<img src='http://256gl.com/notes/clientbin/get_qr_barcode.ashx?session_ID=" + session_ID + "'/>";
 
-    var triggers_Names = new Array("*Help*", "*Slide_Show*", "*Price*", "*Trade-in*", "*Type*", "*Year*", "*Color*", "*Cylinders*", "*Interior*", "*Model*", "*Make*", "*Body*", "*Hybrid*", "*DriveTrain*", "*Engine*", "*Transmission*", "*Certified*", "*Mileage*");
+    var triggers_Names = new Array("*Help*", "*Price*", "*Manufacturer*", "*Color*", "*Type*", "*Rating*", "*Name*", "*OnSale*");
 
     var last_Line = "";
     var selected_Features = "";
@@ -295,9 +189,8 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
     }
 
     function tag_Clicked(tag) {
-        txt = "<font color=green><b>CLOUD SELECTED: </font></b>" + triggers_Names[tag] + "<br>";
-        update_Log(txt);
-        parent.frm_deepzoom.tag_Clicked(triggers_Names[tag]);
+        alert(triggers_Names[tag]);
+ //       parent.frm_deepzoom.tag_Clicked(triggers_Names[tag]);
     }
 
     // MENU CONTROLS /////////////////////////////////////////////////////////////////////////////////
@@ -312,65 +205,14 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
         return false;
     }
 
-    function fixOnMouseOut(element, event) {
-        var current_mouse_target = null;
-        if (event.toElement) {
-            current_mouse_target = event.toElement;
-        } else if (event.relatedTarget) {
-            current_mouse_target = event.relatedTarget;
-        }
-
-        if (!is_child_of(element, current_mouse_target) && element != current_mouse_target) {
-            hide_div_Menu_1();
-        }
-    }
-
-    function hide_div_Menu_1() {
-        if (IE) return;
-        document.getElementById('div_Menu_1').style.visibility = 'hidden';
-        return false;
-    }
-
-    function open_menu(menu_id) {
-        x = document.getElementById("div_Select_Menu").offsetParent.offsetLeft + 20;
-        y = document.getElementById("div_Select_Menu").offsetParent.offsetTop + 20;
-        if (document.getElementById("div_Menu_1").style.visibility != 'visible') {
-            document.getElementById("div_Menu_1").style.top = y + "px";
-            document.getElementById("div_Menu_1").style.left = x + "px";
-            document.getElementById("div_Menu_1").style.display = '';
-            document.getElementById("div_Menu_1").style.visibility = 'visible';
-            return false;
-        } else {
-            document.getElementById("div_Menu_1").style.visibility = "hidden";
-        }
-    }
-
-    function Selected_Item_In_Select_Menu(query) {
-        document.getElementById("div_Menu_1").style.visibility = "hidden";
-
-        parent.frm_deepzoom.location.href = "gallery.html?categoryId=" + query;
-    }
-
     function reset_search() {
-        txt = "<font color=green><b>RESET</font></b><br>";
-        update_Log(txt);
-        if (parent.frm_deepzoom.current_Shopping_Cart.length != 0) {
-            shopping_Icon = parent.frm_header.document.getElementById("shopping_cart").innerHTML;
-            if (shopping_Icon.indexOf("cart_open.png") > 0) {
-                parent.frm_header.document.getElementById("shopping_cart").innerHTML = "<img src='full_cart.png' alt='Empty cart' />";
-            } else {}
-        } else {
-            parent.frm_header.document.getElementById("shopping_cart").innerHTML = "<img src='empty_cart.png' alt='Empty cart' />";
-        }
         document.getElementById("inpt_Ask_Question").value = "";
         document.getElementById("div_Answer").innerHTML = "";
         document.getElementById("div_Current_Contexts").innerHTML = "";
         document.getElementById("div_Current_Fuzzy").innerHTML = "";
-        parent.frm_header.document.getElementById("card_name").innerHTML = "";
         scrollToEnd();
         slider.setValue(0);
         last_Line = "";
-        parent.frm_deepzoom.reset_search();
         setCursorAtEnd();
     }
 
@@ -378,19 +220,6 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
 
     function set_prompt(txt) {
         query = txt.replace("_", " ");
-        /*
-                if (document.getElementById("inpt_Ask_Question").value == "") 
-                {
-                    document.getElementById("inpt_Ask_Question").value = txt;
-                } else 
-                {
-                    document.getElementById("inpt_Ask_Question").value = document.getElementById("inpt_Ask_Question").value + " " + txt;
-                }
-
-                query = document.getElementById("inpt_Ask_Question").value;
-        */
-        txt = "<font color=green><b>CLOUD PROMPT: </font></b>" + query + "<br>";
-        update_Log(txt);
         parent.frm_deepzoom.Get_Cloud_Prompt(query);
         scrollToEnd();
         setCursorAtEnd();
@@ -428,11 +257,8 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
 
         if (msg == last_Line) return;
         last_Line = msg;
-
         msg = "<font color=" + color + ">" + b + msg + "</b></font>";
         document.getElementById("div_Answer").innerHTML = document.getElementById("div_Answer").innerHTML + msg + "<br>" + br;
-
-        update_Log(msg);
         scrollToEnd();
         setCursorAtEnd();
     }
@@ -531,6 +357,81 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
         setCursorAtEnd();
     }
 
+
+
+    // MENU CONTROLS /////////////////////////////////////////////////////////////////////////////////
+    function is_child_of(parent, child) {
+        if (child != null) {
+            while (child.parentNode) {
+                if ((child = child.parentNode) == parent) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function fixOnMouseOut(element, event) {
+        var current_mouse_target = null;
+        if (event.toElement) {
+            current_mouse_target = event.toElement;
+        } else if (event.relatedTarget) {
+            current_mouse_target = event.relatedTarget;
+        }
+
+        if (!is_child_of(element, current_mouse_target) && element != current_mouse_target) {
+            hide_div_Menu_1();
+        }
+    }
+
+    function hide_div_Menu_1() {
+        if (IE) return;
+        document.getElementById('div_Menu_1').style.visibility = 'hidden';
+        return false;
+    }
+
+    function open_menu(menu_id) {
+        x = document.getElementById("div_Select_Menu").offsetParent.offsetLeft + 20;
+        y = document.getElementById("div_Select_Menu").offsetParent.offsetTop + 20;
+        if (document.getElementById("div_Menu_1").style.visibility != 'visible') {
+            document.getElementById("div_Menu_1").style.top = y + "px";
+            document.getElementById("div_Menu_1").style.left = x + "px";
+            document.getElementById("div_Menu_1").style.display = '';
+            document.getElementById("div_Menu_1").style.visibility = 'visible';
+            return false;
+        } else {
+            document.getElementById("div_Menu_1").style.visibility = "hidden";
+        }
+    }
+
+    function Selected_Item_In_Select_Menu(query) {
+        document.getElementById("div_Menu_1").style.visibility = "hidden";
+
+        parent.frm_deepzoom.location.href = "gallery.html?categoryId=" + query;
+    }
+
+    function reset_search() {
+        if (parent.frm_deepzoom.current_Shopping_Cart.length != 0) {
+            shopping_Icon = parent.frm_header.document.getElementById("shopping_cart").innerHTML;
+            if (shopping_Icon.indexOf("cart_open.png") > 0) {
+                parent.frm_header.document.getElementById("shopping_cart").innerHTML = "<img src='full_cart.png' alt='Empty cart' />";
+            } else {}
+        } else {
+            parent.frm_header.document.getElementById("shopping_cart").innerHTML = "<img src='empty_cart.png' alt='Empty cart' />";
+        }
+        document.getElementById("inpt_Ask_Question").value = "";
+        document.getElementById("div_Answer").innerHTML = "";
+        document.getElementById("div_Current_Contexts").innerHTML = "";
+        document.getElementById("div_Current_Fuzzy").innerHTML = "";
+        parent.frm_header.document.getElementById("card_name").innerHTML = "";
+        scrollToEnd();
+        slider.setValue(0);
+        last_Line = "";
+        parent.frm_deepzoom.reset_search();
+        setCursorAtEnd();
+    }
+
+    
     // FORMATTERS AND HELPERS ///////////////////////////////////////////////////////////////////////////////
 
     function select_Chunk() {
@@ -608,19 +509,13 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
         return (((sign) ? '' : '-') + '$' + num + '.' + cents);
     }
 
-    function set_Fuzzy_Number(money) {
-        parent.frm_deepzoom.current_Fuzzy_Number = formatCurrency(money);
-        document.getElementById("div_Current_Fuzzy").innerHTML = "&nbsp;<img src='context_delete.png' alt='Delete price option' title='Delete price option' height=10 onclick='fuzzy_Number_Deleted()' style='cursor:pointer;' />&nbsp;&nbsp;" + parent.frm_deepzoom.current_Fuzzy_Number;
-    }
-
-
     function scrollToEnd() {
         document.getElementById("div_Answer").focus();
         document.getElementById("div_Answer").scrollTop = document.getElementById("div_Answer").scrollHeight;
     }
 
     function setCursorAtEnd() {
-        parent.frm_agent.document.getElementById("inpt_Ask_Question").focus();
+        document.getElementById("inpt_Ask_Question").focus();
         obj = document.getElementById("inpt_Ask_Question");
         try {
             var FieldRange = obj.createTextRange();
@@ -634,33 +529,6 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
         slider.setValue(current_Fuzzy_Point);
     }
 
-    String.prototype.trim = function() {
-        return this.replace(/^\s+|\s+$/g, "");
-    }
-
-    String.prototype.ltrim = function() {
-        return this.replace(/^\s+/, "");
-    }
-
-    String.prototype.rtrim = function() {
-        return this.replace(/\s+$/, "");
-    }
-
-    function strip(txt) {
-        return txt.replace(/\n/g, '');
-    }
-
-    function update_Log(txt) {
-        if (txt != "") {
-            txt = txt + "<br>";
-            txt = encodeURIComponent(txt);
-            try {
-
-            } catch (Error) {
-                alert(err)
-            }
-        }
-    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     setCursorAtEnd();

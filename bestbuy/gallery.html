@@ -104,7 +104,7 @@
         if (customerReviewAverage === undefined) {
             customerReviewAverage = "";
         } else {
-            customerReviewAverage = customerReviewAverage - 0.1
+            customerReviewAverage = customerReviewAverage - 0.2
             customerReviewAverage = "&customerReviewAverage>=" + customerReviewAverage;
         }
         var manufacturer = get_arguments["manufacturer"];
@@ -123,13 +123,14 @@
         var regularPrice_gt = 0;
         var regularPrice_lt = 100000;
         var price = get_arguments["price"];
+        
         if (price === undefined || price === "") {
             price = "regularPrice>=" + regularPrice_gt + "&regularPrice<=" + regularPrice_lt;
         } else {
-            regularPrice_gt = Math.round(price) - Math.round(price / 4);
-            regularPrice_lt = Math.round(price) + Math.round(price / 4);
+            price = parseInt(price)
+            regularPrice_gt = price - price / 3;
+            regularPrice_lt = price + price / 3;
             price = "regularPrice>=" + regularPrice_gt + "&regularPrice<=" + regularPrice_lt;
-
         }
         var img_height = 165;
         var img_width = 165;
