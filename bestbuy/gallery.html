@@ -38,64 +38,17 @@
         })(window.location.search.substr(1).split('&'));
 
 
-        // http://localhost/neurons/bestbuy/gallery.htm?color=silver&manufacturer=apple&customerReviewAverage=5&price=500
+        // http://localhost/neurons/bestbuy/gallery.html?color=silver&manufacturer=apple&customerReviewAverage=5&price=500
         var api_key = "";
         var baseURL = "https://api.bestbuy.com/v1/products";
 
         var categoryId = get_arguments["categoryId"];
-        if (categoryId === undefined) categoryId = "abcat0401000";
-        //        abcat0502000 - Laptops
-        //        abcat0501000 - Computers
-        //        abcat0401000 - Cameras & Camcorders
-        //        pcmcat209400050001 - phones
-        //        abcat0204000 - Hesad phones
-        //        pcmcat241600050001 - Home Audio
-        //        pcmcat254000050002 - Home Automation
-        //        pcmcat209000050006 - iPads
-        //        abcat0904000 - Ovens
-        //        abcat0901000 - Refrigirators
-        //        abcat0101000 - TVs
-        //        abcat0910000 - Washers
-        //        pcmcat310200050004 - Speakers
-        //        pcmcat138100050018 - Geek Squad
-        //        pcmcat748300678080 - Instant Print Camera
-        //        pcmcat748302046986 - Instant Print Camera Cases
-        //        pcmcat748302046977 - Instant Print Accessories
-        //        abcat0410000 - Digital Camera Accessories
-        //        pcmcat128500050004 - Name Brands
-        //        pcmcat748301598672 - Wireless Doorbell Cameras
-        //        pcmcat254000050002 - Smart Home
-        //        pcmcat308100050020 - Security Cameras & Surveillance
-        //        pcmcat748300682207 - Trail Cameras & Rangefinders
-        //        abcat0409000 - Binoculars, Telescopes & Optics
-        //        pcmcat748300678486 - 360 Degree Cameras
-        //        pcmcat748300670708 - Pet Cameras
-        //        pcmcat748300670181 - Pet Supplies & Technology
-        //        pcmcat369900050003 - Drones without Cameras
-        //        pcmcat369900050002 - Drones with Cameras
-        //        pcmcat252700050006 - Drones, Toys & Collectibles
-        //        pcmcat351400050014 - Mirrorless Camera Package Deals
-        //        pcmcat214000050005 - Mirrorless Camera
-        //        pcmcat340500050007 - Security Camera Systems
-        //        pcmcat330300050003 - Dash Cameras
-        //        abcat0300000 - Car Electronics & GPS
-        //        pcmcat330300050001 - Car Safety & Convenience
-        //        pcmcat330300050002 - Back-Up Cameras
-        //        pcmcat328900050015 - Camera Mounts, Grips & Stabilizers
-        //        pcmcat328900050011 - Camera Belts & Hip Packs
-        //        pcmcat328900050008 - Universal Camera Bags & Cases
-        //        pcmcat324200050004 - All Point & Shoot Cameras
-        //        abcat0401001 - Point & Shoot Cameras
-        //        pcmcat284800050007 - Camera Batteries
-        //        pcmcat226400050024 - Camera & Camcorder Services
-        //        pcmcat171900050007 - All Camera Lenses
-        //        abcat0410018 - Camera Lenses
-        //        abcat0401005 - Digital SLR Cameras
-        //        pcmcat180000050013 - DSLR Body Only
-        //        pcmcat180400050000 - DSLR Body & Lens
-        //        pcmcat233000050008 - DSLR Lens
-        //        pcmcat258000050013 - Disposable Cameras
-
+        if (categoryId === undefined) {
+            categoryId = "";
+            //       categoryId = "&(categoryPath.id=abcat0401000)"; 
+        } else {
+            categoryId = "&(categoryPath.id=" + categoryId + ")";
+        }
 
         var api_key = get_arguments["api_key"];
         if (api_key === undefined) api_key = "7ksBhjryZ5hxofJSEk2VBO7u";
@@ -123,7 +76,7 @@
         var regularPrice_gt = 0;
         var regularPrice_lt = 100000;
         var price = get_arguments["price"];
-        
+
         if (price === undefined || price === "") {
             price = "regularPrice>=" + regularPrice_gt + "&regularPrice<=" + regularPrice_lt;
         } else {
@@ -137,8 +90,7 @@
         var prices = {};
 
 
-        var url = baseURL + "(" + price + customerReviewAverage + manufacturer + color +
-            "&(categoryPath.id=" + categoryId + "))" +
+        var url = baseURL + "(" + price + customerReviewAverage + manufacturer + color + categoryId + ")" +
             "?apiKey=" + api_key +
             "&sort=name.asc&show=manufacturer,name,image,url,regularPrice&facet=regularPrice,50&pageSize=100&format=json";
 
@@ -172,7 +124,10 @@
                     document.getElementById("gallery").innerHTML = gallery;
                     max_price = regularPrices[0];
                     min_price = regularPrices[regularPrices.length - 1];
-                    parent.document.getElementById('frm_agent').contentWindow.set_Price_Range(max_price, min_price);
+                    var obj = parent.document.getElementById('frm_agent');
+                    if (obj) {
+                        parent.document.getElementById('frm_agent').contentWindow.set_Price_Range(max_price, min_price);
+                    }
                 }
             }
         };
