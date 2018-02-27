@@ -5,47 +5,52 @@
 <script type="text/javascript" src="js-cumulus.js"></script>
 
 <div id="div_Menu_1" class="menu" style="position:absolute; z-index:10;" onmouseout="fixOnMouseOut(this, event);" onmouseleave="document.getElementById('div_Menu_1').style.visibility = 'hidden';return false;" ;>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0502000');return false;" class="menuitem">Laptops</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0501000');return false;" class="menuitem">Computers</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0401000');return false;" class="menuitem">Cameras</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat209400050001');return false;" class="menuitem">Phones</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0204000');return false;" class="menuitem">Head phones</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat241600050001');return false;" class="menuitem">Home Audio</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat254000050002');return false;" class="menuitem">Home Automation</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat209000050006');return false;" class="menuitem">iPads</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0901000');return false;" class="menuitem">Refrigirators</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0101000');return false;" class="menuitem">TVs</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0910000');return false;" class="menuitem">Washers</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat310200050004');return false;" class="menuitem">Speakers</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0904000');return false;" class="menuitem">Ovens</a></div>
-    
-    <div id="div_Select_Menu" onclick="open_menu();" style="cursor:pointer; position:absolute; left:5; top:5;
+    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0502000');return false;" class="menuitem">Laptops</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0501000');return false;" class="menuitem">Computers</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0401000');return false;" class="menuitem">Cameras</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat209400050001');return false;" class="menuitem">Phones</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0204000');return false;" class="menuitem">Head phones</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat241600050001');return false;" class="menuitem">Home Audio</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat254000050002');return false;" class="menuitem">Home Automation</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat209000050006');return false;" class="menuitem">iPads</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0901000');return false;" class="menuitem">Refrigirators</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0101000');return false;" class="menuitem">TVs</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0910000');return false;" class="menuitem">Washers</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat310200050004');return false;" class="menuitem">Speakers</a>
+    <a href="" onclick="Selected_Item_In_Select_Menu('abcat0904000');return false;" class="menuitem">Ovens</a>
+</div>
+
+<div id="div_Select_Menu" onclick="open_menu();" style="cursor:pointer; position:absolute; left:5; top:5;
     border:1px; width:50;
     overflow:hidden; padding-left:1px;
     padding-right:1px; padding-top:5px; padding-bottom:1px; 
-    font-family:arial; font-size:14px; color:#0000ff"><b>Select</b></div>
+    font-family:arial; font-size:14px; color:#0000ff"><b>Select</b>
+</div>
 
 <div id="div_Reset_Menu" onclick="reset_search();" style="cursor:pointer; position:absolute; left:155; top:5;
-border:1px; width:60;
-padding-right:1px; padding-top:5px; padding-bottom:1px; 
-font-family:arial; font-size:14px; color:#0000ff"><b>Reset</b></div>
+    border:1px; width:60;
+    padding-right:1px; padding-top:5px; padding-bottom:1px; 
+    font-family:arial; font-size:14px; color:#0000ff"><b>Reset</b>
+</div>
 
-<div id="tagCloud1" name="tagCloud1" style="cursor:pointer; height:200; "></div>
+<div id="tagCloud1" name="tagCloud1" style="cursor:pointer; height:200; ">
+</div>
 
 <table border="0">
     <tr>
         <td align="left">
             <div id="div_Answer" ondblclick="select_Chunk()" ; style="height:190; width:190; vertical-align:top; border: 0px gray solid;
-background-color:#eeeeee; overflow:auto; padding-left:2px;
-padding-right:2px; padding-top:2px; padding-bottom:2px; 
-font-family:sans-serif; font-size:13px;"></div>
+                background-color:#eeeeee; overflow:auto; padding-left:2px;
+                padding-right:2px; padding-top:2px; padding-bottom:2px; 
+                font-family:sans-serif; font-size:13px;">
+            </div>
         </td>
     </tr>
     <tr>
         <td align="right" nowrap="nowrap">
             <input x-webkit-speech="x-webkit-speech" id="inpt_Ask_Question" type="text" style="width:150px; vertical-align:middle; border: 1px gray solid;
-background-color:white; padding-left:2px;padding-right:2px; " size="20" onkeypress="checkEnter(event);" name="inpt_Ask_Question" maxlength="80" value="" ; /><input type="button" unselectable="true" name="SUBMIT" value="OK" onclick="Get_Answer();"
-            />
+                background-color:white; padding-left:2px; padding-right:2px; " size="20" onkeypress="checkEnter(event);" name="inpt_Ask_Question" maxlength="80" value="" ; />
+            <input type="button" unselectable="true" name="SUBMIT" value="OK" onclick="Get_Answer();" />
         </td>
     </tr>
 </table>
@@ -55,16 +60,18 @@ background-color:white; padding-left:2px;padding-right:2px; " size="20" onkeypre
         <tr>
             <td style="width:50%">
                 <div id="div_Min" style="left:20px; vertical-align:top; border: 0px;
-                        padding-left:10px;font-family:sans-serif; font-size:13px; color:gray;">$0.0</div>
+                        padding-left:10px;font-family:sans-serif; font-size:13px; color:gray;">$0.0
+                </div>
             </td>
             <td style="width:50%">
                 <div id="div_Max" align="right" style="right:10px; vertical-align:top; border: 0px;
-                        font-family:sans-serif; font-size:13px; color:gray;">$0.0</div>
+                        font-family:sans-serif; font-size:13px; color:gray;">$0.0
+                </div>
             </td>
         </tr>
     </table>
     <script type="text/javascript">
-// SLIDER CONTROLS ////////////////////////////////////////////////////////////////////////////////////////// 
+        // SLIDER CONTROLS ////////////////////////////////////////////////////////////////////////////////////////// 
 
         var slider_Pos = 0;
         var slider;
@@ -81,7 +88,8 @@ background-color:white; padding-left:2px;padding-right:2px; " size="20" onkeypre
 
         function Slider_Completed() {
             edit_Slider_Pos();
-            document.getElementById("div_Current_Fuzzy").innerHTML = "&nbsp;<img src='context_delete.png' alt='Delete price option' title='Delete price option' height=10 onclick='fuzzy_Number_Deleted()' style='cursor:pointer;' />&nbsp;&nbsp;" + formatCurrency(current_Fuzzy_Number);
+            document.getElementById("div_Current_Fuzzy").innerHTML = "&nbsp;<img src='context_delete.png' alt='Delete price option' title='Delete price option' height=10 onclick='fuzzy_Number_Deleted()' style='cursor:pointer;' />&nbsp;&nbsp;" +
+                formatCurrency(current_Fuzzy_Number);
             parent.frm_deepzoom.location.href = "gallery.html?price=" + current_Fuzzy_Number;
         }
 
@@ -110,42 +118,44 @@ background-color:white; padding-left:2px;padding-right:2px; " size="20" onkeypre
             parent.frm_deepzoom.location.href = "gallery.html";
         }
     </script>
-    <br />
+    <br/>
 </div>
 
 <div id="div_Selected_Features" <div onclick='show_Current_Clusters()' ; style="height:20; width:190; vertical-align:top; border:1px; font-weight:bolder;
-background-color:#E6E6E6; overflow:auto; padding-left:1px;
-padding-right:1px; padding-top:1px; padding-bottom:1px; 
-font-family:verdana; font-size:12px; color:#0000ff; cursor:pointer;">&nbsp;&nbsp;Selected Features:</div>
+        background-color:#E6E6E6; overflow:auto; padding-left:1px;
+        padding-right:1px; padding-top:1px; padding-bottom:1px; 
+        font-family:verdana; font-size:12px; color:#0000ff; cursor:pointer;">&nbsp;&nbsp;Selected Features:
+</div>
 </div>
 
 <table border=0>
     <tr>
         <td align="left">
             <div id="div_Current_Fuzzy" style="height:20; width:190; vertical-align:top; border:1px; font-weight:normal;
-background-color:#EEEEEE; overflow:auto; padding-left:1px;
-padding-right:1px; padding-top:1px; padding-bottom:1px; 
-font-family:verdana; font-size:10px; color:#0000FF"></div>
+                background-color:#EEEEEE; overflow:auto; padding-left:1px;
+                padding-right:1px; padding-top:1px; padding-bottom:1px; 
+                font-family:verdana; font-size:10px; color:#0000FF">
+            </div>
         </td>
     </tr>
     <tr>
         <td align="left">
             <div id="div_Current_Contexts" style="height:180; width:190; vertical-align:top; border:1px;
-background-color:#EEEEEE; overflow:auto; padding-left:2px;
-padding-right:2px; padding-top:2px; padding-bottom:2px; 
-font-family:verdana; font-size:12px; color:#0000FF"></div>
+                background-color:#EEEEEE; overflow:auto; padding-left:2px;
+                padding-right:2px; padding-top:2px; padding-bottom:2px; font-family:verdana; font-size:12px; color:#0000FF">
+            </div>
         </td>
     </tr>
 </table>
 <br />
 
-<div id=div_hidden_text style="display:none"></div>
+<div id=div_hidden_text style="display:none">
+</div>
 
-<div id="div_QR" onclick="" style="cursor:pointer; position:absolute; left:10; bottom:5;border:0px; 
-padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
+<div id="div_QR" onclick="" style="cursor:pointer; position:absolute; left:10; bottom:5;border:0px; padding-right:1px; padding-top:5px; padding-bottom:1px;">
+</div>
 
 <script type="text/javascript">
-
     var max_price = 0;
     var min_price = 0;
     var current_Fuzzy_Number = 0;
@@ -190,7 +200,7 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
 
     function tag_Clicked(tag) {
         alert(triggers_Names[tag]);
- //       parent.frm_deepzoom.tag_Clicked(triggers_Names[tag]);
+        //       parent.frm_deepzoom.tag_Clicked(triggers_Names[tag]);
     }
 
     // MENU CONTROLS /////////////////////////////////////////////////////////////////////////////////
@@ -227,18 +237,25 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
 
     // ANSWER & QUESTION  CONTROLS ////////////////////////////////////////////////////////////////////////////////////
 
+
+    function neural_State(nn_state) {
+        set_answer(nn_state, "green", "");
+    }
+
+
     function Get_Answer() {
         query = document.getElementById("inpt_Ask_Question").value;
         query = query.replace(/'/g, "");
         document.getElementById("inpt_Ask_Question").value = "";
         setCursorAtEnd();
+        Submit_Phrase(query);
         if (parent.frm_deepzoom.chat_Status == "CHAT_ON") {
             set_answer(">" + query, "green", "");
             parent.frm_deepzoom.sendMessage("user: " + query);
             return;
         }
         set_answer(query, "green", "");
-        parent.frm_deepzoom.Get_Answer(query);
+        //       parent.frm_deepzoom.Get_Answer(query);
     }
 
     function set_answer(msg, color, b, br) {
@@ -357,8 +374,6 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
         setCursorAtEnd();
     }
 
-
-
     // MENU CONTROLS /////////////////////////////////////////////////////////////////////////////////
     function is_child_of(parent, child) {
         if (child != null) {
@@ -385,7 +400,6 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
     }
 
     function hide_div_Menu_1() {
-        if (IE) return;
         document.getElementById('div_Menu_1').style.visibility = 'hidden';
         return false;
     }
@@ -431,7 +445,7 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
         setCursorAtEnd();
     }
 
-    
+
     // FORMATTERS AND HELPERS ///////////////////////////////////////////////////////////////////////////////
 
     function select_Chunk() {
@@ -529,7 +543,64 @@ padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
         slider.setValue(current_Fuzzy_Point);
     }
 
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FUTURE CATEGORIES
+    //        abcat0502000 - Laptops
+    //        abcat0501000 - Computers
+    //        abcat0401000 - Cameras & Camcorders
+    //        pcmcat209400050001 - phones
+    //        abcat0204000 - Hesad phones
+    //        pcmcat241600050001 - Home Audio
+    //        pcmcat254000050002 - Home Automation
+    //        pcmcat209000050006 - iPads
+    //        abcat0904000 - Ovens
+    //        abcat0901000 - Refrigirators
+    //        abcat0101000 - TVs
+    //        abcat0910000 - Washers
+    //        pcmcat310200050004 - Speakers
+    //        pcmcat138100050018 - Geek Squad
+    //        pcmcat748300678080 - Instant Print Camera
+    //        pcmcat748302046986 - Instant Print Camera Cases
+    //        pcmcat748302046977 - Instant Print Accessories
+    //        abcat0410000 - Digital Camera Accessories
+    //        pcmcat128500050004 - Name Brands
+    //        pcmcat748301598672 - Wireless Doorbell Cameras
+    //        pcmcat254000050002 - Smart Home
+    //        pcmcat308100050020 - Security Cameras & Surveillance
+    //        pcmcat748300682207 - Trail Cameras & Rangefinders
+    //        abcat0409000 - Binoculars, Telescopes & Optics
+    //        pcmcat748300678486 - 360 Degree Cameras
+    //        pcmcat748300670708 - Pet Cameras
+    //        pcmcat748300670181 - Pet Supplies & Technology
+    //        pcmcat369900050003 - Drones without Cameras
+    //        pcmcat369900050002 - Drones with Cameras
+    //        pcmcat252700050006 - Drones, Toys & Collectibles
+    //        pcmcat351400050014 - Mirrorless Camera Package Deals
+    //        pcmcat214000050005 - Mirrorless Camera
+    //        pcmcat340500050007 - Security Camera Systems
+    //        pcmcat330300050003 - Dash Cameras
+    //        abcat0300000 - Car Electronics & GPS
+    //        pcmcat330300050001 - Car Safety & Convenience
+    //        pcmcat330300050002 - Back-Up Cameras
+    //        pcmcat328900050015 - Camera Mounts, Grips & Stabilizers
+    //        pcmcat328900050011 - Camera Belts & Hip Packs
+    //        pcmcat328900050008 - Universal Camera Bags & Cases
+    //        pcmcat324200050004 - All Point & Shoot Cameras
+    //        abcat0401001 - Point & Shoot Cameras
+    //        pcmcat284800050007 - Camera Batteries
+    //        pcmcat226400050024 - Camera & Camcorder Services
+    //        pcmcat171900050007 - All Camera Lenses
+    //        abcat0410018 - Camera Lenses
+    //        abcat0401005 - Digital SLR Cameras
+    //        pcmcat180000050013 - DSLR Body Only
+    //        pcmcat180400050000 - DSLR Body & Lens
+    //        pcmcat233000050008 - DSLR Lens
+    //        pcmcat258000050013 - Disposable Cameras
+
 
     setCursorAtEnd();
 </script>
+
+<script type="text/javascript" src='/neurons/neurons/neurons.js'></script>
+<script type="text/javascript" src="bb_page.js" onload="load_nnod();"></script>

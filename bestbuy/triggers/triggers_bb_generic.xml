@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE neuro_triggers 
+[
+  <!ELEMENT neuro_triggers (neuro_trigger+)>
+  <!ATTLIST neuro_triggers name CDATA #REQUIRED>
+  <!ELEMENT neuro_trigger (state+)>
+  <!ATTLIST neuro_trigger name CDATA #REQUIRED>
+  <!ATTLIST neuro_trigger prompt CDATA #IMPLIED>
+  <!ELEMENT state (item+)>
+  <!ATTLIST state name CDATA #REQUIRED>
+  <!ATTLIST state discharge CDATA #IMPLIED>
+  <!ATTLIST state func CDATA #IMPLIED>
+  <!ATTLIST state url CDATA #IMPLIED>
+  <!ELEMENT item (#PCDATA)>
+  <!ATTLIST item word CDATA #REQUIRED>
+  <!ATTLIST item weight CDATA #REQUIRED>
+]>
+
+<neuro_triggers name="Generic">
+
+  <neuro_trigger name="Clause">
+    <state name="Question">
+      <item word="who" weight="1.0"></item>
+      <item word="whom" weight="1.0"></item>
+      <item word="whose" weight="1.0"></item>
+      <item word="what" weight="1.0"></item>
+      <item word="which" weight="1.0"></item>
+      <item word="when" weight="1.0"></item>
+      <item word="where" weight="1.0"></item>
+      <item word="why" weight="1.0"></item>
+      <item word="how" weight="1.0"></item>
+      <item word="?" weight="1.0"></item>
+    </state>
+    <state name="Declarative">
+      <item word="." weight="1.0"></item>
+    </state>
+    <state name="Enter">
+      <item word="*enter*" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Question">
+    <state name="Who">
+      <item word="who" weight="1.0"></item>
+      <item word="whom" weight="1.0"></item>
+      <item word="whose" weight="1.0"></item>
+    </state>
+    <state name="What">
+      <item word="what" weight="1.0"></item>
+      <item word="which" weight="1.0"></item>
+    </state>
+    <state name="When">
+      <item word="when" weight="1.0"></item>
+    </state>
+    <state name="Where">
+      <item word="where" weight="1.0"></item>
+    </state>
+    <state name="Why">
+      <item word="why" weight="1.0"></item>
+    </state>
+    <state name="How">
+      <item word="how" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Help">
+    <state name="Help" func="Help">
+      <item word="help" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Reset">
+    <state name="Reset">
+      <item word="reset" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Hello" prompt="You can say - 'Hello world' or 'привет'">
+    <state name="Hello" func="Hello_World">
+      <item word="hello" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="User_Name" prompt="My name is ...">
+    <state name="User_Name" func="User_Name">
+      <item word="my" weight="0.5"></item>
+      <item word="name" weight="0.5"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Fuzzy" prompt="'around $20K' or 'under 20,000'">
+    <state name="Around" func="Fuzzy_Around">
+      <item word="around" weight="1.0"></item>
+    </state>
+    <state name="Less" func="Fuzzy_Around">
+      <item word="under" weight="1.0"></item>
+      <item word="less" weight="1.0"></item>
+    </state>
+    <state name="Better" func="Fuzzy_Around">
+      <item word="better" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Shopping" prompt="'Cameras' or 'Computers'">
+    <state name="Cameras">
+      <item word="cameras" weight="1.0"></item>
+      <item word="camera" weight="1.0"></item>
+    </state>
+    <state name="Computers">
+      <item word="computers" weight="1.0"></item>
+      <item word="computer" weight="1.0"></item>
+    </state>
+    <state name="Phones">
+      <item word="phone" weight="1.0"></item>
+      <item word="phones" weight="1.0"></item>
+    </state>
+    <state name="TV">
+      <item word="tv" weight="1.0"></item>
+      <item word="tvs" weight="1.0"></item>
+    </state>
+    <state name="Home Automation">
+      <item word="home" weight="0.5"></item>
+      <item word="automation" weight="1.0"></item>
+    </state>
+    <state name="Home Audio">
+      <item word="home" weight="0.5"></item>
+      <item word="audio" weight="1.0"></item>
+    </state>
+    <state name="Refrigirators">
+      <item word="refrigirators" weight="1.0"></item>
+      <item word="refrigirator" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Clear" prompt="'clear' or 'clean'">
+    <state name="Clearn" func="Clean">
+      <item word="clear" weight="1.0"></item>
+      <item word="clean" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Assist" prompt="assist me with ...">
+    <state name="Assist" func="Assist">
+      <item word="assist" weight="0.5"></item>
+      <item word="me" weight="0.5"></item>
+    </state>
+  </neuro_trigger>
+
+</neuro_triggers>
+

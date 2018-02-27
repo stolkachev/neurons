@@ -45,7 +45,6 @@
         var categoryId = get_arguments["categoryId"];
         if (categoryId === undefined) {
             categoryId = "";
-            //       categoryId = "&(categoryPath.id=abcat0401000)"; 
         } else {
             categoryId = "&(categoryPath.id=" + categoryId + ")";
         }
@@ -108,7 +107,10 @@
                         "\" onclick=\"javascript:openThumbnailLink('" + result[i].url + "'); return false;\"></a></td>\n" +
                         "</tr><tr><td class=\"td_thumbnail_title\">\n" + " " + result[i].name + "<br>$" + result[i].regularPrice + "\n" +
                         "</td></tr></table></div> \n\n";
-                    if (i >= 100) break;
+                    if (i >= 100) {
+                        alert(gallery)
+                        break;
+                    }
                 }
                 var regularPrices = [];
                 if (myObj.facets.regularPrice) {

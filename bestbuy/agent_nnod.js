@@ -1,535 +1,180 @@
-﻿<link rel="stylesheet" type="text/css" href="style_a.css" />
-<link rel="STYLESHEET" type="text/css" href="codebase/dhtmlxslider.css" />
-<script type="text/javascript" src="codebase/dhtmlxcommon.js"></script>
-<script type="text/javascript" src="codebase/dhtmlxslider.js"></script>
-<script type="text/javascript" src="js-cumulus.js"></script>
+﻿    var slv_Zoom_Ctl = null;
+    var req;
+    var session_id = "<%=session_id%>";
 
-<div id="div_Menu_1" class="menu" style="position:absolute; z-index:10;" onmouseout="fixOnMouseOut(this, event);" onmouseleave="document.getElementById('div_Menu_1').style.visibility = 'hidden';return false;" ;>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0502000');return false;" class="menuitem">Laptops</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0501000');return false;" class="menuitem">Computers</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0401000');return false;" class="menuitem">Cameras</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat209400050001');return false;" class="menuitem">Phones</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0204000');return false;" class="menuitem">Head phones</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat241600050001');return false;" class="menuitem">Home Audio</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat254000050002');return false;" class="menuitem">Home Automation</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat209000050006');return false;" class="menuitem">iPads</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0901000');return false;" class="menuitem">Refrigirators</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0101000');return false;" class="menuitem">TVs</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0910000');return false;" class="menuitem">Washers</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('pcmcat310200050004');return false;" class="menuitem">Speakers</a>
-        <a href="" onclick="Selected_Item_In_Select_Menu('abcat0904000');return false;" class="menuitem">Ovens</a></div>
-    
-    <div id="div_Select_Menu" onclick="open_menu();" style="cursor:pointer; position:absolute; left:5; top:5;
-    border:1px; width:50;
-    overflow:hidden; padding-left:1px;
-    padding-right:1px; padding-top:5px; padding-bottom:1px; 
-    font-family:arial; font-size:14px; color:#0000ff"><b>Select</b></div>
+    var ws_Chat_session_id = session_id;
 
-<div id="div_Reset_Menu" onclick="reset_search();" style="cursor:pointer; position:absolute; left:155; top:5;
-border:1px; width:60;
-padding-right:1px; padding-top:5px; padding-bottom:1px; 
-font-family:arial; font-size:14px; color:#0000ff"><b>Reset</b></div>
+    var chat_Status = "CHAT_OFF";
 
-<div id="tagCloud1" name="tagCloud1" style="cursor:pointer; height:200; "></div>
+    var device_id = "<%=device_id%>";
+    var remote_control = "<%=remote_control%>";
 
-<table border="0">
-    <tr>
-        <td align="left">
-            <div id="div_Answer" ondblclick="select_Chunk()" ; style="height:190; width:190; vertical-align:top; border: 0px gray solid;
-background-color:#eeeeee; overflow:auto; padding-left:2px;
-padding-right:2px; padding-top:2px; padding-bottom:2px; 
-font-family:sans-serif; font-size:13px;"></div>
-        </td>
-    </tr>
-    <tr>
-        <td align="right" nowrap="nowrap">
-            <input x-webkit-speech="x-webkit-speech" id="inpt_Ask_Question" type="text" style="width:150px; vertical-align:middle; border: 1px gray solid;
-background-color:white; padding-left:2px;padding-right:2px; " size="20" onkeypress="checkEnter(event);" name="inpt_Ask_Question" maxlength="80" value="" ; /><input type="button" unselectable="true" name="SUBMIT" value="OK" onclick="Get_Answer();"
-            />
-        </td>
-    </tr>
-</table>
+    var DuplexServerHost = "<%=DuplexServerHost%>";
+    var DuplexServerPort = "<%=DuplexServerPort%>";
+    var ws;
+    var ws_Chat;
+    var ETB = '\x17';
 
-<div id="Slider_Div">
-    <table border="0" style="width:90%">
-        <tr>
-            <td style="width:50%">
-                <div id="div_Min" style="left:20px; vertical-align:top; border: 0px;
-                        padding-left:10px;font-family:sans-serif; font-size:13px; color:gray;">$0.0</div>
-            </td>
-            <td style="width:50%">
-                <div id="div_Max" align="right" style="right:10px; vertical-align:top; border: 0px;
-                        font-family:sans-serif; font-size:13px; color:gray;">$0.0</div>
-            </td>
-        </tr>
-    </table>
-    <script type="text/javascript">
-// SLIDER CONTROLS ////////////////////////////////////////////////////////////////////////////////////////// 
+    var SocketCreated = false;
+    var ws_Chat_SocketCreated = false;
 
-        var slider_Pos = 0;
-        var slider;
-        window.dhx_globalImgPath = "codebase/imgs/";
-        slider = new dhtmlxSlider(null, 150, "dhx_skyblue", null, 0, 1, 0, 0.05);
-        slider.attachEvent("onChange", slider_OnChange);
-        slider.init();
-        Slider_Div.onmouseup = Slider_Completed;
-
-        function slider_OnChange(pos, slider) {
-            slider_Pos = pos;
-            edit_Slider_Pos();
-        }
-
-        function Slider_Completed() {
-            edit_Slider_Pos();
-            document.getElementById("div_Current_Fuzzy").innerHTML = "&nbsp;<img src='context_delete.png' alt='Delete price option' title='Delete price option' height=10 onclick='fuzzy_Number_Deleted()' style='cursor:pointer;' />&nbsp;&nbsp;" + formatCurrency(current_Fuzzy_Number);
-            parent.frm_deepzoom.location.href = "gallery.html?price=" + current_Fuzzy_Number;
-        }
-
-        function edit_Slider_Pos() {
-            var d = max_price - min_price;
-            d = (d * slider_Pos) + min_price;
-            if (d > 1000) {
-                d = Math.round(d / 1000);
-                d = d * 1000;
-            }
-
-            if (slider_Pos == 0) d = min_price;
-            if (slider_Pos == 1) d = max_price;
-            d = d.toFixed(2);
-            current_Fuzzy_Number = d;
-            if (d.length > 6) {
-                d = d.substr(0, d.length - 6) + "," + d.substr(d.length - 6, d.length)
-            }
-            document.getElementById("div_Current_Fuzzy").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$" + d;
-        }
-
-        function fuzzy_Number_Deleted() {
-            slider_Pos = 0;
-            slider.setValue(0);
-            document.getElementById("div_Current_Fuzzy").innerHTML = "";
-            parent.frm_deepzoom.location.href = "gallery.html";
-        }
-    </script>
-    <br />
-</div>
-
-<div id="div_Selected_Features" <div onclick='show_Current_Clusters()' ; style="height:20; width:190; vertical-align:top; border:1px; font-weight:bolder;
-background-color:#E6E6E6; overflow:auto; padding-left:1px;
-padding-right:1px; padding-top:1px; padding-bottom:1px; 
-font-family:verdana; font-size:12px; color:#0000ff; cursor:pointer;">&nbsp;&nbsp;Selected Features:</div>
-</div>
-
-<table border=0>
-    <tr>
-        <td align="left">
-            <div id="div_Current_Fuzzy" style="height:20; width:190; vertical-align:top; border:1px; font-weight:normal;
-background-color:#EEEEEE; overflow:auto; padding-left:1px;
-padding-right:1px; padding-top:1px; padding-bottom:1px; 
-font-family:verdana; font-size:10px; color:#0000FF"></div>
-        </td>
-    </tr>
-    <tr>
-        <td align="left">
-            <div id="div_Current_Contexts" style="height:180; width:190; vertical-align:top; border:1px;
-background-color:#EEEEEE; overflow:auto; padding-left:2px;
-padding-right:2px; padding-top:2px; padding-bottom:2px; 
-font-family:verdana; font-size:12px; color:#0000FF"></div>
-        </td>
-    </tr>
-</table>
-<br />
-
-<div id=div_hidden_text style="display:none"></div>
-
-<div id="div_QR" onclick="" style="cursor:pointer; position:absolute; left:10; bottom:5;border:0px; 
-padding-right:1px; padding-top:5px; padding-bottom:1px;"></div>
-
-<script type="text/javascript">
-
-    var max_price = 0;
-    var min_price = 0;
-    var current_Fuzzy_Number = 0;
-
-    var session_ID = "shopping_bestbuy";
-
-    document.getElementById("div_QR").innerHTML = "<img src='http://256gl.com/notes/clientbin/get_qr_barcode.ashx?session_ID=" + session_ID + "'/>";
-
-    var triggers_Names = new Array("*Help*", "*Price*", "*Manufacturer*", "*Color*", "*Type*", "*Rating*", "*Name*", "*OnSale*");
-
-    var last_Line = "";
-    var selected_Features = "";
-
-    // HIDDEN FRAME TO EDIT HTML TO TEXT CONTENT
-
-    // CLOUD TAGS CONTROLS ////////////////////////////////////////////////////////////////////////////////////////// 
-    var tags1 = [new Tag("Help?", 40, "javascript:tag_Clicked(0)"),
-        new Tag("Price?", 40, "javascript:tag_Clicked(1)"),
-        new Tag("Manufacturer?", 40, "javascript:tag_Clicked(2)"),
-        new Tag("Color?", 40, "javascript:tag_Clicked(3)"),
-        new Tag("Type?", 40, "javascript:tag_Clicked(4)"),
-        new Tag("Rating?", 40, "javascript:tag_Clicked(5)"),
-        new Tag("Name?", 40, "javascript:tag_Clicked(6)"),
-        new Tag("On Sale?", 40, "javascript:tag_Clicked(17)")
-    ];
-
-    var tagCloud1;
-    if (tags1 != "") {
-        tagCloud1 = new TagCloud(tags1, 220, 0);
-        tagCloud1.Distribute(document.getElementById("tagCloud1")).Animate();
-    } else {
-        document.getElementById("tagCloud1").style.height = "40px";
-        document.getElementById("div_Answer").style.width = "190px";
-    }
-
-    function set_Price_Range(max_p, min_p) {
-        max_price = Number(max_p);
-        min_price = Number(min_p);
-        document.getElementById("div_Max").innerText = "$" + max_price;
-        document.getElementById("div_Min").innerText = "$" + min_price;
-    }
-
-    function tag_Clicked(tag) {
-        alert(triggers_Names[tag]);
- //       parent.frm_deepzoom.tag_Clicked(triggers_Names[tag]);
-    }
-
-    // MENU CONTROLS /////////////////////////////////////////////////////////////////////////////////
-    function is_child_of(parent, child) {
-        if (child != null) {
-            while (child.parentNode) {
-                if ((child = child.parentNode) == parent) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    function reset_search() {
-        document.getElementById("inpt_Ask_Question").value = "";
-        document.getElementById("div_Answer").innerHTML = "";
-        document.getElementById("div_Current_Contexts").innerHTML = "";
-        document.getElementById("div_Current_Fuzzy").innerHTML = "";
-        scrollToEnd();
-        slider.setValue(0);
-        last_Line = "";
-        setCursorAtEnd();
-    }
-
-    // EDITOR'S SCRIPT SUPPORT //////////////////////////////////////////////////////////////////////////////
-
-    function set_prompt(txt) {
-        query = txt.replace("_", " ");
-        parent.frm_deepzoom.Get_Cloud_Prompt(query);
-        scrollToEnd();
-        setCursorAtEnd();
-    }
-
-    // ANSWER & QUESTION  CONTROLS ////////////////////////////////////////////////////////////////////////////////////
-
-    function Get_Answer() {
-        query = document.getElementById("inpt_Ask_Question").value;
-        query = query.replace(/'/g, "");
-        document.getElementById("inpt_Ask_Question").value = "";
-        setCursorAtEnd();
-        if (parent.frm_deepzoom.chat_Status == "CHAT_ON") {
-            set_answer(">" + query, "green", "");
-            parent.frm_deepzoom.sendMessage("user: " + query);
-            return;
-        }
-        set_answer(query, "green", "");
-        parent.frm_deepzoom.Get_Answer(query);
-    }
-
-    function set_answer(msg, color, b, br) {
-        if (color == null) {
-            color = "black";
-        }
-        if (msg == null) {
-            msg = "";
-        }
-        if (b == null) {
-            b = "";
-        }
-        if (br == null) {
-            br = "";
-        }
-
-        if (msg == last_Line) return;
-        last_Line = msg;
-        msg = "<font color=" + color + ">" + b + msg + "</b></font>";
-        document.getElementById("div_Answer").innerHTML = document.getElementById("div_Answer").innerHTML + msg + "<br>" + br;
-        scrollToEnd();
-        setCursorAtEnd();
-    }
-
-    // CONTEXT CONTROLS ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    function show_Current_Clusters() {
-        i = 0;
-        while (true) {
-            var id = "show_Context_Click_" + i;
-            if (document.getElementById(id)) {
-                document.getElementById(id).color = "#0000ff";
-                i++;
-            } else {
-                break;
-            }
-        }
-        selected_Features = "";
-        parent.frm_deepzoom.Refresh_Context();
-    }
-
-    function show_Context_Click(id, context) {
-        if (document.getElementById(id).color == "#0000ff") {
-            document.getElementById(id).color = "#00ff00";
-            selected_Features = selected_Features + "\n" + context;
-        } else {
-            document.getElementById(id).color = "#0000ff";
-            selected_Features = selected_Features.replace(context + "\n", "");
-            selected_Features = selected_Features.replace(context, "");
-        }
-        if (selected_Features == "" || selected_Features == "\n") {
-            selected_Features = "";
-            parent.frm_deepzoom.Refresh_Context();
-        } else {
-            parent.frm_deepzoom.select_Context(selected_Features);
-        }
-    }
-
-    function delete_Context_Click(ev) {
-        var txt = document.getElementById("div_Current_Contexts").innerHTML.replace(/<BR>/g, "<br>");
-        var splited = txt.split("<br>");
-        if (splited.length <= 0) return;
-        var result = "";
-        for (i = 0; i < splited.length - 1; i++) {
-            if (splited[i].indexOf(ev) <= 0) {
-                result = result + splited[i] + "<br>";
-            } else {
-                delete_Context(ev);
-            }
-        }
-        Set_Clicable_Context();
-        parent.frm_deepzoom.context_Deleted();
-        setCursorAtEnd();
-    }
-
-    function delete_Context(context) {
-        txt = context + " - DELETED";
-        set_answer(txt, "green");
-
-        excited_Nodes = parent.frm_deepzoom.slv_Zoom_Ctl.Content.SVL_Deep_Zoom.Get_Excited_Nodes_CR();
-        var splitContexts = excited_Nodes.split("\n");
-        for (i = 0; i < splitContexts.length; i++) {
-            if (splitContexts[i].indexOf(context) >= 0) {
-                parent.frm_deepzoom.slv_Zoom_Ctl.Content.SVL_Deep_Zoom.Delete_Context(splitContexts[i]);
-                return;
-            }
-        }
-        setCursorAtEnd();
-    }
-
-    function Set_Clicable_Context() {
-        var clicable_context = "";
-        context = parent.frm_deepzoom.slv_Zoom_Ctl.Content.SVL_Deep_Zoom.Get_Excited_Nodes();
-        context = context.replace(/<BR>/g, "<br>");
-
-        if (context != "") {
-            var splited = context.split("<br>");
-            if (splited.length > 0) {
-                for (i = 0; i < splited.length - 1; i++) {
-                    var parts = splited[i].split(":");
-
-                    var id = "show_Context_Click_" + i;
-
-                    c_Name = "<b><font color=gray onclick='delete_Context_Click(\"" + splited[i] +
-                        "\")' style='cursor:pointer;'>" + parts[0] + "</b></font>:&nbsp;&nbsp;&nbsp;" +
-                        "<font id='" + id + "' color=blue onclick='show_Context_Click(\"" + id + "\",\"" + splited[i] + "\")' style='cursor:pointer;'>" + parts[1] + "</font>";
-
-                    clicable_context = clicable_context +
-                        "<img src='context_delete.png'alt='Delete this option' height=10 onclick='delete_Context_Click(\"" +
-                        splited[i] + "\")' style='cursor:pointer;' />&nbsp;" +
-                        c_Name + "<br>";
-                }
-            }
-        }
-        document.getElementById("div_Current_Contexts").innerHTML = clicable_context;
-        setCursorAtEnd();
-    }
-
-
-
-    // MENU CONTROLS /////////////////////////////////////////////////////////////////////////////////
-    function is_child_of(parent, child) {
-        if (child != null) {
-            while (child.parentNode) {
-                if ((child = child.parentNode) == parent) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    function fixOnMouseOut(element, event) {
-        var current_mouse_target = null;
-        if (event.toElement) {
-            current_mouse_target = event.toElement;
-        } else if (event.relatedTarget) {
-            current_mouse_target = event.relatedTarget;
-        }
-
-        if (!is_child_of(element, current_mouse_target) && element != current_mouse_target) {
-            hide_div_Menu_1();
-        }
-    }
-
-    function hide_div_Menu_1() {
-        if (IE) return;
-        document.getElementById('div_Menu_1').style.visibility = 'hidden';
-        return false;
-    }
-
-    function open_menu(menu_id) {
-        x = document.getElementById("div_Select_Menu").offsetParent.offsetLeft + 20;
-        y = document.getElementById("div_Select_Menu").offsetParent.offsetTop + 20;
-        if (document.getElementById("div_Menu_1").style.visibility != 'visible') {
-            document.getElementById("div_Menu_1").style.top = y + "px";
-            document.getElementById("div_Menu_1").style.left = x + "px";
-            document.getElementById("div_Menu_1").style.display = '';
-            document.getElementById("div_Menu_1").style.visibility = 'visible';
-            return false;
-        } else {
-            document.getElementById("div_Menu_1").style.visibility = "hidden";
-        }
-    }
-
-    function Selected_Item_In_Select_Menu(query) {
-        document.getElementById("div_Menu_1").style.visibility = "hidden";
-
-        parent.frm_deepzoom.location.href = "gallery.html?categoryId=" + query;
-    }
-
-    function reset_search() {
-        if (parent.frm_deepzoom.current_Shopping_Cart.length != 0) {
-            shopping_Icon = parent.frm_header.document.getElementById("shopping_cart").innerHTML;
-            if (shopping_Icon.indexOf("cart_open.png") > 0) {
-                parent.frm_header.document.getElementById("shopping_cart").innerHTML = "<img src='full_cart.png' alt='Empty cart' />";
-            } else {}
-        } else {
-            parent.frm_header.document.getElementById("shopping_cart").innerHTML = "<img src='empty_cart.png' alt='Empty cart' />";
-        }
-        document.getElementById("inpt_Ask_Question").value = "";
-        document.getElementById("div_Answer").innerHTML = "";
-        document.getElementById("div_Current_Contexts").innerHTML = "";
-        document.getElementById("div_Current_Fuzzy").innerHTML = "";
-        parent.frm_header.document.getElementById("card_name").innerHTML = "";
-        scrollToEnd();
-        slider.setValue(0);
-        last_Line = "";
-        parent.frm_deepzoom.reset_search();
-        setCursorAtEnd();
-    }
-
-    
-    // FORMATTERS AND HELPERS ///////////////////////////////////////////////////////////////////////////////
-
-    function select_Chunk() {
-        var txt = '';
-        if (window.getSelection) {
-            txt = window.getSelection();
-        } else if (document.getSelection) {
-            txt = document.getSelection();
-        } else if (document.selection) {
-            txt = document.selection.createRange().text;
-        } else return;
-        if (document.getElementById("inpt_Ask_Question").value.indexOf(txt) >= 0) return;
-
-        if (document.getElementById("inpt_Ask_Question").value == "") {
-            document.getElementById("inpt_Ask_Question").value = txt;
-        } else {
-            document.getElementById("inpt_Ask_Question").value = document.getElementById("inpt_Ask_Question").value + " " + txt;
-        }
-        setCursorAtEnd();
-    }
-
-    function clear_Selections() {
-        var sel;
-        if (document.selection && document.selection.empty) {
-            document.selection.empty();
-        } else
-        if (window.getSelection) {
-            sel = window.getSelection();
-            if (sel && sel.removeAllRanges)
-                sel.removeAllRanges();
-        }
-    }
-
-    function checkEnter(e) {
-        var characterCode;
-        if (e && e.which) {
-            e = e;
-            characterCode = e.which;
-        } else {
-            e = event;
-            characterCode = e.keyCode;
-        }
-        if (characterCode == 13) {
-            try {
-                e.stopPropagation();
-                e.preventDefault();
-            } catch (err) {}
-            try {
-                e.cancelBubble = true;
-            } catch (err) {}
-            try {
-                e.cancel = true;
-            } catch (err) {}
-            try {
-                e.returnValue = false;
-            } catch (err) {}
-            Get_Answer();
-            return false;
-        }
-        return true;
-    }
-
-    function formatCurrency(num) {
-        num = num.toString().replace(/\$|\,/g, '');
-        if (isNaN(num)) num = "0";
-        sign = (num == (num = Math.abs(num)));
-        num = Math.floor(num * 100 + 0.50000000001);
-        cents = num % 100;
-        num = Math.floor(num / 100).toString();
-        if (cents < 10)
-            cents = "0" + cents;
-        for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
-            num = num.substring(0, num.length - (4 * i + 3)) + ',' +
-            num.substring(num.length - (4 * i + 3));
-        return (((sign) ? '' : '-') + '$' + num + '.' + cents);
-    }
-
-    function scrollToEnd() {
-        document.getElementById("div_Answer").focus();
-        document.getElementById("div_Answer").scrollTop = document.getElementById("div_Answer").scrollHeight;
-    }
-
-    function setCursorAtEnd() {
-        document.getElementById("inpt_Ask_Question").focus();
-        obj = document.getElementById("inpt_Ask_Question");
+    window.onbeforeunload = function() {
         try {
-            var FieldRange = obj.createTextRange();
-            FieldRange.moveStart('character', obj.value.length);
-            FieldRange.collapse();
-            FieldRange.select();
+            ws.close();
+            ws_Chat.close();
+        } catch (Error) {}
+    };
+
+    if (remote_control == "true") {
+        try {
+            ws = new WebSocket("ws://256gl.azurewebsites.net");
+            SocketCreated = true;
+            ws.onopen = WSonOpen;
+            ws.onmessage = WSonMessage;
+            ws.onclose = WSonClose;
         } catch (Error) {}
     }
+    /*
+        try {
+            ws_Chat = new WebSocket("ws://256gl.azurewebsites.net");
+            ws_Chat.onopen = WS_Chat_Оn_Open;
+            ws_Chat.onmessage = WS_Chat_Оn_Message;
+            ws_Chat.onclose = WS_Chat_Оn_Close;
+        } catch (Error) {
+            alert(Error)
+        }
+    */
+    function WS_Chat_Оn_Open() {
+        ws_Chat.send("Session_Id=" + ws_Chat_session_id);
+        setInterval(function() { ws_Chat.send("PONG" + ETB) }, 10000);
+    };
 
-    function set_current_Fuzzy_Point(current_Fuzzy_Point) {
-        slider.setValue(current_Fuzzy_Point);
+    function WS_Chat_Оn_Message(event) {
+        ws_Chat_SocketCreated = true;
+        msg = event.data;
+        var segments = event.data.split("\n");
+        for (var i = 0; i < segments.length; i++) {
+            var parms = segments[i].split(ETB);
+            if (parms[0] == "PONG") {
+                if (parms[1] == "CONNECTED") {
+                    chat_Status = "CHAT_ON";
+                } else {
+                    if (chat_Status == "CHAT_ON") {
+                        msg = "<font color=blue>&gt;Disconnected</font>";
+                        parent.frm_agent.set_answer(msg);
+                        parent.frm_agent.setCursorAtEnd();
+                    }
+                    chat_Status = "CHAT_OFF";
+                }
+            }
+            if (parms[0] == "MESSAGE") {
+                if (parms[1].indexOf("user: ") != 0) {
+                    if (parms[1] == "Connected" || parms[1] == "Disconnected") {
+                        msg = "<font color=blue>&gt;" + parms[1] + "</font>";
+                    } else {
+                        msg = "<font color=red>&gt;" + parms[1] + "</font>";
+                    }
+                    parent.frm_agent.set_answer(msg);
+                    parent.frm_agent.setCursorAtEnd();
+                }
+            }
+            if (parms[0] == "MESSAGECONTINUE") {
+                if (parms[1].indexOf("user: ") != 0) {
+                    msg = "<font color=red>&gt;" + parms[1] + "</font>";
+                    parent.frm_agent.set_answer(msg);
+                    parent.frm_agent.setCursorAtEnd();
+                }
+            }
+
+            if (parms[0] == "COMMAND") {
+                if (parms[1].indexOf("CHAT_ON") == 0) {
+                    chat_Status = "CHAT_ON";
+                }
+                if (parms[1].indexOf("CHAT_OFF") == 0) {
+                    chat_Status = "CHAT_OFF";
+                }
+            }
+        }
+    };
+
+    function WS_Chat_Оn_Close() {
+        ws_Chat_SocketCreated = false;
+    };
+
+    function sendMessage(msg) {
+        if (!ws_Chat_SocketCreated) return;
+        try {
+            var txt = msg;
+            txt = txt.replace(/\[:/g, ':');
+            txt = txt.replace(/\] /g, ' ');
+            if (txt.length < 80) {
+                ws_Chat.send("MESSAGE" + ETB + txt);
+            } else {
+                var txt1 = txt.substring(0, 60);
+                var txt2 = txt.substring(61, txt.length);
+                ws_Chat.send("MESSAGE" + ETB + txt1);
+                ws_Chat.send("MESSAGECONTINUE" + ETB + txt2);
+            }
+        } catch (Error) {
+            alert(Error)
+        }
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    function WSonOpen() {
+        ws.send("Session_Id=" + session_id);
+    };
 
-    setCursorAtEnd();
-</script>
+    function WSonMessage(event) {
+        msg = event.data;
+        var coordinates = "";
+        var segments = event.data.split("\n");
+        for (i = 0; i < segments.length; i++) {
+            var parms = segments[i].split(":");
+            if (parms[0].toLowerCase() != "") {
+                ws.send("OK");
+                if (parms[1].toLowerCase() == "reset") {
+                    reset_search_Remote();
+                } else {
+                    if (parms[1].toLowerCase().indexOf("looking for ") >= 0) {
+                        if (parms[1].toLowerCase().indexOf(" car") >= 0) {
+                            top.location.href = "/notes/ClientBin/common/deepzoom/index.aspx?user_id=121&remote_control=true&device_id=121&session_id=my_virtual";
+                        }
+                        if (parms[1].toLowerCase().indexOf(" camera") >= 0) {
+                            top.location.href = "/notes/ClientBin/common/deepzoom/index.aspx?user_id=58&remote_control=true&device_id=58&session_id=my_virtual";
+                        }
+                        if (parms[1].toLowerCase().indexOf(" art") >= 0) {
+                            top.location.href = "/notes/ClientBin/common/deepzoom/index.aspx?user_id=39&remote_control=true&device_id=39&session_id=my_virtual";
+                        }
+                        if (parms[1].toLowerCase().indexOf(" movie") >= 0) {
+                            top.location.href = "/notes/ClientBin/common/deepzoom/index.aspx?user_id=53&remote_control=true&device_id=53&session_id=my_virtual";
+                        }
+                        if (parms[1].toLowerCase().indexOf(" shampoo") >= 0) {
+                            top.location.href = "/notes/ClientBin/common/deepzoom/index.aspx?user_id=28&remote_control=true&device_id=28&session_id=my_virtual";
+                        }
+                        if (parms[1].toLowerCase().indexOf(" hair") >= 0) {
+                            top.location.href = "/notes/ClientBin/common/deepzoom/index.aspx?user_id=32&remote_control=true&device_id=32&session_id=my_virtual";
+                        }
+                        if (parms[1].toLowerCase().indexOf(" food") >= 0) {
+                            top.location.href = "/notes/ClientBin/common/deepzoom/index.aspx?user_id=64&remote_control=true&device_id=64&session_id=my_virtual";
+                        }
+                    } else {
+                        Get_Answer_Remote(parms[1]);
+                    }
+                }
+            }
+            if (parms[0] == "CURSOR") {
+                coordinates = coordinates + parms[1] + ":";
+                slv_Zoom_Ctl.Content.SVL_Deep_Zoom.Remote_Mouse(parms[1]);
+            }
+            if (parms[0] == "CURSOREND") {
+                slv_Zoom_Ctl.Content.SVL_Deep_Zoom.Remote_Mouse_End();
+            }
+            if (parms[0] == "CURSORCLICK") {
+                slv_Zoom_Ctl.Content.SVL_Deep_Zoom.Remote_Mouse_Click();
+            }
+        }
+    };
+
+    function WSonClose() {
+        SocketCreated = false;
+    };
