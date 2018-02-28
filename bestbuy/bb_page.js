@@ -14,6 +14,7 @@
         generic_triggers_layer = Build_Neural_Layer(generic_triggers_url);
         generic_triggers_layer.Disharged_CallBack = Show_Neural_State;
         layers.push(generic_triggers_layer);
+    
         Save_Linguistics_URL(generic_triggers_url);
 
         linguistic_URLs = Restore_Linguistics_URLs();
@@ -34,6 +35,38 @@
         }
         Show_Neural_State();
         linguistic_URLs = Restore_Linguistics_URLs();
+        
+        add_Layer(cameras_triggers_url);
+    }
+
+    function Discharge_Node(node)
+    {
+        for (var i = 0; i < personal_Neural_Net.neurons.length; i++) 
+        {
+            var neuron = personal_Neural_Net.neurons[i];
+            if (neuron.Name == node)
+            {
+                neuron.Curent_E = 0;
+                neuron.E = 0;
+            }
+        }
+    }
+
+    function Get_Excited_Nodes()
+    {        
+        var context = "";
+        for (var i = 0; i < layers.length; i++) 
+        {
+            var layer = layers[i];
+            var c_triggers = Get_Charged_Triggers(layer);
+            var d_triggers = Get_Discharged_Triggers(layer);
+            if (layer.Name == "Generic") continue;
+            for (var j = 0; j < c_triggers.length; j++) {
+                var splitter = c_triggers[j].split(":")
+                context = context + splitter[0] + ":" + splitter[1] + "<br>";
+            }
+        }
+        return context;
     }
 
     function Reset() {
@@ -99,7 +132,6 @@
         Excite_Phrase(phrase);
         try {
             localStorage.removeItem(generic_triggers_layer.Name);
-
             Save_Neural_State(generic_triggers_layer);
             for (var i = 0; i < layers.length; i++) {
                 Save_Neural_State(layers[i]);
@@ -108,23 +140,6 @@
 
         Show_Neural_State();
         check_Controls();
-    }
-
-    function Show_Neural_State() {
-        var neurons = Get_Excited_Neurons(generic_triggers_layer);
-        var str_result = "";
-        for (var i = 0; i < layers.length; i++) {
-            var layer = layers[i];
-            var c_triggers = Get_Charged_Triggers(layer);
-            var d_triggers = Get_Discharged_Triggers(layer);
-            if (layer.Name == "Generic") continue;
-            str_result = str_result + "<b><font color=black>" + layer.Name + " unresolved triggers:</font></b><br>"
-            for (var j = 0; j < d_triggers.length; j++) {
-                var splitter = d_triggers[j].split(":")
-                str_result = str_result + "<i>" + splitter[0] + ":<font color=blue>&nbsp;&nbsp;" + splitter[1] + "</font></i><br>";
-            }
-        }
-        neural_State(str_result);
     }
 
     // NEURON'S FUNCTIONS

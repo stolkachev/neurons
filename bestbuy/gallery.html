@@ -42,7 +42,7 @@
         var api_key = "";
         var baseURL = "https://api.bestbuy.com/v1/products";
 
-        var categoryId = get_arguments["categoryId"];
+        var categoryId = get_arguments["categoryid"];
         if (categoryId === undefined) {
             categoryId = "";
         } else {
@@ -53,7 +53,12 @@
         if (api_key === undefined) api_key = "7ksBhjryZ5hxofJSEk2VBO7u";
 
         var customerReviewAverage = get_arguments["customerReviewAverage"];
-        if (customerReviewAverage === undefined) {
+        if (customerReviewAverage === undefined) 
+        {
+            customerReviewAverage = get_arguments["review"];
+        }
+        if (customerReviewAverage === undefined)
+        {
             customerReviewAverage = "";
         } else {
             customerReviewAverage = customerReviewAverage - 0.2
@@ -76,7 +81,7 @@
         var regularPrice_lt = 100000;
         var price = get_arguments["price"];
 
-        if (price === undefined || price === "") {
+        if (price === undefined || price === "" || price === "0") {
             price = "regularPrice>=" + regularPrice_gt + "&regularPrice<=" + regularPrice_lt;
         } else {
             price = parseInt(price)

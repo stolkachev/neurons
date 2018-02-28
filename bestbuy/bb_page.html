@@ -90,7 +90,7 @@
             edit_Slider_Pos();
             document.getElementById("div_Current_Fuzzy").innerHTML = "&nbsp;<img src='context_delete.png' alt='Delete price option' title='Delete price option' height=10 onclick='fuzzy_Number_Deleted()' style='cursor:pointer;' />&nbsp;&nbsp;" +
                 formatCurrency(current_Fuzzy_Number);
-            parent.frm_deepzoom.location.href = "gallery.html?price=" + current_Fuzzy_Number;
+            reload_Gallery();
         }
 
         function edit_Slider_Pos() {
@@ -115,7 +115,7 @@
             slider_Pos = 0;
             slider.setValue(0);
             document.getElementById("div_Current_Fuzzy").innerHTML = "";
-            parent.frm_deepzoom.location.href = "gallery.html";
+            reload_Gallery();
         }
     </script>
     <br/>
@@ -159,7 +159,8 @@
     var max_price = 0;
     var min_price = 0;
     var current_Fuzzy_Number = 0;
-
+    var categoryId = "abcat0401000";
+    var neuro_context = "";
     var session_ID = "shopping_bestbuy";
 
     document.getElementById("div_QR").innerHTML = "<img src='http://256gl.com/notes/clientbin/get_qr_barcode.ashx?session_ID=" + session_ID + "'/>";
@@ -236,12 +237,6 @@
     }
 
     // ANSWER & QUESTION  CONTROLS ////////////////////////////////////////////////////////////////////////////////////
-
-
-    function neural_State(nn_state) {
-        set_answer(nn_state, "green", "");
-    }
-
 
     function Get_Answer() {
         query = document.getElementById("inpt_Ask_Question").value;
@@ -326,33 +321,60 @@
                 delete_Context(ev);
             }
         }
-        Set_Clicable_Context();
-        parent.frm_deepzoom.context_Deleted();
+        Show_Neural_State();
         setCursorAtEnd();
     }
 
     function delete_Context(context) {
         txt = context + " - DELETED";
         set_answer(txt, "green");
-
-        excited_Nodes = parent.frm_deepzoom.slv_Zoom_Ctl.Content.SVL_Deep_Zoom.Get_Excited_Nodes_CR();
-        var splitContexts = excited_Nodes.split("\n");
+        excited_Nodes = Get_Excited_Nodes();
+        var splitContexts = excited_Nodes.split("<br>");
         for (i = 0; i < splitContexts.length; i++) {
             if (splitContexts[i].indexOf(context) >= 0) {
-                parent.frm_deepzoom.slv_Zoom_Ctl.Content.SVL_Deep_Zoom.Delete_Context(splitContexts[i]);
+                Discharge_Node(splitContexts[i]);
                 return;
             }
         }
         setCursorAtEnd();
     }
 
+    function Show_Neural_State() {
+        var neurons = Get_Excited_Neurons(generic_triggers_layer);
+        neuro_context = Get_Excited_Nodes();
+        var clicable_context = "";
+        if (neuro_context != "") {
+            var splited = neuro_context.split("<br>");
+            if (splited.length > 0) {
+                for (i = 0; i < splited.length - 1; i++) {
+                    var parts = splited[i].split(":");
+
+                    var id = "show_Context_Click_" + i;
+
+                    c_Name = "<b><font color=gray onclick='delete_Context_Click(\"" + splited[i] +
+                        "\")' style='cursor:pointer;'>" + parts[0] + "</b></font>:&nbsp;&nbsp;&nbsp;" +
+                        "<font id='" + id + "' color=blue onclick='show_Context_Click(\"" + id + "\",\"" + splited[i] + "\")' style='cursor:pointer;'>" + parts[1] + "</font>";
+
+                    clicable_context = clicable_context +
+                        "<img src='context_delete.png'alt='Delete this option' height=10 onclick='delete_Context_Click(\"" +
+                        splited[i] + "\")' style='cursor:pointer;' />&nbsp;" +
+                        c_Name + "<br>";
+                }
+            }
+        }
+        document.getElementById("div_Current_Contexts").innerHTML = clicable_context;
+        setCursorAtEnd();
+        reload_Gallery();
+    }
+
     function Set_Clicable_Context() {
         var clicable_context = "";
-        context = parent.frm_deepzoom.slv_Zoom_Ctl.Content.SVL_Deep_Zoom.Get_Excited_Nodes();
-        context = context.replace(/<BR>/g, "<br>");
+        neuro_context = Get_Excited_Nodes();
+        neuro_context = neuro_context.replace(/<BR>/g, "<br>");
 
-        if (context != "") {
-            var splited = context.split("<br>");
+        if (neuro_context != "") 
+        {
+            var splited = neuro_context.split("<br>");
             if (splited.length > 0) {
                 for (i = 0; i < splited.length - 1; i++) {
                     var parts = splited[i].split(":");
@@ -420,8 +442,7 @@
 
     function Selected_Item_In_Select_Menu(query) {
         document.getElementById("div_Menu_1").style.visibility = "hidden";
-
-        parent.frm_deepzoom.location.href = "gallery.html?categoryId=" + query;
+        reload_Gallery();
     }
 
     function reset_search() {
@@ -542,7 +563,23 @@
     function set_current_Fuzzy_Point(current_Fuzzy_Point) {
         slider.setValue(current_Fuzzy_Point);
     }
-
+    
+    function reload_Gallery() 
+    {
+ //       url = "http://localhost/neurons/bestbuy/gallery.html?color=silver&manufacturer=apple&customerReviewAverage=5&price=500";
+        url = "gallery.html?price=" + current_Fuzzy_Number + "&categoryid=" + categoryId;
+        if (neuro_context != "") 
+        {
+            var splited = neuro_context.split("<br>");
+            if (splited.length > 0) {
+                for (i = 0; i < splited.length - 1; i++) {
+                    var parts = splited[i].split(":");
+                    url = url + "&" + parts[0].toLowerCase() + "=" + parts[1].toLowerCase();
+                }
+            }
+        }
+        parent.frm_deepzoom.location.href = url;
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // FUTURE CATEGORIES
@@ -602,5 +639,5 @@
     setCursorAtEnd();
 </script>
 
-<script type="text/javascript" src='/neurons/neurons/neurons.js'></script>
+<script type="text/javascript" src='neurons/neurons.js'></script>
 <script type="text/javascript" src="bb_page.js" onload="load_nnod();"></script>

@@ -13,91 +13,9 @@
 ]>
 
 <neuro_triggers name="Cameras">
+  
     
-    <neuro_trigger name="Geek">
-        
-        <state name="Sergey">
-            <item word="sergey" weight="1.0"></item>
-        </state>
-        
-        <state name="Larissa">
-            <item word="larisa" weight="1.0"></item>
-            <item word="larissa" weight="1.0"></item>
-            <item word="lara" weight="1.0"></item>
-        </state>
-        
-    </neuro_trigger>
-    
-    <neuro_trigger name="Camera_Preowned">
-        
-        <state name="New">
-            <item word="new" weight="1.0"></item>
-        </state>
-        
-        <state name="Used">
-            <item word="used" weight="1.0"></item>
-            <item word="preowned" weight="1.0"></item>
-        </state>
-        
-    </neuro_trigger>
-    
-    <neuro_trigger name="Camera_Year">
-        
-        <state name="2013">
-            <item word="2013" weight="1"></item>
-        </state>
-        
-        <state name="2012">
-            <item word="2012" weight="1"></item>
-        </state>
-        
-        <state name="2011">
-            <item word="2011" weight="1"></item>
-        </state>
-        
-        <state name="2010">
-            <item word="2010" weight="1"></item>
-        </state>
-        
-        <state name="2009">
-            <item word="2009" weight="1"></item>
-        </state>
-        
-        <state name="2008">
-            <item word="2008" weight="1"></item>
-        </state>
-        
-        <state name="2007">
-            <item word="2007" weight="1"></item>
-        </state>
-        
-        <state name="2006">
-            <item word="2006" weight="1"></item>
-        </state>
-        
-        <state name="2005">
-            <item word="2005" weight="1"></item>
-        </state>
-        
-        <state name="2004">
-            <item word="2004" weight="1"></item>
-        </state>
-        
-        <state name="2003">
-            <item word="2003" weight="1"></item>
-        </state>
-        
-        <state name="2002">
-            <item word="2002" weight="1"></item>
-        </state>
-        
-        <state name="2001">
-            <item word="2001" weight="1"></item>
-        </state>
-        
-    </neuro_trigger>
-    
-    <neuro_trigger name="Camera_Color">
+    <neuro_trigger name="Color">
         
         <state name="Black">
             <item word="Black" weight="1"></item>
@@ -168,7 +86,7 @@
         
     </neuro_trigger>
     
-    <neuro_trigger name="Camera_Manufacturer">
+    <neuro_trigger name="Manufacturer">
         
         <state name="Canon">
             <item word="Canon" weight="1"></item>
@@ -252,7 +170,7 @@
         
     </neuro_trigger>
     
-    <neuro_trigger name="Camera_Type">
+    <neuro_trigger name="Type">
         
         <state name="SLR">
             <item word="SLR" weight="1"></item>
@@ -272,190 +190,38 @@
         
     </neuro_trigger>
     
-    <neuro_trigger name="Camera_Zoom">
+    <neuro_trigger name="Review">
         
-        <state name="5x">
-            <item word="2x" weight="1"></item>
-            <item word="3x" weight="1"></item>
-            <item word="4x" weight="1"></item>
-            <item word="5x" weight="1"></item>
-            <item word="6x" weight="1"></item>
-            <item word="7x" weight="1"></item>
+        <state name="1">
+            <item word="1" weight="1"></item>
+            <item word="low" weight="1"></item>
         </state>
         
-        <state name="10x">
-            <item word="8x" weight="1"></item>
-            <item word="9x" weight="1"></item>
-            <item word="10x" weight="1"></item>
-            <item word="11x" weight="1"></item>
-            <item word="12x" weight="1"></item>
-            <item word="13x" weight="1"></item>
-            <item word="14x" weight="1"></item>
+        <state name="2">
+            <item word="2" weight="1"></item>
         </state>
         
-        <state name="15x">
-            <item word="15x" weight="1"></item>
-            <item word="16x" weight="1"></item>
-            <item word="16x" weight="1"></item>
-            <item word="17x" weight="1"></item>
+        <state name="3">
+            <item word="3" weight="1"></item>
+            <item word="average" weight="1"></item>
         </state>
         
-        <state name="20x">
-            <item word="18x" weight="1"></item>
-            <item word="19x" weight="1"></item>
-            <item word="20x" weight="1"></item>
-            <item word="21x" weight="1"></item>
-            <item word="22x" weight="1"></item>
-            <item word="23x" weight="1"></item>
-            <item word="24x" weight="1"></item>
+        <state name="4">
+            <item word="4" weight="1"></item>
+            <item word="good" weight="1"></item>
         </state>
         
-        <state name="25x">
-            <item word="25x" weight="1"></item>
-            <item word="26x" weight="1"></item>
-            <item word="27x" weight="1"></item>
-            <item word="28x" weight="1"></item>
-            <item word="29x" weight="1"></item>
-        </state>
-        
-        <state name="30x">
-            <item word="30x" weight="1"></item>
-            <item word="31x" weight="1"></item>
-            <item word="32x" weight="1"></item>
-            <item word="33x" weight="1"></item>
-            <item word="34x" weight="1"></item>
-            <item word="35x" weight="1"></item>
-            <item word="36x" weight="1"></item>
-            <item word="37x" weight="1"></item>
-            <item word="38x" weight="1"></item>
-            <item word="39x" weight="1"></item>
-        </state>
-        
-        <state name="40x">
-            <item word="40x" weight="1"></item>
-            <item word="41x" weight="1"></item>
-            <item word="42x" weight="1"></item>
-            <item word="43x" weight="1"></item>
-            <item word="44x" weight="1"></item>
-            <item word="45x" weight="1"></item>
-            <item word="46x" weight="1"></item>
-            <item word="47x" weight="1"></item>
-            <item word="48x" weight="1"></item>
-            <item word="49x" weight="1"></item>
+        <state name="5">
+            <item word="5" weight="1"></item>
+            <item word="best" weight="1"></item>
         </state>
         
     </neuro_trigger>
     
-    <neuro_trigger name="Camera_Memory">
-        
-        <state name="6MP">
-            <item word="10mp" weight="1"></item>
-            <item word="5." weight="1"></item>
-            <item word="5.0" weight="1"></item>
-            <item word="5.1" weight="1"></item>
-            <item word="6." weight="1"></item>
-            <item word="6.0" weight="1"></item>
-            <item word="6.1" weight="1"></item>
-        </state>
-        
-        <state name="7MP">
-            <item word="10mp" weight="1"></item>
-            <item word="7." weight="1"></item>
-            <item word="7.0" weight="1"></item>
-            <item word="7.1" weight="1"></item>
-        </state>
-        
-        <state name="8MP">
-            <item word="10mp" weight="1"></item>
-            <item word="8." weight="1"></item>
-            <item word="8.0" weight="1"></item>
-            <item word="8.1" weight="1"></item>
-        </state>
-        
-        <state name="9MP">
-            <item word="9mp" weight="1"></item>
-            <item word="9." weight="1"></item>
-            <item word="9.0" weight="1"></item>
-            <item word="9.1" weight="1"></item>
-        </state>
-        
-        <state name="10MP">
-            <item word="10mp" weight="1"></item>
-            <item word="10." weight="1"></item>
-            <item word="10.0" weight="1"></item>
-            <item word="10.1" weight="1"></item>
-            <item word="10.2" weight="1"></item>
-            <item word="10.3" weight="1"></item>
-        </state>
-        
-        <state name="11MP">
-            <item word="11MP" weight="1"></item>
-            <item word="11." weight="1"></item>
-            <item word="11.0" weight="1"></item>
-            <item word="11.1" weight="1"></item>
-            <item word="11.2" weight="1"></item>
-            <item word="11.3" weight="1"></item>
-        </state>
-        
-        <state name="12MP">
-            <item word="12MP" weight="1"></item>
-            <item word="12." weight="1"></item>
-            <item word="12.0" weight="1"></item>
-            <item word="12.1" weight="1"></item>
-            <item word="12.2" weight="1"></item>
-            <item word="12.3" weight="1"></item>
-            <item word="12.4" weight="1"></item>
-        </state>
-        
-        <state name="14MP">
-            <item word="14MP" weight="1"></item>
-            <item word="14." weight="1"></item>
-            <item word="14.0" weight="1"></item>
-            <item word="14.1" weight="1"></item>
-            <item word="14.2" weight="1"></item>
-            <item word="14.3" weight="1"></item>
-            <item word="14.4" weight="1"></item>
-            <item word="14.6" weight="1"></item>
-        </state>
-        
-        <state name="15MP">
-            <item word="15MP" weight="1"></item>
-            <item word="15." weight="1"></item>
-            <item word="15.0" weight="1"></item>
-            <item word="15.1" weight="1"></item>
-            <item word="15.2" weight="1"></item>
-            <item word="15.3" weight="1"></item>
-            <item word="15.4" weight="1"></item>
-        </state>
-        
-        <state name="18MP">
-            <item word="18MP" weight="1"></item>
-            <item word="18." weight="1"></item>
-            <item word="18.0" weight="1"></item>
-            <item word="18.1" weight="1"></item>
-            <item word="18.2" weight="1"></item>
-            <item word="18.3" weight="1"></item>
-            <item word="18.4" weight="1"></item>
-        </state>
-        
-        <state name="20MP">
-            <item word="20MP" weight="1"></item>
-            <item word="20." weight="1"></item>
-            <item word="20.0" weight="1"></item>
-            <item word="20.1" weight="1"></item>
-            <item word="20.2" weight="1"></item>
-            <item word="20.3" weight="1"></item>
-            <item word="20.4" weight="1"></item>
-        </state>
-        
-        <state name="21MP">
-            <item word="21MP" weight="1"></item>
-            <item word="21." weight="1"></item>
-            <item word="21.0" weight="1"></item>
-            <item word="21.1" weight="1"></item>
-            <item word="21.2" weight="1"></item>
-            <item word="21.3" weight="1"></item>
-            <item word="21.4" weight="1"></item>
+    <neuro_trigger name="OnSale">
+        <state name="On Sale">
+            <item word="on" weight="0.5"></item>
+            <item word="sale" weight="0.5"></item>
         </state>
         
     </neuro_trigger>
