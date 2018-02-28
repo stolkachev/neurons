@@ -53,17 +53,27 @@
         if (api_key === undefined) api_key = "7ksBhjryZ5hxofJSEk2VBO7u";
 
         var customerReviewAverage = get_arguments["customerReviewAverage"];
-        if (customerReviewAverage === undefined) 
-        {
+        if (customerReviewAverage === undefined) {
             customerReviewAverage = get_arguments["review"];
         }
-        if (customerReviewAverage === undefined)
-        {
+        if (customerReviewAverage === undefined) {
             customerReviewAverage = "";
         } else {
             customerReviewAverage = customerReviewAverage - 0.2
             customerReviewAverage = "&customerReviewAverage>=" + customerReviewAverage;
         }
+
+        var onSale = get_arguments["onsale"];
+        if (onSale === undefined) {
+            onSale = "";
+        } else {
+            if (onSale === "true" || onSale === "false") {
+                onSale = "&onSale=" + onSale;
+            } else {
+                onSale = "";
+            }
+        }
+
         var manufacturer = get_arguments["manufacturer"];
         if (manufacturer === undefined) {
             manufacturer = "";
@@ -94,7 +104,7 @@
         var prices = {};
 
 
-        var url = baseURL + "(" + price + customerReviewAverage + manufacturer + color + categoryId + ")" +
+        var url = baseURL + "(" + price + customerReviewAverage + manufacturer + color + onSale + categoryId + ")" +
             "?apiKey=" + api_key +
             "&sort=name.asc&show=manufacturer,name,image,url,regularPrice&facet=regularPrice,50&pageSize=100&format=json";
 

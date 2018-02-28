@@ -14,7 +14,7 @@
         generic_triggers_layer = Build_Neural_Layer(generic_triggers_url);
         generic_triggers_layer.Disharged_CallBack = Show_Neural_State;
         layers.push(generic_triggers_layer);
-    
+
         Save_Linguistics_URL(generic_triggers_url);
 
         linguistic_URLs = Restore_Linguistics_URLs();
@@ -35,28 +35,23 @@
         }
         Show_Neural_State();
         linguistic_URLs = Restore_Linguistics_URLs();
-        
+
         add_Layer(cameras_triggers_url);
     }
 
-    function Discharge_Node(node)
-    {
-        for (var i = 0; i < personal_Neural_Net.neurons.length; i++) 
-        {
+    function Discharge_Node(node) {
+        for (var i = 0; i < personal_Neural_Net.neurons.length; i++) {
             var neuron = personal_Neural_Net.neurons[i];
-            if (neuron.Name == node)
-            {
+            if (neuron.Name == node) {
                 neuron.Curent_E = 0;
                 neuron.E = 0;
             }
         }
     }
 
-    function Get_Excited_Nodes()
-    {        
+    function Get_Excited_Nodes() {
         var context = "";
-        for (var i = 0; i < layers.length; i++) 
-        {
+        for (var i = 0; i < layers.length; i++) {
             var layer = layers[i];
             var c_triggers = Get_Charged_Triggers(layer);
             var d_triggers = Get_Discharged_Triggers(layer);
@@ -77,7 +72,7 @@
         layer = null;
 
         Clean_Personal_Neural_Net();
-        load_completed();
+        load_nnod();
         Show_Neural_State();
     }
 

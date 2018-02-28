@@ -168,6 +168,30 @@
             <item word="Vivitar" weight="1"></item>
         </state>
         
+        <state name="Acer">
+            <item word="acer" weight="1"></item>
+        </state>
+        
+        <state name="Apple">
+            <item word="apple" weight="1"></item>
+        </state>
+        
+        <state name="Asus">
+            <item word="asus" weight="1"></item>
+        </state>
+        
+        <state name="Dell">
+            <item word="dell" weight="1"></item>
+        </state>
+        
+        <state name="Lenovo">
+            <item word="lenovo" weight="1"></item>
+        </state>
+        
+        <state name="Google">
+            <item word="google" weight="1"></item>
+        </state>
+        
     </neuro_trigger>
     
     <neuro_trigger name="Type">
@@ -219,7 +243,7 @@
     </neuro_trigger>
     
     <neuro_trigger name="OnSale">
-        <state name="On Sale">
+        <state name="True">
             <item word="on" weight="0.5"></item>
             <item word="sale" weight="0.5"></item>
         </state>

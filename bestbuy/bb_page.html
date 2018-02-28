@@ -72,7 +72,6 @@
     </table>
     <script type="text/javascript">
         // SLIDER CONTROLS ////////////////////////////////////////////////////////////////////////////////////////// 
-
         var slider_Pos = 0;
         var slider;
         window.dhx_globalImgPath = "codebase/imgs/";
@@ -114,6 +113,7 @@
         function fuzzy_Number_Deleted() {
             slider_Pos = 0;
             slider.setValue(0);
+            current_Fuzzy_Number = 0;
             document.getElementById("div_Current_Fuzzy").innerHTML = "";
             reload_Gallery();
         }
@@ -156,6 +156,12 @@
 </div>
 
 <script type="text/javascript">
+    //  CLEN LOCALSTORAGE 
+    try {
+        localStorage.clear();
+    } catch (Error) {}
+
+    //    
     var max_price = 0;
     var min_price = 0;
     var current_Fuzzy_Number = 0;
@@ -214,17 +220,6 @@
             }
         }
         return false;
-    }
-
-    function reset_search() {
-        document.getElementById("inpt_Ask_Question").value = "";
-        document.getElementById("div_Answer").innerHTML = "";
-        document.getElementById("div_Current_Contexts").innerHTML = "";
-        document.getElementById("div_Current_Fuzzy").innerHTML = "";
-        scrollToEnd();
-        slider.setValue(0);
-        last_Line = "";
-        setCursorAtEnd();
     }
 
     // EDITOR'S SCRIPT SUPPORT //////////////////////////////////////////////////////////////////////////////
@@ -372,8 +367,7 @@
         neuro_context = Get_Excited_Nodes();
         neuro_context = neuro_context.replace(/<BR>/g, "<br>");
 
-        if (neuro_context != "") 
-        {
+        if (neuro_context != "") {
             var splited = neuro_context.split("<br>");
             if (splited.length > 0) {
                 for (i = 0; i < splited.length - 1; i++) {
@@ -442,28 +436,24 @@
 
     function Selected_Item_In_Select_Menu(query) {
         document.getElementById("div_Menu_1").style.visibility = "hidden";
+        categoryId = query;
         reload_Gallery();
     }
 
     function reset_search() {
-        if (parent.frm_deepzoom.current_Shopping_Cart.length != 0) {
-            shopping_Icon = parent.frm_header.document.getElementById("shopping_cart").innerHTML;
-            if (shopping_Icon.indexOf("cart_open.png") > 0) {
-                parent.frm_header.document.getElementById("shopping_cart").innerHTML = "<img src='full_cart.png' alt='Empty cart' />";
-            } else {}
-        } else {
-            parent.frm_header.document.getElementById("shopping_cart").innerHTML = "<img src='empty_cart.png' alt='Empty cart' />";
-        }
+        Reset_Neurons(null);
+        current_Fuzzy_Number = 0;
+        categoryId = "abcat0401000";
+        neuro_context = "";
         document.getElementById("inpt_Ask_Question").value = "";
         document.getElementById("div_Answer").innerHTML = "";
         document.getElementById("div_Current_Contexts").innerHTML = "";
         document.getElementById("div_Current_Fuzzy").innerHTML = "";
-        parent.frm_header.document.getElementById("card_name").innerHTML = "";
         scrollToEnd();
         slider.setValue(0);
         last_Line = "";
-        parent.frm_deepzoom.reset_search();
         setCursorAtEnd();
+        reload_Gallery()
     }
 
 
@@ -563,13 +553,11 @@
     function set_current_Fuzzy_Point(current_Fuzzy_Point) {
         slider.setValue(current_Fuzzy_Point);
     }
-    
-    function reload_Gallery() 
-    {
- //       url = "http://localhost/neurons/bestbuy/gallery.html?color=silver&manufacturer=apple&customerReviewAverage=5&price=500";
+
+    function reload_Gallery() {
+        //       url = "http://localhost/neurons/bestbuy/gallery.html?color=silver&manufacturer=apple&customerReviewAverage=5&price=500";
         url = "gallery.html?price=" + current_Fuzzy_Number + "&categoryid=" + categoryId;
-        if (neuro_context != "") 
-        {
+        if (neuro_context != "") {
             var splited = neuro_context.split("<br>");
             if (splited.length > 0) {
                 for (i = 0; i < splited.length - 1; i++) {
