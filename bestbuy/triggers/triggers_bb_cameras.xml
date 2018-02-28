@@ -14,16 +14,13 @@
 
 <neuro_triggers name="Cameras">
   
-    
     <neuro_trigger name="Color">
-        
         <state name="Black">
             <item word="Black" weight="1"></item>
             <item word="Ebony" weight="1"></item>
             <item word="Nighthawk" weight="1"></item>
             <item word="Graphite" weight="1"></item>
         </state>
-        
         <state name="Red">
             <item word="Red" weight="1"></item>
             <item word="Ruby" weight="1"></item>
@@ -32,17 +29,14 @@
             <item word="Rallye" weight="1"></item>
             <item word="Redrock" weight="1"></item>
         </state>
-        
         <state name="Pink">
             <item word="Pink" weight="1"></item>
         </state>
-        
         <state name="White">
             <item word="White" weight="1"></item>
             <item word="Diamond" weight="1"></item>
             <item word="Opal" weight="1"></item>
         </state>
-        
         <state name="Gray">
             <item word="Gray" weight="1"></item>
             <item word="Grey" weight="1"></item>
@@ -51,43 +45,35 @@
             <item word="Chrome" weight="1"></item>
             <item word="Charcoal" weight="1"></item>
         </state>
-        
         <state name="Purple">
             <item word="Purple" weight="1"></item>
             <item word="Radish" weight="1"></item>
             <item word="Plum" weight="1"></item>
         </state>
-        
         <state name="Tan">
             <item word="Tan" weight="1"></item>
             <item word="Champagne" weight="1"></item>
             <item word="Bronze" weight="1"></item>
             <item word="Brown" weight="1"></item>
         </state>
-        
         <state name="Silver">
             <item word="Silver" weight="1"></item>
             <item word="Frost" weight="1"></item>
             <item word="Titanium" weight="1"></item>
         </state>
-        
         <state name="Blue">
             <item word="Blue" weight="1"></item>
             <item word="Water" weight="1"></item>
         </state>
-        
         <state name="Green">
             <item word="Green" weight="1"></item>
         </state>
-        
         <state name="Orange">
             <item word="Orange" weight="1"></item>
         </state>
-        
     </neuro_trigger>
     
     <neuro_trigger name="Manufacturer">
-        
         <state name="Canon">
             <item word="Canon" weight="1"></item>
             <item word="Cannon" weight="1"></item>
@@ -95,24 +81,20 @@
             <item word="Rebel" weight="1"></item>
             <item word="PowerShot" weight="1"></item>
         </state>
-        
         <state name="Casio">
             <item word="Casio" weight="1"></item>
             <item word="EXILIM" weight="1"></item>
         </state>
-        
         <state name="FUJIFILM">
             <item word="FUJIFILM" weight="1"></item>
             <item word="FUJI" weight="0.1"></item>
             <item word="FinePix" weight="0.1"></item>
         </state>
-        
         <state name="GE" >
             <item word="GE" weight="1"></item>
             <item word="General" weight="0.5"></item>
             <item word="Electric" weight="0.5"></item>
         </state>
-        
         <state name="HP" >
             <item word="HP" weight="1"></item>
             <item word="H-P" weight="1"></item>
@@ -120,34 +102,28 @@
             <item word="Hewlett" weight="0.5"></item>
             <item word="Packard" weight="0.5"></item>
         </state>
-        
         <state name="Insignia">
             <item word="Insignia" weight="1"></item>
         </state>
-        
         <state name="Kodak">
             <item word="Kodak" weight="1"></item>
             <item word="Codak" weight="1"></item>
             <item word="EasyShare" weight="1"></item>
         </state>
-        
         <state name="Nikon">
             <item word="Nikon" weight="1"></item>
             <item word="Nicon" weight="1"></item>
             <item word="Nickon" weight="1"></item>
             <item word="Coolpix" weight="1"></item>
         </state>
-        
         <state name="Olympus">
             <item word="Olympus" weight="1"></item>
             <item word="Stylus" weight="1"></item>
         </state>
-        
         <state name="Panasonic">
             <item word="Panasonic" weight="1"></item>
             <item word="Lumix" weight="1"></item>
         </state>
-        
         <state name="PENTAX">
             <item word="PENTAX" weight="1"></item>
             <item word="Optio" weight="1"></item>
@@ -157,39 +133,34 @@
             <item word="Samsung" weight="1"></item>
             <item word="Samsun" weight="1"></item>
         </state>
-        
         <state name="Sony">
             <item word="Sony" weight="1"></item>
             <item word="Cyber-Shot" weight="1"></item>
             <item word="Cyber" weight="1"></item>
         </state>
-        
         <state name="Vivitar">
             <item word="Vivitar" weight="1"></item>
         </state>
-        
         <state name="Acer">
             <item word="acer" weight="1"></item>
         </state>
-        
         <state name="Apple">
             <item word="apple" weight="1"></item>
         </state>
-        
         <state name="Asus">
             <item word="asus" weight="1"></item>
         </state>
-        
         <state name="Dell">
             <item word="dell" weight="1"></item>
         </state>
-        
         <state name="Lenovo">
             <item word="lenovo" weight="1"></item>
         </state>
-        
         <state name="Google">
             <item word="google" weight="1"></item>
+        </state>
+        <state name="Amazon">
+            <item word="amazon" weight="1"></item>
         </state>
         
     </neuro_trigger>
