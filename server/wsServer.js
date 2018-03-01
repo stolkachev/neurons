@@ -1,6 +1,6 @@
 "use strict";
 process.title = '256GL Connection Bus';
-var webSocketsServerPort = process.env.PORT || 55438;
+var webSocketsServerPort = process.env.PORT || 77777;
 var webSocketServer = require('websocket').server;
 var http = require('http');
 var uuid = require('node-uuid');
