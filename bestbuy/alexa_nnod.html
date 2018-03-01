@@ -2,13 +2,11 @@
 <script type="text/javascript">
     var my_Id = "WA";
     var ws;
-    var session_State = "false";
     var web_Host = "ws://256gl.com:55438";
-    // var initial_session_Id = "shopping:wine";
-    // var session_Id = "shopping:wine";
 
     var initial_session_Id = "my_virtual";
     var session_Id = "my_virtual";
+
     var categoryId = "abcat0401000";
     var current_Fuzzy_Number = 0;
     var neuro_context = "";
@@ -16,7 +14,6 @@
     var dataToSend = "";
     var ETX = String.fromCharCode(3);
 
-    var user_id = '129';
     var generic_triggers_url = 'triggers_bb_generic.xml';
     var cameras_linguistic_triggers_url = 'triggers_bb_cameras.xml';
 
@@ -24,6 +21,10 @@
     var layers = [];
     var layer = null;
     var url;
+
+    try {
+        localStorage.clear();
+    } catch (Error) {}
 
     window.onload = function() {
         init_WS();
@@ -33,10 +34,6 @@
         max_price = Number(max_p);
         min_price = Number(min_p);
 
-    }
-
-    function Submit_Phrase(msg) {
-        ws.send(msg);
     }
 
     function reload_Gallery() {
@@ -54,6 +51,19 @@
         parent.frm_deepzoom.location.href = url;
     }
 
+    function reset_search() {
+        Reset_Neurons(null);
+        current_Fuzzy_Number = 0;
+        categoryId = "abcat0401000";
+        neuro_context = "";
+        reload_Gallery()
+    }
+
+    function Show_Neural_State() {
+        var neurons = Get_Excited_Neurons(generic_triggers_layer);
+        neuro_context = Get_Excited_Nodes();
+        reload_Gallery();
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -66,18 +76,15 @@
         try {
             ws = new WebSocket(web_Host);
         } catch (ex) {
-            session_State = "false";
             return;
         }
         ws.onopen = WSonOpen;
         ws.onmessage = WSonMessage;
         ws.onclose = WSonClose;
         ws.onerror = WSonError;
-        session_State = "starting";
     };
 
     function WSonOpen() {
-        session_State = "true";
         ws.send("Session_Id=" + session_Id);
         setInterval(function() {
             ws.send("PONG:PING")
@@ -87,6 +94,7 @@
     function WSonMessage(event) {
         msg = event.data;
         if (msg === "PONG:PING" || msg === "PING:PONG") return;
+        msg = msg.replace(":", ETX);
         var particles = msg.split(ETX);
 
         if (particles.length === 2) {
@@ -97,31 +105,26 @@
                 Reset_Neurons(null);
                 init_WS();
                 return;
+            } else {
+                msg = particles[1];
             }
         }
-
-        var segments = event.data.split("\n");
-        for (i = 0; i < segments.length; i++) {
-            var parms = segments[i].split(ETX);
-            if (parms.length > 1) {
-                var msg = parms[1].toLowerCase();
-                Submit_Phrase(msg)
-                return;
-            }
+        if (msg.toLowerCase() === "reset") {
+            ws.send(msg);
+            reset_search();
+            return;
         }
+        Submit_Phrase(msg);
         ws.send(msg);
     };
 
     function WSonClose() {
-        session_State = "false";
         try {
             if (ws.status > 0) ws.close();
         } catch (Error) {}
     };
 
-    function WSonError() {
-        session_State = "false";
-    };
+    function WSonError() {};
 
     window.onbeforeunload = function() {
         try {
@@ -129,3 +132,5 @@
         } catch (Error) {}
     };
 </script>
+<script type="text/javascript" src='neurons/neurons.js'></script>
+<script type="text/javascript" src="bb_page.js" onload="load_nnod();"></script>
