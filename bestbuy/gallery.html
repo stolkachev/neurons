@@ -20,10 +20,10 @@
 </head>
 
 <body style="background-color:#999999;">
-
+    <div style="position:absolute; right:10pt; top:10pt; "><img id="qr_code" src="" /></div>
     <div id="gallery"></div>
 
-    <script>
+    <script type="text/javascript">
         var get_arguments = (function(a) {
             if (a == "") return {};
             var b = {};
@@ -37,10 +37,12 @@
             return b;
         })(window.location.search.substr(1).split('&'));
 
-
         // http://localhost/neurons/bestbuy/gallery.html?color=silver&manufacturer=apple&customerReviewAverage=5&price=500
         var api_key = "";
         var baseURL = "https://api.bestbuy.com/v1/products";
+
+        var api_key = get_arguments["api_key"];
+        if (api_key === undefined) api_key = "7ksBhjryZ5hxofJSEk2VBO7u";
 
         var categoryId = get_arguments["categoryid"];
         if (categoryId === undefined) {
@@ -49,8 +51,10 @@
             categoryId = "&(categoryPath.id=" + categoryId + ")";
         }
 
-        var api_key = get_arguments["api_key"];
-        if (api_key === undefined) api_key = "7ksBhjryZ5hxofJSEk2VBO7u";
+        var session_id = get_arguments["session_id"];
+        if (session_id !== undefined) {
+            document.getElementById('qr_code').src = "http://www.256gl.com/notes/clientbin/get_qr_barcode.ashx?session_ID=" + session_id;
+        }
 
         var customerReviewAverage = get_arguments["customerReviewAverage"];
         if (customerReviewAverage === undefined) {
@@ -100,9 +104,8 @@
             price = "regularPrice>=" + regularPrice_gt + "&regularPrice<=" + regularPrice_lt;
         }
         var img_height = 165;
-        var img_width = 165;
+        var img_width = 180;
         var prices = {};
-
 
         var url = baseURL + "(" + price + customerReviewAverage + manufacturer + color + onSale + categoryId + ")" +
             "?apiKey=" + api_key +
@@ -113,19 +116,17 @@
             if (this.readyState == 4 && this.status == 200) {
                 var myObj = JSON.parse(this.responseText);
                 var result = myObj.products;
-
                 var gallery = "";
+
                 for (i in result) {
+                    if (result[i].image === null) continue;
                     gallery = gallery + "<div class=\"thumbnail_wrapper\"><table cellspacing=\"0\" cellpadding=\"0\"><tr>\n" +
                         "<td class=\"td_thumbnail_image\">" +
                         "<a href=\"#\"><img src=\"" + result[i].image + "\" height='" + img_height + "' width='" + img_width + "'" +
                         "\" onclick=\"javascript:openThumbnailLink('" + result[i].url + "'); return false;\"></a></td>\n" +
                         "</tr><tr><td class=\"td_thumbnail_title\">\n" + " " + result[i].name + "<br>$" + result[i].regularPrice + "\n" +
                         "</td></tr></table></div> \n\n";
-                    if (i >= 100) {
-                        alert(gallery)
-                        break;
-                    }
+                    if (i >= 100) break;
                 }
                 var regularPrices = [];
                 if (myObj.facets.regularPrice) {
@@ -141,8 +142,8 @@
                     document.getElementById("gallery").innerHTML = gallery;
                     max_price = regularPrices[0];
                     min_price = regularPrices[regularPrices.length - 1];
-                    var obj = parent.document.getElementById('frm_agent');
-                    if (obj) {
+
+                    if (parent.document.getElementById('frm_agent').contentWindow) {
                         parent.document.getElementById('frm_agent').contentWindow.set_Price_Range(max_price, min_price);
                     }
                 }
@@ -151,16 +152,6 @@
 
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
-
-        function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[\[\]]/g, "\\$&");
-            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
     </script>
 </body>
 
