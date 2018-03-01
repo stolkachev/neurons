@@ -1,0 +1,136 @@
+﻿<script src='neurons/neurons.js'></script>
+<script type="text/javascript">
+    var my_Id = "WA";
+    var ws;
+    var web_Host = "ws://256gl.com:55438";
+
+    var initial_session_Id = "my_virtual";
+    var session_Id = "my_virtual";
+
+    var categoryId = "abcat0401000";
+    var current_Fuzzy_Number = 0;
+    var neuro_context = "";
+
+    var dataToSend = "";
+    var ETX = String.fromCharCode(3);
+
+    var generic_triggers_url = 'triggers_bb_generic.xml';
+    var cameras_linguistic_triggers_url = 'triggers_bb_cameras.xml';
+
+    var linguistic_URLs = [];
+    var layers = [];
+    var layer = null;
+    var url;
+
+    try {
+        localStorage.clear();
+    } catch (Error) {}
+
+    window.onload = function() {
+        init_WS();
+    }
+
+    function set_Price_Range(max_p, min_p) {
+        max_price = Number(max_p);
+        min_price = Number(min_p);
+
+    }
+
+    function reload_Gallery() {
+        //       url = "http://localhost/neurons/bestbuy/gallery.html?color=silver&manufacturer=apple&customerReviewAverage=5&price=500";
+        url = "gallery.html?price=" + current_Fuzzy_Number + "&categoryid=" + categoryId + "&session_id=" + session_Id;
+        if (neuro_context != "") {
+            var splited = neuro_context.split("<br>");
+            if (splited.length > 0) {
+                for (i = 0; i < splited.length - 1; i++) {
+                    var parts = splited[i].split(":");
+                    url = url + "&" + parts[0].toLowerCase() + "=" + parts[1].toLowerCase();
+                }
+            }
+        }
+        parent.frm_deepzoom.location.href = url;
+    }
+
+    function reset_search() {
+        Reset_Neurons(null);
+        current_Fuzzy_Number = 0;
+        categoryId = "abcat0401000";
+        neuro_context = "";
+        reload_Gallery()
+    }
+
+    function Show_Neural_State() {
+        var neurons = Get_Excited_Neurons(generic_triggers_layer);
+        neuro_context = Get_Excited_Nodes();
+        reload_Gallery();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function wsCall(functionName, args) {
+        ws.send(functionName + ETX + args);
+    }
+
+    function init_WS() {
+        reload_Gallery();
+        try {
+            ws = new WebSocket(web_Host);
+        } catch (ex) {
+            return;
+        }
+        ws.onopen = WSonOpen;
+        ws.onmessage = WSonMessage;
+        ws.onclose = WSonClose;
+        ws.onerror = WSonError;
+    };
+
+    function WSonOpen() {
+        ws.send("Session_Id=" + session_Id);
+        setInterval(function() {
+            ws.send("PONG:PING")
+        }, 60000);
+    };
+
+    function WSonMessage(event) {
+        msg = event.data;
+        if (msg === "PONG:PING" || msg === "PING:PONG") return;
+        msg = msg.replace(":", ETX);
+        var particles = msg.split(ETX);
+
+        if (particles.length === 2) {
+            if (particles[1] === 'DISCONNECTED') {
+                ws.send("COMMAND" + ETX + "DISCONNECT");
+                ws.close();
+                session_Id = initial_session_Id;
+                Reset_Neurons(null);
+                init_WS();
+                return;
+            } else {
+                msg = particles[1];
+            }
+        }
+        if (msg.toLowerCase() === "reset") {
+            ws.send(msg);
+            reset_search();
+            return;
+        }
+        Submit_Phrase(msg);
+        ws.send(msg);
+    };
+
+    function WSonClose() {
+        try {
+            if (ws.status > 0) ws.close();
+        } catch (Error) {}
+    };
+
+    function WSonError() {};
+
+    window.onbeforeunload = function() {
+        try {
+            ws.close();
+        } catch (Error) {}
+    };
+</script>
+<script type="text/javascript" src='neurons/neurons.js'></script>
+<script type="text/javascript" src="bb_page.js" onload="load_nnod();"></script>
