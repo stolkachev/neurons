@@ -270,6 +270,10 @@
     <state name="Sweden">
       <item word="sweden" weight="1.0"></item>
     </state>
+    <state name="Colombia">
+      <item word="colombian" weight="1.0"></item>
+      <item word="colombia" weight="1.0"></item>
+    </state>
     <state name="Spain">
       <item word="spain" weight="1.0"></item>
     </state>
