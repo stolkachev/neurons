@@ -18,6 +18,23 @@
 
 <neuro_triggers name="Headache">
 
+  <neuro_trigger name="Emotional" prompt="Weather, Work...">
+    <state name="Depressed">
+      <item word="depressed" weight="1.0"></item>
+      <item word="sad" weight="1.0"></item>
+    </state>
+    <state name="Happy">
+      <item word="hapy" weight="1.0"></item>
+    </state>
+    <state name="OK">
+      <item word="ok" weight="0.5"></item>
+      <item word="i" weight="0.5"></item>
+      <item word="am" weight="0.5"></item>
+      <item word="everything" weight="0.5"></item>
+      <item word="fine" weight="0.5"></item>
+    </state>
+  </neuro_trigger>
+
   <neuro_trigger name="Onset" prompt="Morning, Evening...">
     <state name="Morning">
       <item word="morning" weight="1.0"></item>
@@ -30,6 +47,13 @@
     </state>
     <state name="Night">
       <item word="night" weight="1.0"></item>
+    </state>
+    <state name="Today">
+      <item word="today" weight="1.0"></item>
+      <item word="now" weight="1.0"></item>
+    </state>
+    <state name="Yesterday">
+      <item word="yesterday" weight="1.0"></item>
     </state>
   </neuro_trigger>
 
