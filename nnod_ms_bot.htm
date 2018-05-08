@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>256gl Neurons v 1.0</title>
+</head>
+
+<body onload='load_completed()'>
+    <table>
+        <tr>
+            <th>Chat</th>
+            <th>State</th>
+        </tr>
+        <tr>
+            <td style="width: 55%;">
+                <div style="position: absolute; top: 40pt; padding-left: 20px; ">
+                    <input type="text" id="Phrase" style="width:180px" onkeydown="if (event.keyCode == 13) Submit_Phrase();">&nbsp;
+                    <input type="button" onclick="Submit_Phrase();" value="OK" />&nbsp;<input type="button" onclick="Reset();" value="Reset" /><br>
+                </div>
+                <br />
+                <div id='consoleLog' style='position: absolute; width:360px; top: 80pt; padding-left: 20px;  padding-right: 20px; '>
+                </div>
+
+            </td>
+            <td style="width: 45%; padding-left: 20px; border-left: solid 1px #cccccc;">
+                <div id="Result">
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <script src='neurons/neurons.js'></script>
+    <script>
+        var generic_triggers_url = "triggers/triggers_generic.xml";
+        var headache_triggers_url = "triggers/triggers_headache.xml";
+        var wines_triggers_url = "triggers/triggers_wines.xml";
+        var cars_triggers_url = "triggers/triggers_cars.xml";
+        var chat = document.getElementById('consoleLog');
+
+        var linguistic_URLs = [];
+        var layers = [];
+        var layer = null;
+        var url;
+
+        var words_layer = null;
+        var generic_triggers_layer = null;
+
+
+        function load_completed() {
+            words_layer = Add_Neuro_Layer(1, -1, 1, 50000, "words");
+            generic_triggers_layer = Build_Neural_Layer(generic_triggers_url);
+            generic_triggers_layer.Disharged_CallBack = Show_Neural_State;
+            layers.push(generic_triggers_layer);
+            Save_Linguistics_URL(generic_triggers_url);
+
+            linguistic_URLs = Restore_Linguistics_URLs();
+
+            if (linguistic_URLs != null) {
+                for (var i = 0; i < linguistic_URLs.length; i++) {
+                    url = linguistic_URLs[i];
+                    if (url == generic_triggers_url) continue;
+                    layer = Build_Neural_Layer(url);
+                    layers.push(layer);
+                    Save_Linguistics_URL(url);
+                }
+            }
+
+            Restore_Neural_State(generic_triggers_layer);
+            for (var i = 0; i < layers.length; i++) {
+                Restore_Neural_State(layers[i]);
+            }
+            Show_Neural_State();
+            linguistic_URLs = Restore_Linguistics_URLs();
+        }
+
+        function Reset() {
+            Reset_Neurons(null);
+            localStorage.clear();
+            document.getElementById("Result").innerHTML = "";
+            linguistic_URLs = [];
+            layers = [];
+            layer = null;
+
+            Clean_Personal_Neural_Net();
+            load_completed();
+            Show_Neural_State();
+        }
+
+        function add_Layer(linguistic_triggers_url) {
+            if (linguistic_URLs == null) {
+                layer = Build_Neural_Layer(linguistic_triggers_url);
+                layers.push(layer);
+                Show_Neural_State();
+            } else {
+                for (var k = 0; k < linguistic_URLs.length; k++) {
+                    if (linguistic_URLs[k] == linguistic_triggers_url) return;
+                }
+                layer = Build_Neural_Layer(linguistic_triggers_url);
+                layers.push(layer);
+                Save_Linguistics_URL(linguistic_triggers_url);
+                linguistic_URLs = Restore_Linguistics_URLs();
+                Show_Neural_State();
+            }
+        }
+
+        function check_Controls() {
+            var g_neurons = Get_Excited_Neurons(generic_triggers_layer);
+            if (g_neurons == null) return;
+            for (var i = 0; i < g_neurons.length; i++) {
+                var nl = g_neurons[i];
+                var splitter = nl.Name.split(':');
+
+                if (nl.Name.toLowerCase() == "health:headache") {
+                    add_Layer(headache_triggers_url);
+                }
+
+                if (nl.Name.toLowerCase() == "shopping:wine") {
+                    add_Layer(wines_triggers_url);
+                }
+
+                if (nl.Name.toLowerCase() == "shopping:car") {
+                    add_Layer(cars_triggers_url);
+                }
+
+                if (nl.Name.toLowerCase() == "clean:clean") {
+                    localStorage.clear();
+                    document.getElementById("Phrase").value = "";
+                    document.getElementById("Result").innerHTML = "";
+                }
+            }
+        }
+
+        function generateAnswer(phrase) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var obj = JSON.parse(this.responseText)
+                    chat.innerHTML = chat.innerHTML + "<font color=red>" + phrase + '</font><br>';
+                    chat.innerHTML = chat.innerHTML + "<font color=blue>" + obj.answers[0].answer + '</font><br><br>';
+                }
+            };
+            xhttp.open("POST", "https://claudine.azurewebsites.net/qnamaker/knowledgebases/9c55a088-885e-462a-8aa7-a76f8dddbda9/generateAnswer", true);
+            xhttp.setRequestHeader("Authorization", "EndpointKey 6e78c816-f731-447f-8b1c-d0d36234d4c4");
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send('{"question":"' + phrase + '"}');
+        }
+
+        function Submit_Phrase() {
+
+            var phrase = document.getElementById("Phrase").value;
+            generateAnswer(phrase)
+
+            //          Reset_Neurons(generic_triggers_layer);
+            for (var i = 0; i < layers.length; i++) {
+                var layer = layers[i];
+                Reset_Half_Charged_Neurons(layer);
+            }
+
+            document.getElementById("Result").innerHTML = "";
+            phrase = phrase.toLowerCase();
+            var l = phrase.length - 1;
+            var q = phrase.indexOf('?');
+
+            Excite_Word(".");
+            if (phrase == "") phrase = "*enter*";
+            phrase = phrase.replace('?', ' ? ');
+            Excite_Phrase(phrase);
+            try {
+                localStorage.removeItem(generic_triggers_layer.Name);
+
+                Save_Neural_State(generic_triggers_layer);
+                for (var i = 0; i < layers.length; i++) {
+                    Save_Neural_State(layers[i]);
+                }
+            } catch (Error) {}
+
+            Show_Neural_State();
+            check_Controls();
+            document.getElementById("Phrase").value = "";
+        }
+
+        function Show_Neural_State() {
+            var neurons = Get_Excited_Neurons(generic_triggers_layer);
+            var str_result = "";
+            for (var i = 0; i < layers.length; i++) {
+                var layer = layers[i];
+                var c_triggers = Get_Charged_Triggers(layer);
+                str_result = str_result + "<hr>";
+                str_result = str_result + "<b><font color=black>" + layer.Name + " known triggers:</font></b><br>"
+
+                for (var j = 0; j < c_triggers.length; j++) {
+                    var splitter = c_triggers[j].split(":")
+                    str_result = str_result + "<i>" + splitter[0] + ":<font color=red>&nbsp;&nbsp;" + splitter[1] + "</font></i><br>";
+                }
+
+                var d_triggers = Get_Discharged_Triggers(layer);
+                str_result = str_result + "<hr>";
+                str_result = str_result + "<b><font color=black>" + layer.Name + " unresolved triggers:</font></b><br>"
+
+                for (var j = 0; j < d_triggers.length; j++) {
+                    var splitter = d_triggers[j].split(":")
+                    str_result = str_result + "<i>" + splitter[0] + ":<font color=blue>&nbsp;&nbsp;" + splitter[1] + "</font></i><br>";
+                }
+            }
+            document.getElementById("Result").innerHTML = str_result;
+        }
+
+        // NEURON'S FUNCTIONS
+        function Help() {
+            Save_Neural_State(generic_triggers_layer);
+            for (var i = 0; i < layers.length; i++) {
+                Save_Neural_State(layers[i]);
+            }
+            window.open("http://www.256gl.com");
+        }
+
+        function Hello_World() {
+            //           alert("Hello_World was activated!")
+        }
+    </script>
+
+</body>
+
+</html>
