@@ -18,7 +18,7 @@
                     <input type="button" onclick="Submit_Phrase();" value="OK" />&nbsp;<input type="button" onclick="Reset();" value="Reset" /><br>
                 </div>
                 <br />
-                <div id='consoleLog' style='position: absolute; width:360px; top: 80pt; padding-left: 20px;  padding-right: 20px; '>
+                <div id='chatLog' style='position: absolute; width:360px; top: 80pt; padding-left: 20px;  padding-right: 20px; '>
                 </div>
 
             </td>
@@ -35,7 +35,7 @@
         var headache_triggers_url = "triggers/triggers_headache.xml";
         var wines_triggers_url = "triggers/triggers_wines.xml";
         var cars_triggers_url = "triggers/triggers_cars.xml";
-        var chat = document.getElementById('consoleLog');
+        var chat = document.getElementById('chatLog');
 
         var linguistic_URLs = [];
         var layers = [];
@@ -77,6 +77,7 @@
             Reset_Neurons(null);
             localStorage.clear();
             document.getElementById("Result").innerHTML = "";
+            document.getElementById("chatLog").innerHTML = "";
             linguistic_URLs = [];
             layers = [];
             layer = null;
