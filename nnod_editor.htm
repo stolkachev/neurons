@@ -263,6 +263,7 @@
             };
 
             var options = {
+
                 nodes: {
 
                 },
@@ -292,6 +293,12 @@
                         color: "#109618" // green
                     }
                 },
+                physics: {
+                    enabled: false,
+                    minVelocity: 0.75,
+                    solver: "repulsion",
+                    timestep: 0.01
+                },
                 interaction: {
                     hover: true
                 },
@@ -316,6 +323,7 @@
                 params.event = "[original event]";
                 document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
             });
+
             network.on("oncontext", function(params) {
                 params.event = "[original event]";
                 document.getElementById('eventSpan').innerHTML = '<h2>oncontext (right click) event:</h2>' + JSON.stringify(params, null, 4);
@@ -350,6 +358,10 @@
             });
             network.on("selectNode", function(params) {
                 console.log('selectNode Event:', params);
+                network.clustering.updateClusteredNode(params.nodes[0], {
+                    shape: 'star'
+                });
+
             });
             network.on("selectEdge", function(params) {
                 console.log('selectEdge Event:', params);
