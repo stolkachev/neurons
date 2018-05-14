@@ -1,0 +1,474 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>NNOD Dialog Editor</title>
+
+    <style type="text/css">
+        html,
+        body {
+            font: 11pt arial;
+        }
+        
+        h1 {
+            font-size: 150%;
+            margin: 5px 0;
+        }
+        
+        h2 {
+            font-size: 100%;
+            margin: 5px 0;
+        }
+        
+        table.view {
+            width: 100%;
+        }
+        
+        table td {
+            vertical-align: top;
+        }
+        
+        table table {
+            background-color: #f5f5f5;
+            border: 1px solid #e5e5e5;
+        }
+        
+        table table td {
+            vertical-align: middle;
+        }
+        
+        input[type=text],
+        pre {
+            border: 1px solid lightgray;
+        }
+        
+        pre {
+            margin: 0;
+            padding: 5px;
+            font-size: 10pt;
+        }
+        
+        #network {
+            width: 100%;
+            height: 400px;
+            border: 1px solid lightgray;
+        }
+    </style>
+
+    <script type="text/javascript" src="/js/vis.js"></script>
+    <link href="/js/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript">
+        var nodes = null;
+        var edges = null;
+        var network = null;
+
+        var LENGTH_MAIN = 350,
+            LENGTH_SERVER = 150,
+            LENGTH_SUB = 50,
+            WIDTH_SCALE = 2,
+            GREEN = 'green',
+            RED = '#C5000B',
+            ORANGE = 'orange',
+            GRAY = 'gray',
+            BLACK = '#2B1B17';
+
+
+        // convenience method to stringify a JSON object
+        function toJSON(obj) {
+            return JSON.stringify(obj, null, 4);
+        }
+
+        function addNode() {
+            try {
+                nodes.add({
+                    id: document.getElementById('node-id').value,
+                    label: document.getElementById('node-label').value
+                });
+            } catch (err) {
+                alert(err);
+            }
+        }
+
+        function updateNode() {
+            try {
+                nodes.update({
+                    id: document.getElementById('node-id').value,
+                    label: document.getElementById('node-label').value
+                });
+            } catch (err) {
+                alert(err);
+            }
+        }
+
+        function removeNode() {
+            try {
+                nodes.remove({
+                    id: document.getElementById('node-id').value
+                });
+            } catch (err) {
+                alert(err);
+            }
+        }
+
+        function addEdge() {
+            try {
+                edges.add({
+                    id: document.getElementById('edge-id').value,
+                    from: document.getElementById('edge-from').value,
+                    to: document.getElementById('edge-to').value
+                });
+            } catch (err) {
+                alert(err);
+            }
+        }
+
+        function updateEdge() {
+            try {
+                edges.update({
+                    id: document.getElementById('edge-id').value,
+                    from: document.getElementById('edge-from').value,
+                    to: document.getElementById('edge-to').value
+                });
+            } catch (err) {
+                alert(err);
+            }
+        }
+
+        function removeEdge() {
+            try {
+                edges.remove({
+                    id: document.getElementById('edge-id').value
+                });
+            } catch (err) {
+                alert(err);
+            }
+        }
+
+        function draw() {
+            // create an array with nodes
+
+
+            nodes = new vis.DataSet();
+
+
+
+            nodes.on('*', function() {
+                document.getElementById('nodes').innerHTML = JSON.stringify(nodes.get(), null, 4);
+            });
+
+
+            var mynetwork = document.getElementById('network');
+            var x = -mynetwork.clientWidth / 2 + 50;
+            var y = -mynetwork.clientHeight / 2 + 50;
+            var step = 70;
+            nodes.add({
+                id: 1000,
+                x: x,
+                y: y,
+                label: 'Internet',
+                group: 'internet',
+                value: 1,
+                fixed: true,
+                physics: false
+            });
+            nodes.add({
+                id: 1001,
+                x: x,
+                y: y + step,
+                label: 'Switch',
+                group: 'switch',
+                value: 1,
+                fixed: true,
+                physics: false
+            });
+            nodes.add({
+                id: 1002,
+                x: x,
+                y: y + 2 * step,
+                label: 'Server',
+                group: 'server',
+                value: 1,
+                fixed: true,
+                physics: false
+            });
+            nodes.add({
+                id: 1003,
+                x: x,
+                y: y + 3 * step,
+                label: 'Computer',
+                group: 'desktop',
+                value: 1,
+                fixed: true,
+                physics: false
+            });
+            nodes.add({
+                id: 1004,
+                x: x,
+                y: y + 4 * step,
+                label: 'Smartphone',
+                group: 'mobile',
+                value: 1,
+                fixed: true,
+                physics: false
+            });
+
+
+            nodes.add([{
+                id: '1',
+                label: 'Node 1',
+                title: 'I have a popup!'
+            }, {
+                id: '2',
+                label: 'Node 2'
+            }, {
+                id: '3',
+                label: 'Node 3'
+            }, {
+                id: '4',
+                label: 'Node 4'
+            }, {
+                id: '5',
+                label: 'Node 5'
+            }]);
+
+            // create an array with edges
+            edges = new vis.DataSet();
+            edges.on('*', function() {
+                document.getElementById('edges').innerHTML = JSON.stringify(edges.get(), null, 4);
+            });
+            edges.add([{
+                id: '1',
+                from: '1',
+                to: '2'
+            }, {
+                id: '2',
+                from: '1',
+                to: '3'
+            }, {
+                id: '3',
+                from: '2',
+                to: '4'
+            }, {
+                id: '4',
+                from: '2',
+                to: '5'
+            }]);
+
+            // create a network
+            var container = document.getElementById('network');
+            var data = {
+                nodes: nodes,
+                edges: edges
+            };
+
+            var options = {
+                nodes: {
+
+                },
+                edges: {
+                    color: GRAY,
+                    smooth: false
+                },
+                groups: {
+                    'switch': {
+                        shape: 'triangle',
+                        color: '#FF9900' // orange
+                    },
+                    desktop: {
+                        shape: 'dot',
+                        color: "#2B7CE9" // blue
+                    },
+                    mobile: {
+                        shape: 'dot',
+                        color: "#5A1E5C" // purple
+                    },
+                    server: {
+                        shape: 'square',
+                        color: "#C5000B" // red
+                    },
+                    internet: {
+                        shape: 'square',
+                        color: "#109618" // green
+                    }
+                },
+                interaction: {
+                    hover: true
+                },
+                manipulation: {
+                    enabled: true
+                }
+            };
+
+
+
+
+
+            network = new vis.Network(container, data, options);
+
+
+            network.on("click", function(params) {
+                params.event = "[original event]";
+                document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4);
+                console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+            });
+            network.on("doubleClick", function(params) {
+                params.event = "[original event]";
+                document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
+            });
+            network.on("oncontext", function(params) {
+                params.event = "[original event]";
+                document.getElementById('eventSpan').innerHTML = '<h2>oncontext (right click) event:</h2>' + JSON.stringify(params, null, 4);
+            });
+            network.on("dragStart", function(params) {
+                // There's no point in displaying this event on screen, it gets immediately overwritten
+                params.event = "[original event]";
+                console.log('dragStart Event:', params);
+                console.log('dragStart event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+            });
+            network.on("dragging", function(params) {
+                params.event = "[original event]";
+                document.getElementById('eventSpan').innerHTML = '<h2>dragging event:</h2>' + JSON.stringify(params, null, 4);
+            });
+            network.on("dragEnd", function(params) {
+                params.event = "[original event]";
+                document.getElementById('eventSpan').innerHTML = '<h2>dragEnd event:</h2>' + JSON.stringify(params, null, 4);
+                console.log('dragEnd Event:', params);
+                console.log('dragEnd event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+            });
+            network.on("zoom", function(params) {
+                document.getElementById('eventSpan').innerHTML = '<h2>zoom event:</h2>' + JSON.stringify(params, null, 4);
+            });
+            network.on("showPopup", function(params) {
+                document.getElementById('eventSpan').innerHTML = '<h2>showPopup event: </h2>' + JSON.stringify(params, null, 4);
+            });
+            network.on("hidePopup", function() {
+                console.log('hidePopup Event');
+            });
+            network.on("select", function(params) {
+                console.log('select Event:', params);
+            });
+            network.on("selectNode", function(params) {
+                console.log('selectNode Event:', params);
+            });
+            network.on("selectEdge", function(params) {
+                console.log('selectEdge Event:', params);
+            });
+            network.on("deselectNode", function(params) {
+                console.log('deselectNode Event:', params);
+            });
+            network.on("deselectEdge", function(params) {
+                console.log('deselectEdge Event:', params);
+            });
+            network.on("hoverNode", function(params) {
+                console.log('hoverNode Event:', params);
+            });
+            network.on("hoverEdge", function(params) {
+                console.log('hoverEdge Event:', params);
+            });
+            network.on("blurNode", function(params) {
+                console.log('blurNode Event:', params);
+            });
+            network.on("blurEdge", function(params) {
+                console.log('blurEdge Event:', params);
+            });
+        }
+    </script>
+
+</head>
+
+<body onload="draw();">
+
+    <p>
+        This example demonstrates dynamically adding, updating and removing nodes and edges using a DataSet.
+    </p>
+
+    <h1>Adjust</h1>
+    <table>
+        <tr>
+            <td>
+                <h2>Node</h2>
+                <table>
+                    <tr>
+                        <td></td>
+                        <td><label for="node-id">Id</label></td>
+                        <td><input id="node-id" type="text" value="6"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><label for="node-label">Label</label></td>
+                        <td><input id="node-label" type="text" value="Node 6"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Action</td>
+                        <td>
+                            <button id="node-add" onclick="addNode();">Add</button>
+                            <button id="node-update" onclick="updateNode();">Update</button>
+                            <button id="node-remove" onclick="removeNode();">Remove</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <h2>Edge</h2>
+                <table>
+                    <tr>
+                        <td></td>
+                        <td><label for="edge-id">Id</label></td>
+                        <td><input id="edge-id" type="text" value="5"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><label for="edge-from">From</label></td>
+                        <td><input id="edge-from" type="text" value="3"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><label for="edge-to">To</label></td>
+                        <td><input id="edge-to" type="text" value="4"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Action</td>
+                        <td>
+                            <button id="edge-add" onclick="addEdge();">Add</button>
+                            <button id="edge-update" onclick="updateEdge();">Update</button>
+                            <button id="edge-remove" onclick="removeEdge();">Remove</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+    <h1>View</h1>
+    <table class="view">
+        <colgroup>
+            <col width="25%">
+            <col width="25%">
+            <col width="50%">
+        </colgroup>
+        <tr>
+            <td>
+                <h2>Nodes</h2>
+                <pre id="nodes"></pre>
+            </td>
+
+            <td>
+                <h2>Edges</h2>
+                <pre id="edges"></pre>
+            </td>
+
+            <td>
+                <h2>Network</h2>
+
+                <div id="network"></div>
+            </td>
+        </tr>
+    </table>
+    <pre id="eventSpan"></pre>
+</body>
+
+</html>
