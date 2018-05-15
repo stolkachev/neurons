@@ -62,6 +62,7 @@
         var nodes = null;
         var edges = null;
         var network = null;
+        var current_shape = 'square'
 
         var LENGTH_MAIN = 350,
             LENGTH_SERVER = 150,
@@ -265,7 +266,7 @@
             var options = {
 
                 nodes: {
-
+                    shape: 'dot'
                 },
                 edges: {
                     color: GRAY,
@@ -356,13 +357,26 @@
             network.on("select", function(params) {
                 console.log('select Event:', params);
             });
+
+
+
+
             network.on("selectNode", function(params) {
+                // current_shape = network.clustering.updateClusteredNode(params.nodes[0].shape);
                 console.log('selectNode Event:', params);
+
+                str = JSON.stringify(nodes);
+                alert(str);
+                alert(nodes["_data"][params.nodes[0]].id);
                 network.clustering.updateClusteredNode(params.nodes[0], {
-                    shape: 'star'
+                    shape: current_shape
                 });
 
             });
+
+
+
+
             network.on("selectEdge", function(params) {
                 console.log('selectEdge Event:', params);
             });
