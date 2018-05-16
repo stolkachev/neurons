@@ -5,41 +5,10 @@
     <title>NNOD Dialog Editor</title>
 
     <style type="text/css">
-        html,
-        body {
-            font: 11pt arial;
-        }
-        
-        h1 {
-            font-size: 150%;
-            margin: 5px 0;
-        }
-        
-        h2 {
-            font-size: 100%;
-            margin: 5px 0;
-        }
+
         
         table.view {
             width: 100%;
-        }
-        
-        table td {
-            vertical-align: top;
-        }
-        
-        table table {
-            background-color: #f5f5f5;
-            border: 1px solid #e5e5e5;
-        }
-        
-        table table td {
-            vertical-align: middle;
-        }
-        
-        input[type=text],
-        pre {
-            border: 1px solid lightgray;
         }
         
         pre {
@@ -49,8 +18,8 @@
         }
         
         #network {
-            width: 100%;
-            height: 400px;
+            width: 95%;
+            height: 600px;
             border: 1px solid lightgray;
         }
     </style>
@@ -63,11 +32,12 @@
         var edges = null;
         var network = null;
         var current_shape = 'square'
+        var shapes = [1000, 1001, 1002, 1003, 1004];
 
         var LENGTH_MAIN = 350,
             LENGTH_SERVER = 150,
             LENGTH_SUB = 50,
-            WIDTH_SCALE = 2,
+            WIDTH_SCALE = 1,
             GREEN = 'green',
             RED = '#C5000B',
             ORANGE = 'orange',
@@ -147,28 +117,20 @@
         }
 
         function draw() {
-            // create an array with nodes
-
-
             nodes = new vis.DataSet();
 
 
-
-            nodes.on('*', function() {
-                document.getElementById('nodes').innerHTML = JSON.stringify(nodes.get(), null, 4);
-            });
-
-
             var mynetwork = document.getElementById('network');
-            var x = -mynetwork.clientWidth / 2 + 50;
-            var y = -mynetwork.clientHeight / 2 + 50;
-            var step = 70;
+            var x = -mynetwork.clientWidth / 2 - 250;
+            var y = -mynetwork.clientHeight / 2 - 120 ;
+            var step = 120;
+
             nodes.add({
                 id: 1000,
                 x: x,
                 y: y,
-                label: 'Internet',
-                group: 'internet',
+                label: 'Starter',
+                group: 'starters',
                 value: 1,
                 fixed: true,
                 physics: false
@@ -177,8 +139,8 @@
                 id: 1001,
                 x: x,
                 y: y + step,
-                label: 'Switch',
-                group: 'switch',
+                label: 'Semaphore',
+                group: 'semaphores',
                 value: 1,
                 fixed: true,
                 physics: false
@@ -187,8 +149,8 @@
                 id: 1002,
                 x: x,
                 y: y + 2 * step,
-                label: 'Server',
-                group: 'server',
+                label: 'Prompt',
+                group: 'prommpts',
                 value: 1,
                 fixed: true,
                 physics: false
@@ -197,18 +159,8 @@
                 id: 1003,
                 x: x,
                 y: y + 3 * step,
-                label: 'Computer',
-                group: 'desktop',
-                value: 1,
-                fixed: true,
-                physics: false
-            });
-            nodes.add({
-                id: 1004,
-                x: x,
-                y: y + 4 * step,
-                label: 'Smartphone',
-                group: 'mobile',
+                label: 'Trigger',
+                group: 'triggers',
                 value: 1,
                 fixed: true,
                 physics: false
@@ -217,8 +169,7 @@
 
             nodes.add([{
                 id: '1',
-                label: 'Node 1',
-                title: 'I have a popup!'
+                label: 'Node 1'
             }, {
                 id: '2',
                 label: 'Node 2'
@@ -235,9 +186,7 @@
 
             // create an array with edges
             edges = new vis.DataSet();
-            edges.on('*', function() {
-                document.getElementById('edges').innerHTML = JSON.stringify(edges.get(), null, 4);
-            });
+
             edges.add([{
                 id: '1',
                 from: '1',
@@ -264,7 +213,6 @@
             };
 
             var options = {
-
                 nodes: {
                     shape: 'dot'
                 },
@@ -273,38 +221,35 @@
                     smooth: false
                 },
                 groups: {
-                    'switch': {
-                        shape: 'triangle',
+                    starters: {
+                        shape: 'ellipse',
                         color: '#FF9900' // orange
                     },
-                    desktop: {
+                    semaphores: {
                         shape: 'dot',
                         color: "#2B7CE9" // blue
                     },
-                    mobile: {
-                        shape: 'dot',
+                    prommpts: {
+                        shape: 'square',
                         color: "#5A1E5C" // purple
                     },
-                    server: {
-                        shape: 'square',
+                    triggers: {
+                        shape: 'star',
                         color: "#C5000B" // red
-                    },
-                    internet: {
-                        shape: 'square',
-                        color: "#109618" // green
                     }
                 },
                 physics: {
-                    enabled: false,
-                    minVelocity: 0.75,
-                    solver: "repulsion",
-                    timestep: 0.01
+                    enabled: false
                 },
                 interaction: {
-                    hover: true
+                    hover: true,
+                    zoomView: false
                 },
                 manipulation: {
                     enabled: true
+                },
+                layout: {
+                    randomSeed: 0
                 }
             };
 
@@ -316,40 +261,40 @@
 
 
             network.on("click", function(params) {
-                params.event = "[original event]";
-                document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4);
-                console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+                // params.event = "[original event]";
+                // document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4);
+                // console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
             });
             network.on("doubleClick", function(params) {
-                params.event = "[original event]";
-                document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
+                // params.event = "[original event]";
+                // document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
             });
 
             network.on("oncontext", function(params) {
-                params.event = "[original event]";
-                document.getElementById('eventSpan').innerHTML = '<h2>oncontext (right click) event:</h2>' + JSON.stringify(params, null, 4);
+                // params.event = "[original event]";
+                // document.getElementById('eventSpan').innerHTML = '<h2>oncontext (right click) event:</h2>' + JSON.stringify(params, null, 4);
             });
             network.on("dragStart", function(params) {
                 // There's no point in displaying this event on screen, it gets immediately overwritten
                 params.event = "[original event]";
-                console.log('dragStart Event:', params);
-                console.log('dragStart event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+                // console.log('dragStart Event:', params);
+                // console.log('dragStart event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
             });
             network.on("dragging", function(params) {
-                params.event = "[original event]";
-                document.getElementById('eventSpan').innerHTML = '<h2>dragging event:</h2>' + JSON.stringify(params, null, 4);
+                // params.event = "[original event]";
+                // document.getElementById('eventSpan').innerHTML = '<h2>dragging event:</h2>' + JSON.stringify(params, null, 4);
             });
             network.on("dragEnd", function(params) {
                 params.event = "[original event]";
-                document.getElementById('eventSpan').innerHTML = '<h2>dragEnd event:</h2>' + JSON.stringify(params, null, 4);
-                console.log('dragEnd Event:', params);
-                console.log('dragEnd event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+                // document.getElementById('eventSpan').innerHTML = '<h2>dragEnd event:</h2>' + JSON.stringify(params, null, 4);
+                // console.log('dragEnd Event:', params);
+                // console.log('dragEnd event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
             });
             network.on("zoom", function(params) {
-                document.getElementById('eventSpan').innerHTML = '<h2>zoom event:</h2>' + JSON.stringify(params, null, 4);
+                // document.getElementById('eventSpan').innerHTML = '<h2>zoom event:</h2>' + JSON.stringify(params, null, 4);
             });
             network.on("showPopup", function(params) {
-                document.getElementById('eventSpan').innerHTML = '<h2>showPopup event: </h2>' + JSON.stringify(params, null, 4);
+              //  document.getElementById('eventSpan').innerHTML = '<h2>showPopup event: </h2>' + JSON.stringify(params, null, 4);
             });
             network.on("hidePopup", function() {
                 console.log('hidePopup Event');
@@ -358,24 +303,17 @@
                 console.log('select Event:', params);
             });
 
-
-
-
             network.on("selectNode", function(params) {
-                // current_shape = network.clustering.updateClusteredNode(params.nodes[0].shape);
                 console.log('selectNode Event:', params);
-
-                str = JSON.stringify(nodes);
-                alert(str);
-                alert(nodes["_data"][params.nodes[0]].id);
+                if (params.nodes[0] >= 1000 && params.nodes[0] <= 1004)
+                {
+                    current_shape = network.clustering.body.nodes[params.nodes[0]].shape.constructor.name.toLowerCase();
+                };
                 network.clustering.updateClusteredNode(params.nodes[0], {
                     shape: current_shape
                 });
 
             });
-
-
-
 
             network.on("selectEdge", function(params) {
                 console.log('selectEdge Event:', params);
@@ -404,12 +342,6 @@
 </head>
 
 <body onload="draw();">
-
-    <p>
-        This example demonstrates dynamically adding, updating and removing nodes and edges using a DataSet.
-    </p>
-
-    <h1>Adjust</h1>
     <table>
         <tr>
             <td>
@@ -469,32 +401,14 @@
 
     </table>
 
-    <h1>View</h1>
+    <h1>Network</h1>
     <table class="view">
-        <colgroup>
-            <col width="25%">
-            <col width="25%">
-            <col width="50%">
-        </colgroup>
         <tr>
             <td>
-                <h2>Nodes</h2>
-                <pre id="nodes"></pre>
-            </td>
-
-            <td>
-                <h2>Edges</h2>
-                <pre id="edges"></pre>
-            </td>
-
-            <td>
-                <h2>Network</h2>
-
                 <div id="network"></div>
             </td>
         </tr>
     </table>
-    <pre id="eventSpan"></pre>
 </body>
 
 </html>
