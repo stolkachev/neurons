@@ -4,39 +4,17 @@
 <head>
     <title>NNOD Dialog Editor</title>
 
-    <style type="text/css">
-        table.view {
-            width: 90%;
-            position: absolute
-        }
-        
-        #network {
-            width: 100%;
-            height: 600px;
-            border: 1px solid lightgray;
-        }
-    </style>
-
     <script type="text/javascript" src="js/vis.js"></script>
-    <link href="js/vis-network.min.css" rel="stylesheet" type="text/css" />
+    <link href="nnod_editor.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript">
         var nodes = null;
+        var shapes = null;
         var edges = null;
-        var network = null;
+        var shapes_edges = null;
+        var network_of_nodes = null;
+        var network_of_shapes = null;
         var current_shape = 'square'
-        var shapes = [1000, 1001, 1002, 1003, 1004];
-
-        var LENGTH_MAIN = 350,
-            LENGTH_SERVER = 150,
-            LENGTH_SUB = 50,
-            WIDTH_SCALE = 1,
-            GREEN = 'green',
-            RED = '#C5000B',
-            ORANGE = 'orange',
-            GRAY = 'gray',
-            BLACK = '#2B1B17';
-
 
         // convenience method to stringify a JSON object
         function toJSON(obj) {
@@ -44,15 +22,13 @@
         }
 
         function draw() {
-            nodes = new vis.DataSet();
-
-
-            var mynetwork = document.getElementById('network');
-            var x = -mynetwork.clientWidth / 2 - 250;
-            var y = -mynetwork.clientHeight / 2 - 120;
+            shapes = new vis.DataSet();
+            var mynetwork = document.getElementById('shapes');
+            var x = 0;
+            var y = 0;
             var step = 120;
 
-            nodes.add({
+            shapes.add({
                 id: 1000,
                 x: x,
                 y: y,
@@ -62,7 +38,7 @@
                 fixed: true,
                 physics: false
             });
-            nodes.add({
+            shapes.add({
                 id: 1001,
                 x: x,
                 y: y + step,
@@ -72,7 +48,7 @@
                 fixed: true,
                 physics: false
             });
-            nodes.add({
+            shapes.add({
                 id: 1002,
                 x: x,
                 y: y + 2 * step,
@@ -82,7 +58,7 @@
                 fixed: true,
                 physics: false
             });
-            nodes.add({
+            shapes.add({
                 id: 1003,
                 x: x,
                 y: y + 3 * step,
@@ -93,7 +69,8 @@
                 physics: false
             });
 
-
+            nodes = new vis.DataSet();
+            var mynetwork = document.getElementById('nodes');
             nodes.add([{
                 id: '1',
                 label: 'Node 1'
@@ -132,19 +109,78 @@
                 to: '5'
             }]);
 
-            // create a network
-            var container = document.getElementById('network');
-            var data = {
+            // create a networks
+            var container_of_nodes = document.getElementById('nodes');
+            var container_of_shapes = document.getElementById('shapes');
+
+            var data_nodes = {
                 nodes: nodes,
                 edges: edges
             };
+            var data_shapes = {
+                nodes: shapes,
+                edges: shapes_edges
+            };
 
-            var options = {
+            var options_nodes = {
+                orientation: 'top',
+                groupOrder: 'order',
+                showCurrentTime: false,
+                align: 'left',
                 nodes: {
                     shape: 'dot'
                 },
                 edges: {
-                    color: GRAY,
+                    color: 'gray',
+                    smooth: false
+                },
+                groups: {
+                    starters: {
+                        shape: 'ellipse',
+                        color: '#FF9900' // orange
+                    },
+                    semaphores: {
+                        shape: 'dot',
+                        color: "#2B7CE9" // blue
+                    },
+                    prommpts: {
+                        shape: 'square',
+                        color: "#5A1E5C" // purple
+                    },
+                    triggers: {
+                        shape: 'star',
+                        color: "#C5000B" // red
+                    }
+                },
+                physics: {
+                    enabled: false
+                },
+                interaction: {
+                    hover: true,
+                    zoomView: true
+                },
+                manipulation: {
+                    enabled: true
+                },
+                layout: {
+                    randomSeed: 0
+                }
+            };
+
+            var options_shapes = {
+                orientation: 'top',
+                groupOrder: 'order',
+                showCurrentTime: false,
+                align: 'center',
+                nodes: {
+                    shape: 'dot',
+                    fixed: {
+                        y: true,
+                        x: true
+                    }
+                },
+                edges: {
+                    color: 'gray',
                     smooth: false
                 },
                 groups: {
@@ -173,77 +209,72 @@
                     zoomView: false
                 },
                 manipulation: {
-                    enabled: true
+                    enabled: false
                 },
                 layout: {
                     randomSeed: 0
                 }
             };
 
+            network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
+            network_of_shapes = new vis.Network(container_of_shapes, data_shapes, options_shapes);
 
 
-
-
-            network = new vis.Network(container, data, options);
-
-
-            network.on("click", function(params) {
+            network_of_nodes.on("click", function(params) {
                 // params.event = "[original event]";
                 // document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4);
                 // console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
             });
-            network.on("doubleClick", function(params) {
+            network_of_nodes.on("doubleClick", function(params) {
                 // params.event = "[original event]";
                 // document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
             });
 
-            network.on("select", function(params) {
+            network_of_nodes.on("select", function(params) {
                 console.log('select Event:', params);
             });
 
-            network.on("selectNode", function(params) {
+            network_of_nodes.on("selectNode", function(params) {
                 console.log('selectNode Event:', params);
-                if (params.nodes[0] >= 1000 && params.nodes[0] <= 1004) {
-                    current_shape = network.clustering.body.nodes[params.nodes[0]].shape.constructor.name.toLowerCase();
-                };
-                network.clustering.updateClusteredNode(params.nodes[0], {
+                network_of_nodes.clustering.updateClusteredNode(params.nodes[0], {
                     shape: current_shape
                 });
+            });
+
+            network_of_shapes.on("selectNode", function(params) {
+                console.log('selectNode Event:', params);
+                if (params.nodes[0] >= 1000 && params.nodes[0] <= 1004) {
+                    current_shape = network_of_shapes.clustering.body.nodes[params.nodes[0]].shape.constructor.name.toLowerCase();
+                };
 
             });
         }
-        var resizeId;
-
-        function Page_Resized() {
-            clearTimeout(resizeId);
-            resizeId = setTimeout(Redraw, 500);
+        var resizeTimeOut;
+        window.onresize = function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+            clearTimeout(resizeTimeOut);
+            resizeTimeOut = setTimeout(Redraw, 500);
+            return false;
         };
 
         function Redraw() {
-            var mynetwork = document.getElementById('network');
-            var x = mynetwork.clientWidth;
-            var y = mynetwork.clientHeight;
-            alert(x + " " + y)
+            var mynetwork = document.getElementById('nodes');
+            var x1 = window.innerWidth - 100;
+            var y1 = window.innerHeight - 130;
+            mynetwork.style.width = x1 + "px";
+            mynetwork.style.height = y1 + "px";
+            mynetwork.style.left = "90px";
             draw();
         };
     </script>
 
 </head>
 
-<body onload="draw();" onResize="Page_Resized();return false;">
-
-    <div id="Triggers" style="display:none;">content will be loaded here</div>
-
-
+<body onload="Redraw();">
     <img src="js/img/256gl.png" height="80" width="450">
-
-    <table class="view">
-        <tr>
-            <td>
-                <div id="network"></div>
-            </td>
-        </tr>
-    </table>
+    <div id="shapes"></div>
+    <div id="nodes"></div>
 
 </body>
 
