@@ -6,6 +6,13 @@
 
     <script type="text/javascript" src="js/vis.js"></script>
     <link href="nnod_editor.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload="Init_Draw();">
+    <img src="js/img/256gl.png" height="101" width="432" style="position: absolute; top: 0px; left: 50px;">
+    <div id="shapes"></div>
+    <div id="nodes"></div>
+
 
     <script type="text/javascript">
         var nodes = null;
@@ -16,15 +23,17 @@
         var network_of_shapes = null;
         var current_shape = 'square'
         var exportValue = null;
+        var resizeTimeOut;
 
-        // convenience method to stringify a JSON object
-        function toJSON(obj) {
-            return JSON.stringify(obj, null, 4);
-        }
+        var container_of_nodes = document.getElementById('nodes');
+        var container_of_shapes = document.getElementById('shapes');
+        var options_nodes = null;
+        var options_shapes = null;
+        var data_nodes = null;
+        var data_shapes = null;
 
-        function draw() {
+        function draw_shapes() {
             shapes = new vis.DataSet();
-            var mynetwork = document.getElementById('shapes');
             var x = 0;
             var y = 0;
             var step = 120;
@@ -69,113 +78,11 @@
                 fixed: true,
                 physics: false
             });
-
-            nodes = new vis.DataSet();
-            var mynetwork = document.getElementById('nodes');
-            nodes.add([{
-                id: '1',
-                label: 'Node 1'
-            }, {
-                id: '2',
-                label: 'Node 2'
-            }, {
-                id: '3',
-                label: 'Node 3'
-            }, {
-                id: '4',
-                label: 'Node 4'
-            }, {
-                id: '5',
-                label: 'Node 5'
-            }]);
-
-            // create an array with edges
-            edges = new vis.DataSet();
-
-            edges.add([{
-                id: '1',
-                from: '1',
-                to: '2'
-            }, {
-                id: '2',
-                from: '1',
-                to: '3'
-            }, {
-                id: '3',
-                from: '2',
-                to: '4'
-            }, {
-                id: '4',
-                from: '2',
-                to: '5'
-            }]);
-
-            // create a networks
-            var container_of_nodes = document.getElementById('nodes');
-            var container_of_shapes = document.getElementById('shapes');
-
-            var data_nodes = {
-                nodes: nodes,
-                edges: edges
-            };
-            var data_shapes = {
+            data_shapes = {
                 nodes: shapes,
                 edges: shapes_edges
             };
-
-            var options_nodes = {
-                orientation: 'top',
-                groupOrder: 'order',
-                showCurrentTime: false,
-                align: 'left',
-                nodes: {
-                    shape: 'dot'
-                },
-                edges: {
-                    color: 'gray',
-                    smooth: false,
-                    arrows: {
-                        to: {enabled: true, scaleFactor:1, type:'arrow'}
-                    }
-                },
-                groups: {
-                    starters: {
-                        shape: 'ellipse',
-                        color: '#FF9900' // orange
-                    },
-                    semaphores: {
-                        shape: 'dot',
-                        color: "#2B7CE9" // blue
-                    },
-                    prommpts: {
-                        shape: 'square',
-                        color: "#5A1E5C" // purple
-                    },
-                    triggers: {
-                        shape: 'star',
-                        color: "#C5000B" // red
-                    }
-                },
-                physics: {
-                    enabled: false
-                },
-                interaction: {
-                    hover: true,
-                    zoomView: true
-                },
-                manipulation: {
-                    enabled: true
-                },
-                layout: {
-                    randomSeed: 0
-                }
-            };
-
-            var options_shapes = {
-                orientation: 'top',
-                groupOrder: 'order',
-                showCurrentTime: false,
-                align: 'center',
+            options_shapes = {
                 nodes: {
                     shape: 'dot',
                     fixed: {
@@ -220,16 +127,116 @@
                     randomSeed: 0
                 }
             };
-
-            network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
             network_of_shapes = new vis.Network(container_of_shapes, data_shapes, options_shapes);
+            network_of_shapes.on("selectNode", function(params) {
+                console.log('selectNode Event:', params);
+                if (params.nodes[0] >= 1000 && params.nodes[0] <= 1004) {
+                    current_shape = network_of_shapes.clustering.body.nodes[params.nodes[0]].shape.constructor.name.toLowerCase();
+                };
 
+            });
+        }
 
-            network_of_nodes.on("click", function(params) 
-            {
+        function draw() {
+            nodes = new vis.DataSet();
+            nodes.add([{
+                id: '1',
+                label: 'Node 1'
+            }, {
+                id: '2',
+                label: 'Node 2'
+            }, {
+                id: '3',
+                label: 'Node 3'
+            }, {
+                id: '4',
+                label: 'Node 4'
+            }, {
+                id: '5',
+                label: 'Node 5'
+            }]);
+
+            // create an array with edges
+            edges = new vis.DataSet();
+
+            edges.add([{
+                id: '1',
+                from: '1',
+                to: '2'
+            }, {
+                id: '2',
+                from: '1',
+                to: '3'
+            }, {
+                id: '3',
+                from: '2',
+                to: '4'
+            }, {
+                id: '4',
+                from: '2',
+                to: '5'
+            }]);
+
+            // create a networks
+
+            data_nodes = {
+                nodes: nodes,
+                edges: edges
+            };
+
+            options_nodes = {
+                nodes: {
+                    shape: 'dot'
+                },
+                edges: {
+                    color: 'gray',
+                    smooth: false,
+                    arrows: {
+                        to: {
+                            enabled: true,
+                            scaleFactor: 1,
+                            type: 'arrow'
+                        }
+                    }
+                },
+                groups: {
+                    starters: {
+                        shape: 'ellipse',
+                        color: '#FF9900' // orange
+                    },
+                    semaphores: {
+                        shape: 'dot',
+                        color: "#2B7CE9" // blue
+                    },
+                    prommpts: {
+                        shape: 'square',
+                        color: "#5A1E5C" // purple
+                    },
+                    triggers: {
+                        shape: 'star',
+                        color: "#C5000B" // red
+                    }
+                },
+                physics: {
+                    enabled: false
+                },
+                interaction: {
+                    hover: true,
+                    zoomView: true
+                },
+                manipulation: {
+                    enabled: true
+                },
+                layout: {
+                    randomSeed: 0
+                }
+            };
+            network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
+            network_of_nodes.on("click", function(params) {
                 var nodes = objectToArray(network_of_nodes.getPositions());
                 nodes.forEach(addConnections);
                 exportValue = JSON.stringify(nodes, undefined, 2);
+                //               alert(exportValue)
             });
             network_of_nodes.on("doubleClick", function(params) {
                 // params.event = "[original event]";
@@ -246,16 +253,8 @@
                     shape: current_shape
                 });
             });
-
-            network_of_shapes.on("selectNode", function(params) {
-                console.log('selectNode Event:', params);
-                if (params.nodes[0] >= 1000 && params.nodes[0] <= 1004) {
-                    current_shape = network_of_shapes.clustering.body.nodes[params.nodes[0]].shape.constructor.name.toLowerCase();
-                };
-
-            });
         }
-        var resizeTimeOut;
+
         window.onresize = function(event) {
             event.stopPropagation();
             event.preventDefault();
@@ -264,56 +263,97 @@
             return false;
         };
 
-        function Init_Draw()
-        {            
+        function Init_Draw() {
             var mynetwork = document.getElementById('nodes');
             var x1 = window.innerWidth - 100;
             var y1 = window.innerHeight - 130;
             mynetwork.style.width = x1 + "px";
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
+            draw_shapes()
             draw();
         }
 
         function Redraw() {
+            network_of_nodes.destroy();
             var mynetwork = document.getElementById('nodes');
             var x1 = window.innerWidth - 100;
             var y1 = window.innerHeight - 130;
             mynetwork.style.width = x1 + "px";
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
-            
 
-                var inputData = JSON.parse(exportValue);
-
-                var data = {
-                    nodes: getNodeData(inputData),
-                    edges: getEdgeData(inputData)
-                }
-
-                network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
-
-
+            var inputData = JSON.parse(exportValue);
+            data_nodes = {
+                nodes: getNodeData(inputData),
+                edges: getEdgeData(inputData)
+            }
+            network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
         };
 
         function objectToArray(obj) {
-            return Object.keys(obj).map(function (key) {
-                 obj[key].id = key;
+            return Object.keys(obj).map(function(key) {
+                obj[key].id = key;
                 return obj[key];
             });
         }
-            
+
         function addConnections(elem, index) {
-            elem.connections = network_of_nodes.getConnectedNodes(index);
+            var arr = [];
+            edges.forEach(function(element) {
+                if (element.from == elem.id) {
+                    arr.push(element.to);
+                }
+            });
+            elem.connections = arr;
+        }
+
+        function getNodeData(data) {
+            var networkNodes = [];
+            data.forEach(function(elem, index, array) {
+                networkNodes.push({
+                    id: elem.id,
+                    label: elem.id,
+                    x: elem.x,
+                    y: elem.y
+                });
+            });
+
+            return new vis.DataSet(networkNodes);
+        }
+
+        function getNodeById(data, id) {
+            for (var n = 0; n < data.length; n++) {
+                if (data[n].id == id) {
+                    return data[n];
+                }
+            };
+            throw 'Can not find id \'' + id + '\' in data';
+        }
+
+        function getEdgeData(data) {
+            var networkEdges = [];
+            data.forEach(function(node) {
+                node.connections.forEach(function(connId, cIndex, conns) {
+                    networkEdges.push({
+                        from: node.id,
+                        to: connId
+                    });
+                    let cNode = getNodeById(data, connId);
+
+                    var elementConnections = cNode.connections;
+                    var duplicateIndex = elementConnections.findIndex(function(connection) {
+                        return connection == node.id;
+                    });
+                    if (duplicateIndex != -1) {
+                        elementConnections.splice(duplicateIndex, 1);
+                    };
+                });
+            });
+            return new vis.DataSet(networkEdges);
         }
     </script>
 
-</head>
-
-<body onload="Init_Draw();">
-    <img src="js/img/256gl.png" height="101" width="432" style="position: absolute; top: 0px; left: 50px;">
-    <div id="shapes"></div>
-    <div id="nodes"></div>
 
 </body>
 
