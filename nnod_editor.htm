@@ -8,7 +8,7 @@
     <link href="nnod_editor.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body onload="Init_Draw();">
+<body onload="Page_Loaded();">
     <img src="js/img/256gl.png" height="101" width="432" style="position: absolute; top: 0px; left: 50px;">
     <div id="shapes"></div>
     <div id="nodes"></div>
@@ -24,6 +24,10 @@
         var current_shape = 'square'
         var exportValue = null;
         var resizeTimeOut;
+        var get_Neurons_Url = "/get_neurons.php";
+        var get_Nerves_Url = "/get_nerves.php";
+        var neurons = null;
+        var nevres = null;
 
         var container_of_nodes = document.getElementById('nodes');
         var container_of_shapes = document.getElementById('shapes');
@@ -43,7 +47,7 @@
                 x: x,
                 y: y,
                 label: 'Starter',
-                group: 'starters',
+                group: 'starter',
                 value: 1,
                 fixed: true,
                 physics: false
@@ -53,7 +57,7 @@
                 x: x,
                 y: y + step,
                 label: 'Semaphore',
-                group: 'semaphores',
+                group: 'sema',
                 value: 1,
                 fixed: true,
                 physics: false
@@ -63,7 +67,7 @@
                 x: x,
                 y: y + 2 * step,
                 label: 'Prompt',
-                group: 'prommpts',
+                group: 'question',
                 value: 1,
                 fixed: true,
                 physics: false
@@ -95,21 +99,21 @@
                     smooth: false,
                 },
                 groups: {
-                    starters: {
+                    starter: {
                         shape: 'ellipse',
-                        color: '#FF9900' // orange
+                        color: '#FADBD8'
                     },
-                    semaphores: {
+                    sema: {
                         shape: 'dot',
-                        color: "#2B7CE9" // blue
+                        color: "#A9DFBF"
                     },
-                    prommpts: {
+                    question: {
                         shape: 'square',
-                        color: "#5A1E5C" // purple
+                        color: "#E5E7E9"
                     },
                     triggers: {
                         shape: 'star',
-                        color: "#C5000B" // red
+                        color: "#C5000B"
                     }
                 },
                 physics: {
@@ -138,47 +142,6 @@
         }
 
         function draw() {
-            nodes = new vis.DataSet();
-            nodes.add([{
-                id: '1',
-                label: 'Node 1'
-            }, {
-                id: '2',
-                label: 'Node 2'
-            }, {
-                id: '3',
-                label: 'Node 3'
-            }, {
-                id: '4',
-                label: 'Node 4'
-            }, {
-                id: '5',
-                label: 'Node 5'
-            }]);
-
-            // create an array with edges
-            edges = new vis.DataSet();
-
-            edges.add([{
-                id: '1',
-                from: '1',
-                to: '2'
-            }, {
-                id: '2',
-                from: '1',
-                to: '3'
-            }, {
-                id: '3',
-                from: '2',
-                to: '4'
-            }, {
-                id: '4',
-                from: '2',
-                to: '5'
-            }]);
-
-            // create a networks
-
             data_nodes = {
                 nodes: nodes,
                 edges: edges
@@ -200,21 +163,21 @@
                     }
                 },
                 groups: {
-                    starters: {
+                    starter: {
                         shape: 'ellipse',
-                        color: '#FF9900' // orange
+                        color: '#FADBD8'
                     },
-                    semaphores: {
+                    sema: {
                         shape: 'dot',
-                        color: "#2B7CE9" // blue
+                        color: '#A9DFBF'
                     },
-                    prommpts: {
+                    question: {
                         shape: 'square',
-                        color: "#5A1E5C" // purple
+                        color: '#E5E7E9'
                     },
                     triggers: {
                         shape: 'star',
-                        color: "#C5000B" // red
+                        color: '#C5000B'
                     }
                 },
                 physics: {
@@ -229,6 +192,10 @@
                 },
                 layout: {
                     randomSeed: 0
+                        // hierarchical: {
+                        //     direction: 'UD',
+                        //     sortMethod: 'directed'
+                        // }
                 }
             };
             network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
@@ -262,6 +229,49 @@
             resizeTimeOut = setTimeout(Redraw, 500);
             return false;
         };
+
+        function Page_Loaded() {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", get_Neurons_Url, false);
+            xmlHttp.send(null);
+            neurons = xmlHttp.responseText;
+            xmlHttp.open("GET", get_Nerves_Url, false);
+            xmlHttp.send(null);
+            nevres = xmlHttp.responseText;
+            var a_neurons = neurons.split("\n");
+            var a_nerves = nevres.split("\n");
+
+            nodes = new vis.DataSet();
+            a_neurons.forEach(function(element) {
+                var parts = element.split("\t");
+                if (parts.length < 5) {
+                    return;
+                }
+                nodes.add({
+                    id: parts[0],
+                    group: parts[2].toLowerCase(),
+                    label: parts[3],
+                    x: parts[4],
+                    y: parts[5]
+                });
+            })
+            edges = new vis.DataSet();
+            a_nerves.forEach(function(element) {
+                var parts = element.split("\t");
+                if (parts.length < 3) {
+                    return;
+                }
+                edges.add({
+                    id: parts[0],
+                    from: parts[1],
+                    to: parts[2]
+                });
+            })
+
+            //     alert(nevres);
+
+            Init_Draw();
+        }
 
         function Init_Draw() {
             var mynetwork = document.getElementById('nodes');
