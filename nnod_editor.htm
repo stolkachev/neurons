@@ -15,6 +15,7 @@
         var network_of_nodes = null;
         var network_of_shapes = null;
         var current_shape = 'square'
+        var exportValue = null;
 
         // convenience method to stringify a JSON object
         function toJSON(obj) {
@@ -132,7 +133,10 @@
                 },
                 edges: {
                     color: 'gray',
-                    smooth: false
+                    smooth: false,
+                    arrows: {
+                        to: {enabled: true, scaleFactor:1, type:'arrow'}
+                    }
                 },
                 groups: {
                     starters: {
@@ -181,7 +185,7 @@
                 },
                 edges: {
                     color: 'gray',
-                    smooth: false
+                    smooth: false,
                 },
                 groups: {
                     starters: {
@@ -206,7 +210,8 @@
                 },
                 interaction: {
                     hover: true,
-                    zoomView: false
+                    zoomView: false,
+                    dragView: false,
                 },
                 manipulation: {
                     enabled: false
@@ -220,10 +225,11 @@
             network_of_shapes = new vis.Network(container_of_shapes, data_shapes, options_shapes);
 
 
-            network_of_nodes.on("click", function(params) {
-                // params.event = "[original event]";
-                // document.getElementById('eventSpan').innerHTML = '<h2>Click event:</h2>' + JSON.stringify(params, null, 4);
-                // console.log('click event, getNodeAt returns: ' + this.getNodeAt(params.pointer.DOM));
+            network_of_nodes.on("click", function(params) 
+            {
+                var nodes = objectToArray(network_of_nodes.getPositions());
+                nodes.forEach(addConnections);
+                exportValue = JSON.stringify(nodes, undefined, 2);
             });
             network_of_nodes.on("doubleClick", function(params) {
                 // params.event = "[original event]";
@@ -258,7 +264,8 @@
             return false;
         };
 
-        function Redraw() {
+        function Init_Draw()
+        {            
             var mynetwork = document.getElementById('nodes');
             var x1 = window.innerWidth - 100;
             var y1 = window.innerHeight - 130;
@@ -266,13 +273,45 @@
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
             draw();
+        }
+
+        function Redraw() {
+            var mynetwork = document.getElementById('nodes');
+            var x1 = window.innerWidth - 100;
+            var y1 = window.innerHeight - 130;
+            mynetwork.style.width = x1 + "px";
+            mynetwork.style.height = y1 + "px";
+            mynetwork.style.left = "90px";
+            
+
+                var inputData = JSON.parse(exportValue);
+
+                var data = {
+                    nodes: getNodeData(inputData),
+                    edges: getEdgeData(inputData)
+                }
+
+                network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
+
+
         };
+
+        function objectToArray(obj) {
+            return Object.keys(obj).map(function (key) {
+                 obj[key].id = key;
+                return obj[key];
+            });
+        }
+            
+        function addConnections(elem, index) {
+            elem.connections = network_of_nodes.getConnectedNodes(index);
+        }
     </script>
 
 </head>
 
-<body onload="Redraw();">
-    <img src="js/img/256gl.png" height="80" width="450">
+<body onload="Init_Draw();">
+    <img src="js/img/256gl.png" height="101" width="432" style="position: absolute; top: 0px; left: 50px;">
     <div id="shapes"></div>
     <div id="nodes"></div>
 
