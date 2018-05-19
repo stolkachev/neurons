@@ -56,7 +56,7 @@
                 id: 1001,
                 x: x,
                 y: y + step,
-                label: 'Semaphore',
+                label: 'Sema',
                 group: 'sema',
                 value: 1,
                 fixed: true,
@@ -104,11 +104,11 @@
                         color: '#FADBD8'
                     },
                     sema: {
-                        shape: 'dot',
+                        shape: 'circle',
                         color: "#A9DFBF"
                     },
                     question: {
-                        shape: 'square',
+                        shape: 'box',
                         color: "#E5E7E9"
                     },
                     triggers: {
@@ -168,15 +168,15 @@
                         color: '#FADBD8'
                     },
                     sema: {
-                        shape: 'dot',
+                        shape: 'circle',
                         color: '#A9DFBF'
                     },
                     question: {
-                        shape: 'square',
+                        shape: 'box',
                         color: '#E5E7E9'
                     },
                     triggers: {
-                        shape: 'star',
+                        shape: 'database',
                         color: '#C5000B'
                     }
                 },
@@ -285,7 +285,7 @@
         }
 
         function Redraw() {
-            network_of_nodes.destroy();
+            // network_of_nodes.destroy();
             var mynetwork = document.getElementById('nodes');
             var x1 = window.innerWidth - 100;
             var y1 = window.innerHeight - 130;
@@ -293,11 +293,11 @@
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
 
-            var inputData = JSON.parse(exportValue);
-            data_nodes = {
-                nodes: getNodeData(inputData),
-                edges: getEdgeData(inputData)
-            }
+            // var inputData = JSON.parse(exportValue);
+            // data_nodes = {
+            //     nodes: getNodeData(inputData),
+            //     edges: getEdgeData(inputData)
+            // }
             network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
         };
 
@@ -363,7 +363,6 @@
             return new vis.DataSet(networkEdges);
         }
     </script>
-
 
 </body>
 
