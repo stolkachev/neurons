@@ -199,11 +199,12 @@
                 }
             };
             network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
+
             network_of_nodes.on("click", function(params) {
                 var nodes = objectToArray(network_of_nodes.getPositions());
                 nodes.forEach(addConnections);
                 exportValue = JSON.stringify(nodes, undefined, 2);
-                //               alert(exportValue)
+
             });
             network_of_nodes.on("doubleClick", function(params) {
                 // params.event = "[original event]";
@@ -285,7 +286,6 @@
         }
 
         function Redraw() {
-            // network_of_nodes.destroy();
             var mynetwork = document.getElementById('nodes');
             var x1 = window.innerWidth - 100;
             var y1 = window.innerHeight - 130;
@@ -293,12 +293,7 @@
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
 
-            // var inputData = JSON.parse(exportValue);
-            // data_nodes = {
-            //     nodes: getNodeData(inputData),
-            //     edges: getEdgeData(inputData)
-            // }
-            network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
+            //            network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
         };
 
         function objectToArray(obj) {
@@ -328,7 +323,6 @@
                     y: elem.y
                 });
             });
-
             return new vis.DataSet(networkNodes);
         }
 
