@@ -65,7 +65,6 @@ div.vis-configuration.vis-config-button {
     display: block;
     width: 495px;
     height: 25px;
-    vertical-align: middle;
     line-height: 25px;
     background-color: #f7f8fa;
     border: 2px solid #ceced0;
@@ -85,7 +84,7 @@ div.vis-configuration.vis-config-button.hover {
 
 div.vis-configuration.vis-config-item {
     display: block;
-    float: left;
+    left: 0px;
     width: 495px;
     height: 25px;
     vertical-align: middle;
@@ -519,11 +518,11 @@ div.vis-network div.vis-edit-mode {
 
 div.vis-network div.vis-close {
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
-    width: 30px;
-    height: 30px;
-    background-position: 20px 3px;
+    width: 50px;
+    height: 50px;
+    background-position: 0px 0px;
     background-repeat: no-repeat;
     background-image: url(img/cross.png);
     cursor: pointer;
@@ -539,15 +538,37 @@ div.vis-network div.vis-close:hover {
     opacity: .6
 }
 
-div.vis-network div.vis-edit-mode div.vis-button,
-div.vis-network div.vis-manipulation div.vis-button {
-    float: left;
+div.vis-network div.vis-edit-mode div.vis-button {
+    top: 0px;
+    left: 0px;
     font-family: verdana;
     font-size: 12px;
     -moz-border-radius: 15px;
     border-radius: 15px;
     display: inline-block;
     background-position: 0 0;
+    background-repeat: no-repeat;
+    height: 24px;
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 0 8px 0 8px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+div.vis-network div.vis-manipulation div.vis-button {
+    top: 0px;
+    left: 155px;
+    font-family: verdana;
+    font-size: 12px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    display: inline-block;
+    background-position: 120 0;
     background-repeat: no-repeat;
     height: 24px;
     margin-left: 10px;
@@ -622,9 +643,9 @@ div.vis-network div.vis-manipulation div.vis-label {
 div.vis-network div.vis-manipulation div.vis-separator-line {
     float: left;
     display: inline-block;
-    width: 1px;
+    width: 50px;
     height: 21px;
-    background-color: #bdbdbd;
+    background-color: #00000000;
     margin: 0 7px 0 15px
 }
 
@@ -635,7 +656,7 @@ div.vis-network div.vis-navigation div.vis-button {
     border-radius: 17px;
     position: absolute;
     display: inline-block;
-    background-position: 2px 2px;
+    background-position: 82px 2px;
     background-repeat: no-repeat;
     cursor: pointer;
     -webkit-touch-callout: none;
