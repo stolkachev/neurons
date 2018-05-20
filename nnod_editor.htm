@@ -4,6 +4,8 @@
 <head>
     <title>NNOD Dialog Editor</title>
 
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="qrcode.js"></script>
     <script type="text/javascript" src="js/vis.js"></script>
     <link href="nnod_editor.css" rel="stylesheet" type="text/css" />
 </head>
@@ -22,7 +24,7 @@
         onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
     </div>
     <div id="nodes"></div>
-
+    <div id="qrcode" style="position:absolute; left:3pt; bottom:15pt; "></div>
 
     <script type="text/javascript">
         var nodes = null;
@@ -41,6 +43,17 @@
         var container_of_nodes = document.getElementById('nodes');
         var options_nodes = null;
         var data_nodes = null;
+
+        var userId = 'Guest';
+        var token = '1f6601c5-05b8-4da5-9774-ea7362a8fa2e';
+        var header = 'nnod://chat/'
+        var session_id = '123';
+        var ETX = String.fromCharCode(3);
+        var ws_Server = 'ws://256gl.com:55438';
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            width: 80,
+            height: 80
+        });
 
         function draw() {
             data_nodes = {
@@ -191,6 +204,8 @@
         }
 
         function Init_Draw() {
+
+            qrcode.makeCode(header + "ws=" + ws_Server + "&session_id=" + session_id);
             var mynetwork = document.getElementById('nodes');
             var x1 = window.innerWidth - 100;
             var y1 = window.innerHeight - 130;
