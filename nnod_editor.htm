@@ -11,11 +11,11 @@
 </head>
 
 <body onload="Page_Loaded();">
-    <img src="img/256gl.png" height="80" width="380" style="position: absolute; top: 0px; left: 50px;">
+    <img src="img/256gl.png" height="70" width="270" style="position: absolute; top: 0px; right: 0px;">
 
     <div id="shapes">
         <img id="starter" src="img/starter.png" height="60" width="60" style="position: absolute; top: 20px; left: 10px; 
-        border-color: rgb(231, 167, 167); " onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
+        border-color: gray; " onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
         <img id="prompt" src="img/prompt.png" height="60" width="60" style="position: absolute; top: 90px; left: 10px; border-color: rgb(211, 209, 209);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
         <img id="sema" src="img/sema.png" height="60" width="60" style="position: absolute; top: 160px; left: 10px; border-color: rgb(169, 231, 167);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
         <img id="trigger" src="img/trigger.png" height="60" width="60" style="position: absolute; top: 240px; left: 10px; border-color: rgb(253, 47, 47);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
@@ -23,10 +23,10 @@
 
     <div id="nodes"></div>
 
-    <div id="qrcode" style="position:absolute; left:3pt; bottom:15pt; "></div>
+    <div id="qrcode" style="position:absolute; left:3pt; bottom:12pt; "></div>
 
-    <div id='input_group' style="position:absolute; right:25pt; top:25pt; ">
-        <strong>Question:</strong><br>
+    <div id='input_group' style="position:absolute; left:65pt; top:15pt; ">
+        <strong style="color: rgba(110, 114, 111, 0.788)">Question:</strong><br>
         <input type='text' id='qId' size='40' value='' />
         <button style='position: relative;' onClick='ws_send_Q();'>OK</button>
     </div>
@@ -221,7 +221,7 @@
             qrcode.makeCode(header + "ws=" + ws_Server + "&session_id=" + session_id);
             var mynetwork = document.getElementById('nodes');
             var x1 = window.innerWidth - 100;
-            var y1 = window.innerHeight - 120;
+            var y1 = window.innerHeight - 80;
             mynetwork.style.width = x1 + "px";
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
@@ -231,7 +231,7 @@
         function Redraw() {
             var mynetwork = document.getElementById('nodes');
             var x1 = window.innerWidth - 100;
-            var y1 = window.innerHeight - 120;
+            var y1 = window.innerHeight - 80;
             mynetwork.style.width = x1 + "px";
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";

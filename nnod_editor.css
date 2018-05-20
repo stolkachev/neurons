@@ -1,6 +1,6 @@
 #nodes {
     position: absolute;
-    top: 110px;
+    top: 70px;
     right: 5px;
     width: 580px;
     height: 800px;
@@ -9,7 +9,7 @@
 
 #shapes {
     position: absolute;
-    top: 110px;
+    top: 90px;
     width: 90px;
     height: 500px;
 }
