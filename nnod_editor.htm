@@ -11,20 +11,25 @@
 </head>
 
 <body onload="Page_Loaded();">
-    <img src="img/256gl.png" height="101" width="432" style="position: absolute; top: 0px; left: 50px;">
+    <img src="img/256gl.png" height="80" width="380" style="position: absolute; top: 0px; left: 50px;">
+
     <div id="shapes">
         <img id="starter" src="img/starter.png" height="60" width="60" style="position: absolute; top: 20px; left: 10px; 
-        border-color: rgb(231, 167, 167); " 
-        onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
-        <img id="prompt" src="img/prompt.png" height="60" width="60" style="position: absolute; top: 90px; left: 10px; border-color: rgb(211, 209, 209);" 
-        onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
-        <img id="sema" src="img/sema.png" height="60" width="60" style="position: absolute; top: 160px; left: 10px; border-color: rgb(169, 231, 167);" 
-        onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
-        <img id="trigger" src="img/trigger.png" height="60" width="60" style="position: absolute; top: 240px; left: 10px; border-color: rgb(253, 47, 47);" 
-        onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
+        border-color: rgb(231, 167, 167); " onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
+        <img id="prompt" src="img/prompt.png" height="60" width="60" style="position: absolute; top: 90px; left: 10px; border-color: rgb(211, 209, 209);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
+        <img id="sema" src="img/sema.png" height="60" width="60" style="position: absolute; top: 160px; left: 10px; border-color: rgb(169, 231, 167);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
+        <img id="trigger" src="img/trigger.png" height="60" width="60" style="position: absolute; top: 240px; left: 10px; border-color: rgb(253, 47, 47);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
     </div>
+
     <div id="nodes"></div>
+
     <div id="qrcode" style="position:absolute; left:3pt; bottom:15pt; "></div>
+
+    <div id='input_group' style="position:absolute; right:25pt; top:25pt; ">
+        <strong>Question:</strong><br>
+        <input type='text' id='qId' size='40' value='' />
+        <button style='position: relative;' onClick='ws_send_Q();'>OK</button>
+    </div>
 
     <script type="text/javascript">
         var nodes = null;
@@ -37,8 +42,18 @@
         var neurons = null;
         var nevres = null;
         var current_shape = null;
-        var shapes = { "starter": "ellipse", "prompt": "box", "sema": "circle", "trigger": "star"};
-        var shapes_colors = { "starter": "#FADBD8", "prompt": "#E5E7E9", "sema": "#A9DFBF", "trigger": "#C5000B"};
+        var shapes = {
+            "starter": "ellipse",
+            "prompt": "box",
+            "sema": "circle",
+            "trigger": "star"
+        };
+        var shapes_colors = {
+            "starter": "#FADBD8",
+            "prompt": "#E5E7E9",
+            "sema": "#A9DFBF",
+            "trigger": "#C5000B"
+        };
 
         var container_of_nodes = document.getElementById('nodes');
         var options_nodes = null;
@@ -103,9 +118,8 @@
                 },
                 manipulation: {
                     enabled: true,
-                    addNode: function(nodeData,callback) {
-                        if (current_shape == null) 
-                        {
+                    addNode: function(nodeData, callback) {
+                        if (current_shape == null) {
                             alert("Please select shape of the node!")
                             return;
                         }
@@ -137,9 +151,8 @@
                 alert(JSON.stringify(params, null, 4))
             });
 
-            network_of_nodes.on("select", function(params) 
-            {
- //               console.log('select Event:', params);
+            network_of_nodes.on("select", function(params) {
+                //               console.log('select Event:', params);
             });
 
             network_of_nodes.on("selectNode", function(params) {
@@ -208,7 +221,7 @@
             qrcode.makeCode(header + "ws=" + ws_Server + "&session_id=" + session_id);
             var mynetwork = document.getElementById('nodes');
             var x1 = window.innerWidth - 100;
-            var y1 = window.innerHeight - 130;
+            var y1 = window.innerHeight - 120;
             mynetwork.style.width = x1 + "px";
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
@@ -218,7 +231,7 @@
         function Redraw() {
             var mynetwork = document.getElementById('nodes');
             var x1 = window.innerWidth - 100;
-            var y1 = window.innerHeight - 130;
+            var y1 = window.innerHeight - 120;
             mynetwork.style.width = x1 + "px";
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
@@ -286,30 +299,27 @@
             });
             return new vis.DataSet(networkEdges);
         }
-        function over_image(obj)
-        {
+
+        function over_image(obj) {
             if (current_shape != null) return;
-            if (obj.border != "4")
-            {
+            if (obj.border != "4") {
                 obj.border = "2"
             }
         };
-        function out_image(obj)
-        {
+
+        function out_image(obj) {
             if (current_shape != null) return;
-            if (obj.border != "4")
-            {
+            if (obj.border != "4") {
                 obj.border = "0"
             }
         };
-        function click_on_image(obj)
-        {
+
+        function click_on_image(obj) {
             document.getElementById('starter').border = "0";
             document.getElementById('prompt').border = "0";
             document.getElementById('sema').border = "0";
             document.getElementById('trigger').border = "0";
-            if (current_shape == obj.id)
-            {
+            if (current_shape == obj.id) {
                 current_shape = null;
                 return;
             }
@@ -317,6 +327,12 @@
             current_shape = obj.id;
         };
 
+        function ws_send_Q() {
+            msg = document.getElementById('qId').value;
+            // div.innerHTML = div.innerHTML + "<font color='blue'>" + msg + '</font><br>';
+            // ws_iframe_api.ext_send(userId + ETX + msg);
+            document.getElementById('qId').value = "";
+        };
     </script>
 
 </body>
