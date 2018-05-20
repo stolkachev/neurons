@@ -10,136 +10,37 @@
 
 <body onload="Page_Loaded();">
     <img src="img/256gl.png" height="101" width="432" style="position: absolute; top: 0px; left: 50px;">
-    <div id="shapes"></div>
+    <div id="shapes">
+        <img id="starter" src="img/starter.png" height="60" width="60" style="position: absolute; top: 20px; left: 10px; 
+        border-color: rgb(231, 167, 167); " 
+        onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
+        <img id="prompt" src="img/prompt.png" height="60" width="60" style="position: absolute; top: 90px; left: 10px; border-color: rgb(211, 209, 209);" 
+        onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
+        <img id="sema" src="img/sema.png" height="60" width="60" style="position: absolute; top: 160px; left: 10px; border-color: rgb(169, 231, 167);" 
+        onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
+        <img id="trigger" src="img/trigger.png" height="60" width="60" style="position: absolute; top: 240px; left: 10px; border-color: rgb(253, 47, 47);" 
+        onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
+    </div>
     <div id="nodes"></div>
 
 
     <script type="text/javascript">
         var nodes = null;
-        var shapes = null;
         var edges = null;
-        var shapes_edges = null;
         var network_of_nodes = null;
-        var network_of_shapes = null;
-        var current_shape = 'square'
         var exportValue = null;
         var resizeTimeOut;
         var get_Neurons_Url = "/get_neurons.php";
         var get_Nerves_Url = "/get_nerves.php";
         var neurons = null;
         var nevres = null;
+        var current_shape = null;
+        var shapes = { "starter": "ellipse", "prompt": "box", "sema": "circle", "trigger": "star"};
+        var shapes_colors = { "starter": "#FADBD8", "prompt": "#E5E7E9", "sema": "#A9DFBF", "trigger": "#C5000B"};
 
         var container_of_nodes = document.getElementById('nodes');
-        var container_of_shapes = document.getElementById('shapes');
         var options_nodes = null;
-        var options_shapes = null;
         var data_nodes = null;
-        var data_shapes = null;
-
-        function draw_shapes() {
-            shapes = new vis.DataSet();
-            var x = 0;
-            var y = 0;
-            var step = 120;
-
-            shapes.add({
-                id: 1000,
-                x: x,
-                y: y,
-                label: 'Starter',
-                group: 'starter',
-                value: 1,
-                fixed: true,
-                physics: false
-            });
-            shapes.add({
-                id: 1001,
-                x: x,
-                y: y + step,
-                label: 'Sema',
-                group: 'sema',
-                value: 1,
-                fixed: true,
-                physics: false
-            });
-            shapes.add({
-                id: 1002,
-                x: x,
-                y: y + 2 * step,
-                label: 'Prompt',
-                group: 'question',
-                value: 1,
-                fixed: true,
-                physics: false
-            });
-            shapes.add({
-                id: 1003,
-                x: x,
-                y: y + 3 * step,
-                label: 'Trigger',
-                group: 'triggers',
-                value: 1,
-                fixed: true,
-                physics: false
-            });
-            data_shapes = {
-                nodes: shapes,
-                edges: shapes_edges
-            };
-            options_shapes = {
-                nodes: {
-                    shape: 'dot',
-                    fixed: {
-                        y: true,
-                        x: true
-                    }
-                },
-                edges: {
-                    color: 'gray',
-                    smooth: false,
-                },
-                groups: {
-                    starter: {
-                        shape: 'ellipse',
-                        color: '#FADBD8'
-                    },
-                    sema: {
-                        shape: 'circle',
-                        color: "#A9DFBF"
-                    },
-                    question: {
-                        shape: 'box',
-                        color: "#E5E7E9"
-                    },
-                    triggers: {
-                        shape: 'star',
-                        color: "#C5000B"
-                    }
-                },
-                physics: {
-                    enabled: false
-                },
-                interaction: {
-                    hover: true,
-                    zoomView: false,
-                    dragView: false,
-                },
-                manipulation: {
-                    enabled: false
-                },
-                layout: {
-                    randomSeed: 0
-                }
-            };
-            network_of_shapes = new vis.Network(container_of_shapes, data_shapes, options_shapes);
-            network_of_shapes.on("selectNode", function(params) {
-                console.log('selectNode Event:', params);
-                if (params.nodes[0] >= 1000 && params.nodes[0] <= 1004) {
-                    current_shape = network_of_shapes.clustering.body.nodes[params.nodes[0]].shape.constructor.name.toLowerCase();
-                };
-
-            });
-        }
 
         function draw() {
             data_nodes = {
@@ -167,16 +68,16 @@
                         shape: 'ellipse',
                         color: '#FADBD8'
                     },
+                    prompt: {
+                        shape: 'box',
+                        color: '#E5E7E9'
+                    },
                     sema: {
                         shape: 'circle',
                         color: '#A9DFBF'
                     },
-                    question: {
-                        shape: 'box',
-                        color: '#E5E7E9'
-                    },
                     triggers: {
-                        shape: 'database',
+                        shape: 'star',
                         color: '#C5000B'
                     }
                 },
@@ -188,7 +89,18 @@
                     zoomView: true
                 },
                 manipulation: {
-                    enabled: true
+                    enabled: true,
+                    addNode: function(nodeData,callback) {
+                        if (current_shape == null) 
+                        {
+                            alert("Please select shape of the node!")
+                            return;
+                        }
+                        nodeData.shape = shapes[current_shape];
+                        nodeData.color = shapes_colors[current_shape];
+                        nodeData.label = current_shape;
+                        callback(nodeData);
+                    }
                 },
                 layout: {
                     randomSeed: 0
@@ -201,25 +113,27 @@
             network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
 
             network_of_nodes.on("click", function(params) {
-                var nodes = objectToArray(network_of_nodes.getPositions());
-                nodes.forEach(addConnections);
-                exportValue = JSON.stringify(nodes, undefined, 2);
+                // var nodes = objectToArray(network_of_nodes.getPositions());
+                // nodes.forEach(addConnections);
+                // exportValue = JSON.stringify(nodes, undefined, 2);
 
             });
             network_of_nodes.on("doubleClick", function(params) {
-                // params.event = "[original event]";
+                params.event = "[original event]";
                 // document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
+                alert(JSON.stringify(params, null, 4))
             });
 
-            network_of_nodes.on("select", function(params) {
-                console.log('select Event:', params);
+            network_of_nodes.on("select", function(params) 
+            {
+ //               console.log('select Event:', params);
             });
 
             network_of_nodes.on("selectNode", function(params) {
-                console.log('selectNode Event:', params);
-                network_of_nodes.clustering.updateClusteredNode(params.nodes[0], {
-                    shape: current_shape
-                });
+                // network_of_nodes.clustering.updateClusteredNode(params.nodes[0], 
+                // {
+                //     shape: current_shape
+                // });
             });
         }
 
@@ -248,9 +162,11 @@
                 if (parts.length < 5) {
                     return;
                 }
+                var grp = parts[2].toLowerCase();
+                if (grp == "question") grp = "prompt";
                 nodes.add({
                     id: parts[0],
-                    group: parts[2].toLowerCase(),
+                    group: grp,
                     label: parts[3],
                     x: parts[4],
                     y: parts[5]
@@ -281,7 +197,6 @@
             mynetwork.style.width = x1 + "px";
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
-            draw_shapes()
             draw();
         }
 
@@ -356,6 +271,37 @@
             });
             return new vis.DataSet(networkEdges);
         }
+        function over_image(obj)
+        {
+            if (current_shape != null) return;
+            if (obj.border != "4")
+            {
+                obj.border = "2"
+            }
+        };
+        function out_image(obj)
+        {
+            if (current_shape != null) return;
+            if (obj.border != "4")
+            {
+                obj.border = "0"
+            }
+        };
+        function click_on_image(obj)
+        {
+            document.getElementById('starter').border = "0";
+            document.getElementById('prompt').border = "0";
+            document.getElementById('sema').border = "0";
+            document.getElementById('trigger').border = "0";
+            if (current_shape == obj.id)
+            {
+                current_shape = null;
+                return;
+            }
+            obj.border = "4"
+            current_shape = obj.id;
+        };
+
     </script>
 
 </body>
