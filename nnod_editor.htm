@@ -18,7 +18,8 @@
         border-color: gray; " onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
         <img id="prompt" src="img/prompt.png" height="60" width="60" style="position: absolute; top: 90px; left: 10px; border-color: rgb(211, 209, 209);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
         <img id="sema" src="img/sema.png" height="60" width="60" style="position: absolute; top: 160px; left: 10px; border-color: rgb(169, 231, 167);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
-        <img id="trigger" src="img/trigger.png" height="60" width="60" style="position: absolute; top: 240px; left: 10px; border-color: rgb(253, 47, 47);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
+        <img id="contexter" src="img/contexter.png" height="60" width="60" style="position: absolute; top: 240px; left: 10px; border-color: rgb(253, 47, 47);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
+        <img id="answer" src="img/answer.png" height="60" width="60" style="position: absolute; top: 320px; left: 10px; border-color: rgb(174, 214, 241);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
     </div>
 
     <div id="nodes"></div>
@@ -46,13 +47,15 @@
             "starter": "ellipse",
             "prompt": "box",
             "sema": "circle",
-            "trigger": "star"
+            "contexter": "star",
+            "answer": "database"
         };
         var shapes_colors = {
             "starter": "#FADBD8",
             "prompt": "#E5E7E9",
             "sema": "#A9DFBF",
-            "trigger": "#C5000B"
+            "contexter": "#C5000B",
+            "answer": "#AED6F1"
         };
 
         var container_of_nodes = document.getElementById('nodes');
@@ -104,9 +107,13 @@
                         shape: 'circle',
                         color: '#A9DFBF'
                     },
-                    triggers: {
+                    contexter: {
                         shape: 'star',
                         color: '#C5000B'
+                    },
+                    answer: {
+                        shape: 'database',
+                        color: '#AED6F1'
                     }
                 },
                 physics: {
@@ -318,7 +325,8 @@
             document.getElementById('starter').border = "0";
             document.getElementById('prompt').border = "0";
             document.getElementById('sema').border = "0";
-            document.getElementById('trigger').border = "0";
+            document.getElementById('contexter').border = "0";
+            document.getElementById('answer').border = "0";
             if (current_shape == obj.id) {
                 current_shape = null;
                 return;
