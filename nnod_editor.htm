@@ -35,11 +35,12 @@
     <script type="text/javascript">
         var nodes = null;
         var edges = null;
-        var network_of_nodes = null;
+        var network = null;
         var exportValue = null;
         var resizeTimeOut;
-        var get_Neurons_Url = "/get_neurons.php";
-        var get_Nerves_Url = "/get_nerves.php";
+        var get_Neurons_Url = "/slq_get_neurons.php";
+        var get_Nerves_Url = "/slq_get_nerves.php";
+        var update_Node_Coordinates_Url = "/slq_update_Node_Coordinates.php";
         var neurons = null;
         var nevres = null;
         var current_shape = null;
@@ -58,8 +59,8 @@
             "answer": "#AED6F1"
         };
 
-        var container_of_nodes = document.getElementById('nodes');
-        var options_nodes = null;
+        var container = document.getElementById('nodes');
+        var options = null;
         var data_nodes = null;
 
         var userId = 'Guest';
@@ -74,12 +75,14 @@
         });
 
         function draw() {
-            data_nodes = {
+            data = {
                 nodes: nodes,
                 edges: edges
             };
 
-            options_nodes = {
+            options = {
+                autoResize: false,
+
                 nodes: {
                     shape: 'circle'
                 },
@@ -137,36 +140,32 @@
                     }
                 },
                 layout: {
-                    randomSeed: 0
+                    randomSeed: undefined,
+                    improvedLayout: true
                         // hierarchical: {
                         //     direction: 'UD',
                         //     sortMethod: 'directed'
                         // }
                 }
             };
-            network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
+            network = new vis.Network(container, data, options);
 
-            network_of_nodes.on("click", function(params) {
-                // var nodes = objectToArray(network_of_nodes.getPositions());
+            network.on("click", function(params) {
+                // var nodes = objectToArray(network.getPositions());
                 // nodes.forEach(addConnections);
                 // exportValue = JSON.stringify(nodes, undefined, 2);
 
             });
-            network_of_nodes.on("doubleClick", function(params) {
+            network.on("doubleClick", function(params) {
                 params.event = "[original event]";
                 // document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
                 alert(JSON.stringify(params, null, 4))
             });
 
-            network_of_nodes.on("select", function(params) {
-                //               console.log('select Event:', params);
-            });
-
-            network_of_nodes.on("selectNode", function(params) {
-                // network_of_nodes.clustering.updateClusteredNode(params.nodes[0], 
-                // {
-                //     shape: current_shape
-                // });
+            network.on("dragEnd", function (params) {
+                params.event = "[original event]";
+                if (params.nodes == "" || params.nodes == undefined ) return;
+                update_Node_Coordinates(params.nodes, params.pointer.canvas.x, params.pointer.canvas.y);
             });
         }
 
@@ -233,6 +232,7 @@
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
             draw();
+            network.fit();
         }
 
         function Redraw() {
@@ -243,7 +243,7 @@
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
 
-            //            network_of_nodes = new vis.Network(container_of_nodes, data_nodes, options_nodes);
+            //            network = new vis.Network(container, data, options);
         };
 
         function objectToArray(obj) {
@@ -341,6 +341,15 @@
             // ws_iframe_api.ext_send(userId + ETX + msg);
             document.getElementById('qId').value = "";
         };
+
+        function update_Node_Coordinates(node_id, x, y)
+        {
+            var url = update_Node_Coordinates_Url + "?node_id=" + node_id + "&x=" + x + "&y=" + y;
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", url, false);
+            xmlHttp.send(null);
+            var result = xmlHttp.responseText;
+        }
     </script>
 
 </body>
