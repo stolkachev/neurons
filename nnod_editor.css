@@ -511,17 +511,17 @@ div.vis-network div.vis-manipulation {
 
 div.vis-network div.vis-edit-mode {
     position: absolute;
-    left: 0;
+    left: 5px;
     top: 5px;
     height: 30px
 }
 
 div.vis-network div.vis-close {
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 50px;
-    height: 50px;
+    left: 5px;
+    top: 5px;
+    width: 30px;
+    height: 30px;
     background-position: 0px 0px;
     background-repeat: no-repeat;
     background-image: url(img/cross.png);
@@ -539,6 +539,7 @@ div.vis-network div.vis-close:hover {
 }
 
 div.vis-network div.vis-edit-mode div.vis-button {
+    position: absolute;
     top: 0px;
     left: 0px;
     font-family: verdana;
@@ -549,7 +550,7 @@ div.vis-network div.vis-edit-mode div.vis-button {
     background-position: 0 0;
     background-repeat: no-repeat;
     height: 24px;
-    margin-left: 10px;
+    margin-left: 0px;
     cursor: pointer;
     padding: 0 8px 0 8px;
     -webkit-touch-callout: none;
@@ -561,8 +562,9 @@ div.vis-network div.vis-edit-mode div.vis-button {
 }
 
 div.vis-network div.vis-manipulation div.vis-button {
+    position: relative;
     top: 0px;
-    left: 155px;
+    left: 50px;
     font-family: verdana;
     font-size: 12px;
     -moz-border-radius: 15px;
@@ -641,9 +643,9 @@ div.vis-network div.vis-manipulation div.vis-label {
 }
 
 div.vis-network div.vis-manipulation div.vis-separator-line {
-    float: left;
+    position: absolute;
     display: inline-block;
-    width: 50px;
+    width: 0px;
     height: 21px;
     background-color: #00000000;
     margin: 0 7px 0 15px

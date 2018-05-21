@@ -33,14 +33,30 @@
     </div>
 
     <script type="text/javascript">
+        var u_id = 1;
+        var userId = 'Guest';
+        var token = '1f6601c5-05b8-4da5-9774-ea7362a8fa2e';
+        var header = 'nnod://chat/'
+        var session_id = '123';
+        var ETX = String.fromCharCode(3);
+        var ws_Server = 'ws://256gl.com:55438';
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            width: 80,
+            height: 80
+        });
+
         var nodes = null;
         var edges = null;
         var network = null;
         var exportValue = null;
         var resizeTimeOut;
-        var get_Neurons_Url = "/slq_get_neurons.php";
-        var get_Nerves_Url = "/slq_get_nerves.php";
-        var update_Node_Coordinates_Url = "/slq_update_Node_Coordinates.php";
+
+        var get_Neurons_Url = "/slq_get_neurons.php?u_id=" + u_id;
+        var get_Nerves_Url = "/slq_get_nerves.php?u_id=" + u_id;
+        var update_Node_Coordinates_Url = "/slq_update_Node_Coordinates.php?u_id=" + u_id;
+        var delete_Node_Url = "/slq_delete_neuron.php?u_id=" + u_id;
+        var add_Node_Url = "/slq_add_neuron.php?u_id=" + u_id;
+
         var neurons = null;
         var nevres = null;
         var current_shape = null;
@@ -63,16 +79,7 @@
         var options = null;
         var data_nodes = null;
 
-        var userId = 'Guest';
-        var token = '1f6601c5-05b8-4da5-9774-ea7362a8fa2e';
-        var header = 'nnod://chat/'
-        var session_id = '123';
-        var ETX = String.fromCharCode(3);
-        var ws_Server = 'ws://256gl.com:55438';
-        var qrcode = new QRCode(document.getElementById("qrcode"), {
-            width: 80,
-            height: 80
-        });
+
 
         function draw() {
             data = {
@@ -129,16 +136,13 @@
                 manipulation: {
                     enabled: true,
                     addNode: onAddNode,
+                    addEdge: onAddEge,
                     deleteNode: onDeleteNode,
                     deleteEdge: onDeleteEdge
                 },
                 layout: {
                     randomSeed: undefined,
                     improvedLayout: true
-                        // hierarchical: {
-                        //     direction: 'UD',
-                        //     sortMethod: 'directed'
-                        // }
                 }
             };
             network = new vis.Network(container, data, options);
@@ -155,10 +159,8 @@
                 alert(JSON.stringify(params, null, 4))
             });
 
-            network.on("dragEnd", function (params) {
-                params.event = "[original event]";
-                if (params.nodes == "" || params.nodes == undefined ) return;
-                update_Node_Coordinates(params.nodes, params.pointer.canvas.x, params.pointer.canvas.y);
+            network.on("dragEnd", function(params) {
+                ondragEnd(params);
             });
         }
 
@@ -335,30 +337,31 @@
             document.getElementById('qId').value = "";
         };
 
-        function update_Node_Coordinates(node_id, x, y)
-        {
-            var url = update_Node_Coordinates_Url + "?node_id=" + node_id + "&x=" + x + "&y=" + y;
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open("GET", url, false);
-            xmlHttp.send(null);
-            var result = xmlHttp.responseText;
+        // EVENTS:
+        function ondragEnd(params) {
+            params.event = "[original event]";
+            if (params.nodes == "" || params.nodes == undefined) return;
+            var node_id = params.nodes;
+            var x = params.pointer.canvas.x;
+            var y = params.pointer.canvas.y;
+            var url = update_Node_Coordinates_Url + "&node_id=" + node_id + "&x=" + x + "&y=" + y;
+            var result = synch_XMLHttpRequest(url);
         }
 
-        function onDeleteNode(toBeDeletedData, callback) 
-        {
-            alert('deleting data', toBeDeletedData);
-            // toBeDeletedData is object with nodes: [] and edges: []
+        function onDeleteNode(toBeDeletedData, callback) {
+            var node_id = toBeDeletedData.nodes;
+            var url = delete_Node_Url + "&node_id=" + node_id;
+            var result = synch_XMLHttpRequest(url);
+            //    alert(node_id + " " + result);
             callback(toBeDeletedData);
         }
 
-        function onDeleteEdge(toBeDeletedData, callback) 
-        {
-            alert('deleting data', toBeDeletedData);
+        function onDeleteEdge(toBeDeletedData, callback) {
+            alert('onDeleteEdge', toBeDeletedData);
             callback(toBeDeletedData);
         }
-        
-        function onAddNode(nodeData, callback) 
-        {
+
+        function onAddEge(nodeData, callback) {
             if (current_shape == null) {
                 alert("Please select shape of the node!")
                 return;
@@ -369,6 +372,32 @@
             callback(nodeData);
         }
 
+        function onAddNode(nodeData, callback) {
+            if (current_shape == null) {
+                alert("Please select shape of the node!")
+                return;
+            }
+            var node_shape = current_shape;
+            var x = Math.round(nodeData.x);
+            var y = Math.round(nodeData.y);
+            var url = add_Node_Url + "&node_shape=" + node_shape + "&x=" + x + "&y=" + y;
+            var result = synch_XMLHttpRequest(url);
+            nodeData.id = result;
+            nodeData.shape = shapes[current_shape];
+            nodeData.color = shapes_colors[current_shape];
+            nodeData.label = current_shape;
+            callback(nodeData);
+        }
+
+        // HTTP Requests:
+
+        function synch_XMLHttpRequest(url) {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", url, false);
+            xmlHttp.send(null);
+            var result = xmlHttp.responseText;
+            return result;
+        }
     </script>
 
 </body>
