@@ -81,7 +81,7 @@
             };
 
             options = {
-                autoResize: false,
+                autoResize: true,
 
                 nodes: {
                     shape: 'circle'
@@ -128,16 +128,9 @@
                 },
                 manipulation: {
                     enabled: true,
-                    addNode: function(nodeData, callback) {
-                        if (current_shape == null) {
-                            alert("Please select shape of the node!")
-                            return;
-                        }
-                        nodeData.shape = shapes[current_shape];
-                        nodeData.color = shapes_colors[current_shape];
-                        nodeData.label = current_shape;
-                        callback(nodeData);
-                    }
+                    addNode: onAddNode,
+                    deleteNode: onDeleteNode,
+                    deleteEdge: onDeleteEdge
                 },
                 layout: {
                     randomSeed: undefined,
@@ -350,6 +343,32 @@
             xmlHttp.send(null);
             var result = xmlHttp.responseText;
         }
+
+        function onDeleteNode(toBeDeletedData, callback) 
+        {
+            alert('deleting data', toBeDeletedData);
+            // toBeDeletedData is object with nodes: [] and edges: []
+            callback(toBeDeletedData);
+        }
+
+        function onDeleteEdge(toBeDeletedData, callback) 
+        {
+            alert('deleting data', toBeDeletedData);
+            callback(toBeDeletedData);
+        }
+        
+        function onAddNode(nodeData, callback) 
+        {
+            if (current_shape == null) {
+                alert("Please select shape of the node!")
+                return;
+            }
+            nodeData.shape = shapes[current_shape];
+            nodeData.color = shapes_colors[current_shape];
+            nodeData.label = current_shape;
+            callback(nodeData);
+        }
+
     </script>
 
 </body>
