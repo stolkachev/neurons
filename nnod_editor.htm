@@ -55,7 +55,9 @@
         var get_Nerves_Url = "/slq_get_nerves.php?u_id=" + u_id;
         var update_Node_Coordinates_Url = "/slq_update_Node_Coordinates.php?u_id=" + u_id;
         var delete_Node_Url = "/slq_delete_neuron.php?u_id=" + u_id;
+        var delete_Edge_Url = "/slq_delete_edge.php?u_id=" + u_id;
         var add_Node_Url = "/slq_add_neuron.php?u_id=" + u_id;
+        var add_Edge_Url = "/slq_add_nerve.php?u_id=" + u_id;
 
         var neurons = null;
         var nevres = null;
@@ -352,23 +354,22 @@
             var node_id = toBeDeletedData.nodes;
             var url = delete_Node_Url + "&node_id=" + node_id;
             var result = synch_XMLHttpRequest(url);
-            //    alert(node_id + " " + result);
             callback(toBeDeletedData);
         }
 
         function onDeleteEdge(toBeDeletedData, callback) {
-            alert('onDeleteEdge', toBeDeletedData);
+            var edge_id = toBeDeletedData.edges;
+            var url = delete_Edge_Url + "&edge_id=" + edge_id;
+            var result = synch_XMLHttpRequest(url);
             callback(toBeDeletedData);
         }
 
         function onAddEge(nodeData, callback) {
-            if (current_shape == null) {
-                alert("Please select shape of the node!")
-                return;
-            }
-            nodeData.shape = shapes[current_shape];
-            nodeData.color = shapes_colors[current_shape];
-            nodeData.label = current_shape;
+            var from = nodeData.from;
+            var to = nodeData.to;
+            var url = add_Edge_Url + "&from=" + from + "&to=" + to;
+            var result = synch_XMLHttpRequest(url);
+            nodeData.id = result;
             callback(nodeData);
         }
 
