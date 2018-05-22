@@ -22,13 +22,12 @@ while ($row = $results->fetchArray())
 </head>
 
 <body bgcolor="lightgray">
-    <link rel="stylesheet" href="NNT.css" type="text/css" />
 
     <script type="text/javascript">
 
         var u_id = "<?php echo $u_id;?>";
         var node_id = "<?php echo $node_id;?>";
-        var update_Node_Name_Url = "/slq_update_Node_Name.php?u_id=" + u_id + "&node_id=" + node_id;
+        var update_Node_Url = "/slq_update_Node.php?u_id=" + u_id + "&node_id=" + node_id;
 
         function synch_XMLHttpRequest(url) {
             var xmlHttp = new XMLHttpRequest();
@@ -38,34 +37,32 @@ while ($row = $results->fetchArray())
             return result;
         }
 
-        function Update_Node_Name(V) {
-            l_content = V.value;
+        function Update_Node_Name(parm) {
+            var arg = parm.value;
             r = /'/g;
-            l_content = l_content.replace(r, "''");
-            l_content = encodeURIComponent(l_content);
-            var url = update_Node_Name_Url +"&l_content=" + l_content;
+            arg = arg.replace(r, "''");
+            arg = encodeURIComponent(arg);
+            var url = update_Node_Url +"&l_content=" + arg;
             var result = synch_XMLHttpRequest(url);
-            slq_update_Node_Name.php
-         //   parent.nnt_card_Control.location.href = URL;
-         
+            window.opener.change_name_callback(node_id, arg);
         }
 
-        function Update_Triggers(V) {
-            n_triggers = V.value;
+        function Update_Triggers(parm) {
+            var arg = parm.value;
             r = /'/g;
-            n_triggers = n_triggers.replace(r, "''");
-            n_triggers = encodeURIComponent(n_triggers);
-            URL = "Update_Starters_Triggers.aspx?ID=164&user_ID=1" + "&n_triggers=" + n_triggers;
-            parent.nnt_card_Control.location.href = URL;
+            arg = arg.replace(r, "''");
+            arg = encodeURIComponent(arg);
+            var url = update_Node_Url +"&n_triggers=" + arg;
+            var result = synch_XMLHttpRequest(url);
         }
 
-        function Update_Prompt(V) {
-            n_prompt = V.value;
+        function Update_Prompt(parm) {
+            var arg = parm.value;
             r = /'/g;
-            n_prompt = n_prompt.replace(r, "''");
-            n_prompt = encodeURIComponent(n_prompt);
-            URL = "Update_Starters_Prompt.aspx?ID=164&user_ID=1" + "&n_prompt=" + n_prompt;
-            parent.nnt_card_Control.location.href = URL;
+            arg = arg.replace(r, "''");
+            arg = encodeURIComponent(arg);
+            var url = update_Node_Url +"&n_prompt=" + arg;
+            var result = synch_XMLHttpRequest(url);
         }
 
         function prev_card() {
@@ -117,12 +114,11 @@ while ($row = $results->fetchArray())
             <B><font color=blue><?php echo $node_id; ?></font></th>
 
     <th align="center" width="60%">
-    <textarea id="Node_Name" align="center" onchange="Update_Node_Name(this);"
+    <textarea id="Node_Name" align="center"
          style="height:30; width:70%; background-color:lightgray; color:blue; font-family: 'Times New Roman'; 
-         font-size:14pt; font-weight:bold; border:0; resize:none;"><?php echo $l_content;?></textarea>
+         font-size:14pt; font-weight:bold; border:0; resize:none;" 
+         onchange="Update_Node_Name(this);"><?php echo $l_content;?></textarea>
         </th>
-
-    
     </table>
     
     <hr size=1 align="left">
@@ -150,7 +146,7 @@ while ($row = $results->fetchArray())
     <tr>
     <td align="left">
     <div style='height: 100%; width: 100%'>
-    <textarea id="Triggers" align="left" style='width:100%;background-color:white; overflow=auto; font-family:verdana; font-size:8pt;' 
+    <textarea id="Prompts" align="left" style='width:100%;background-color:white; overflow=auto; font-family:verdana; font-size:8pt;' 
     onChange='Update_Prompt(this);'><?php echo $n_prompt; ?></textarea>
     </div>
     </td>

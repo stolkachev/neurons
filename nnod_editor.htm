@@ -402,6 +402,13 @@
             var result = xmlHttp.responseText;
             return result;
         }
+
+        function change_name_callback(node_id, arg) {
+            nodes.update({
+                id: node_id,
+                label: decodeURI(arg)
+            });
+        }
     </script>
 
 </body>
