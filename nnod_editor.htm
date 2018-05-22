@@ -59,7 +59,7 @@
         var add_Node_Url = "/slq_add_neuron.php?u_id=" + u_id;
         var add_Edge_Url = "/slq_add_nerve.php?u_id=" + u_id;
         var get_Node_Info_Url = "/slq_get_neuron_info.php?u_id=" + u_id;
-        
+        var nnod_node_Url = "nnod_node.php?u_id=" + u_id;
 
         var neurons = null;
         var nevres = null;
@@ -82,8 +82,6 @@
         var container = document.getElementById('nodes');
         var options = null;
         var data_nodes = null;
-
-
 
         function draw() {
             data = {
@@ -158,13 +156,15 @@
                 // exportValue = JSON.stringify(nodes, undefined, 2);
 
             });
+
             network.on("doubleClick", function(params) {
                 params.event = "[original event]";
                 // alert(JSON.stringify(params, null, 4))
                 var node_id = params.nodes[0];
+                if (node_id == undefined) return;
                 var url = get_Node_Info_Url + "&node_id=" + node_id;
                 var result = synch_XMLHttpRequest(url);
-                alert(result);
+                var nnod_node = window.open(nnod_node_Url + "&node_id=" + node_id, "nnod_node", "width=500,height=500");
             });
 
             network.on("dragEnd", function(params) {
@@ -226,7 +226,6 @@
         }
 
         function Init_Draw() {
-
             qrcode.makeCode(header + "ws=" + ws_Server + "&session_id=" + session_id);
             var mynetwork = document.getElementById('nodes');
             var x1 = window.innerWidth - 100;
@@ -245,7 +244,6 @@
             mynetwork.style.width = x1 + "px";
             mynetwork.style.height = y1 + "px";
             mynetwork.style.left = "90px";
-
             //            network = new vis.Network(container, data, options);
         };
 
@@ -297,7 +295,6 @@
                         to: connId
                     });
                     let cNode = getNodeById(data, connId);
-
                     var elementConnections = cNode.connections;
                     var duplicateIndex = elementConnections.findIndex(function(connection) {
                         return connection == node.id;
