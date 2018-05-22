@@ -1,6 +1,14 @@
+.disable-doubletap-to-zoom {
+    touch-action: none;
+}
+
 BODY {
     font-family: "Times New Roman";
     font: x-small;
+}
+
+textarea {
+    font-family: "Times New Roman";
 }
 
 table {

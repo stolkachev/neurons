@@ -15,7 +15,6 @@ while ($row = $results->fetchArray())
 }
 ?>
 
-
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
@@ -26,6 +25,31 @@ while ($row = $results->fetchArray())
     <link rel="stylesheet" href="NNT.css" type="text/css" />
 
     <script type="text/javascript">
+
+        var u_id = "<?php echo $u_id;?>";
+        var node_id = "<?php echo $node_id;?>";
+        var update_Node_Name_Url = "/slq_update_Node_Name.php?u_id=" + u_id + "&node_id=" + node_id;
+
+        function synch_XMLHttpRequest(url) {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", url, false);
+            xmlHttp.send(null);
+            var result = xmlHttp.responseText;
+            return result;
+        }
+
+        function Update_Node_Name(V) {
+            l_content = V.value;
+            r = /'/g;
+            l_content = l_content.replace(r, "''");
+            l_content = encodeURIComponent(l_content);
+            var url = update_Node_Name_Url +"&l_content=" + l_content;
+            var result = synch_XMLHttpRequest(url);
+            slq_update_Node_Name.php
+         //   parent.nnt_card_Control.location.href = URL;
+         
+        }
+
         function Update_Triggers(V) {
             n_triggers = V.value;
             r = /'/g;
@@ -88,9 +112,15 @@ while ($row = $results->fetchArray())
     </script>
 
     <table border="0" width="100%" height="5%">
-        <th align="left" width="40%">
-            <B><font color=blue><?php echo $l_name; ?></font></th>
-    <th align="left" width="50%"><B><font color=blue><?php echo $l_content; ?></font></th>
+
+        <th align="left" width="8%">
+            <B><font color=blue><?php echo $node_id; ?></font></th>
+
+    <th align="center" width="60%">
+    <textarea id="Node_Name" align="center" onchange="Update_Node_Name(this);"
+         style="height:30; width:70%; background-color:lightgray; color:blue; font-family: 'Times New Roman'; 
+         font-size:14pt; font-weight:bold; border:0; resize:none;"><?php echo $l_content;?></textarea>
+        </th>
 
     
     </table>
@@ -98,7 +128,7 @@ while ($row = $results->fetchArray())
     <hr size=1 align="left">
     <table border="0" width="100%" height="10%">
     <tr>
-    <th align="left"><font color='#417c64'>Linguistic triggers</FONT></th>
+    <th align="left"><font color='#417c64'>Linguistic triggers</font></th>
     </tr>
     <tr>
     <td align="left"><textarea id="Triggers" align="left" style='height:40; width:100%;background-color:white; overflow=auto; font-family:verdana; font-size:8pt;' 
