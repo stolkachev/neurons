@@ -58,6 +58,8 @@
         var delete_Edge_Url = "/slq_delete_edge.php?u_id=" + u_id;
         var add_Node_Url = "/slq_add_neuron.php?u_id=" + u_id;
         var add_Edge_Url = "/slq_add_nerve.php?u_id=" + u_id;
+        var get_Node_Info_Url = "/slq_get_neuron_info.php?u_id=" + u_id;
+        
 
         var neurons = null;
         var nevres = null;
@@ -150,15 +152,19 @@
             network = new vis.Network(container, data, options);
 
             network.on("click", function(params) {
-                // var nodes = objectToArray(network.getPositions());
+                var node_id = params.nodes[0];
+
                 // nodes.forEach(addConnections);
                 // exportValue = JSON.stringify(nodes, undefined, 2);
 
             });
             network.on("doubleClick", function(params) {
                 params.event = "[original event]";
-                // document.getElementById('eventSpan').innerHTML = '<h2>doubleClick event:</h2>' + JSON.stringify(params, null, 4);
-                alert(JSON.stringify(params, null, 4))
+                // alert(JSON.stringify(params, null, 4))
+                var node_id = params.nodes[0];
+                var url = get_Node_Info_Url + "&node_id=" + node_id;
+                var result = synch_XMLHttpRequest(url);
+                alert(result);
             });
 
             network.on("dragEnd", function(params) {
