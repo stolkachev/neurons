@@ -2,12 +2,12 @@
 <html>
 
 <head>
-    <title>NNOD Dialog Editor</title>
+    <title>D-Elegance</title>
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="qrcode.js"></script>
     <script type="text/javascript" src="js/vis.js"></script>
     <script type="text/javascript" src='neurons/neurons.js'></script>
-    <script type="text/javascript" src="js/editor_demo.js"></script>
+    <script type="text/javascript" src="js/delegance.js"></script>
 
     <link href="nnod_editor.css" rel="stylesheet" type="text/css" />
 </head>
@@ -31,7 +31,7 @@
         <span class="switch-label" data-on="On" data-off="Off"></span> <span class="switch-handle"></span> </label>
 
     <div id="qrcode" style="position:absolute; left:3pt; bottom:12pt; width: 85; height: 85;"></div>
-    <div style="position:absolute; width: 100%; text-align: center; top:5pt; "><strong><font color="grey">NNOD Editor</font></strong></div>
+    <div style="position:absolute; width: 95%; text-align: center; top:5pt; "><strong><font color="grey">D-Elegance</font></strong></div>
     <div id='input_group' style="position:absolute; left:65pt; top:5pt; ">
         <strong style="color:blue;">Question:</strong><br>
         <input type='text' id='Phrase' size='40' value='' onkeydown="if (event.keyCode == 13) Submit_Phrase();" />
@@ -41,7 +41,6 @@
     </div>
 
     <div id="Result" style="position:absolute; right:3pt; bottom:10pt; height:200px; width:200px;"></div>
-
     <iframe id='ws_home' style='width:0;height:0;border:0; border:none;'></iframe>
 
     <script type="text/javascript" src="nnod_editor.js"></script>
