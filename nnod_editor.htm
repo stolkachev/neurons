@@ -25,28 +25,39 @@
 
     <div id="nodes"></div>
 
-    <div id="qrcode" style="position:absolute; left:3pt; bottom:12pt; "></div>
+    <label class="switch" style="position:absolute; left:3pt; bottom:82pt;">
+        <input class="switch-input" type="checkbox" onchange="ws_on_off(this.checked);" />
+        <span class="switch-label" data-on="On" data-off="Off"></span> <span class="switch-handle"></span> </label>
 
-    <div id='input_group' style="position:absolute; left:65pt; top:15pt; ">
+    <div id="qrcode" style="position:absolute; left:3pt; bottom:12pt; width: 85; height: 85;"></div>
+   
+    <div id='input_group' style="position:absolute; left:65pt; top:5pt; ">
         <strong style="color: rgba(110, 114, 111, 0.788)">Question:</strong><br>
         <input type='text' id='Phrase' size='40' value='' onkeydown="if (event.keyCode == 13) Submit_Phrase();" />
-        <button style='position: relative;' onClick='Submit_Phrase();'>OK</button>&nbsp;<input type="button" onclick="Reset();" value="Reset" />
+        <button style='position: relative;' onClick='Submit_Phrase();'>OK</button>&nbsp;<input type="button" onclick="Reset();" value="Reset" /><br>
+        <div id="Respond" style="font-size: small; color: blue; padding: 3px;"></div>
     </div>
 
     <div id="Result" style="position:absolute; right:3pt; bottom:10pt; height:200px; width:200px;"></div>
 
+    <iframe id='ws_home' style='width:0;height:0;border:0; border:none;'></iframe>
+
     <script type="text/javascript">
         var u_id = 1;
-        var userId = 'Guest';
+        var userId = 'NNOD Editor';
         var token = '1f6601c5-05b8-4da5-9774-ea7362a8fa2e';
         var header = 'nnod://chat/'
-        var session_id = '123';
+        var session_id = 'editor:car';
         var ETX = String.fromCharCode(3);
         var ws_Server = 'ws://256gl.com:55438';
         var qrcode = new QRCode(document.getElementById("qrcode"), {
             width: 80,
             height: 80
         });
+
+        var ws_iframe = document.getElementById('ws_home');
+        var ws_iframe_api = ws_iframe.contentWindow;
+        var api_url = 'nnod_api.htm?env=web';
 
         var generic_triggers_url = "triggers/triggers_generic.xml";
         var local_triggers_url = "triggers/triggers_1.xml";
@@ -57,7 +68,6 @@
 
         var words_layer = null;
         var generic_triggers_layer = null;
-
 
         var nodes = null;
         var edges = null;
@@ -107,7 +117,28 @@
                 autoResize: true,
 
                 nodes: {
-                    shape: 'circle'
+                    shape: 'circle', 
+                    borderWidth: 1,
+                    borderWidthSelected: 1,
+                    color: {
+                        border: 'lightgrey',
+                        background: '#FADBD8',
+                        highlight: {
+                            border: 'lightgrey',
+                            background: 'red'
+                        },
+                        hover: {
+                            border: 'lightgrey',
+                            background: 'red'
+                        }
+                    },
+                    shadow:{
+                        enabled: true,
+                        color: 'rgba(0,0,0,0.5)',
+                        size:10,
+                        x:10,
+                        y:10
+                    },
                 },
                 edges: {
                     color: 'gray',
@@ -118,20 +149,24 @@
                             scaleFactor: 1,
                             type: 'arrow'
                         }
-                    }
+                    },    
+                    shadow:{
+                        enabled: true,
+                        color: 'rgba(0,0,0,0.5)',
+                        size:15,
+                        x:15,
+                        y:15
+                    },
                 },
                 groups: {
                     starter: {
-                        shape: 'ellipse',
-                        color: '#FADBD8'
+                        shape: 'ellipse'
                     },
                     prompt: {
-                        shape: 'box',
-                        color: '#E5E7E9'
+                        shape: 'box'
                     },
                     sema: {
-                        shape: 'circle',
-                        color: '#A9DFBF'
+                        shape: 'circle'
                     },
                     contexter: {
                         shape: 'star',
@@ -233,11 +268,10 @@
                     to: parts[2]
                 });
             })
-
-            //     alert(nevres);
-
             Init_Draw();
             load_neurons();
+            ws_iframe.src = api_url;
+  //          document.getElementById('qrcode').style.border = "1px solid blue";
         }
 
         function Init_Draw() {
@@ -454,6 +488,18 @@
                 for (var j = 0; j < c_triggers.length; j++) {
                     var splitter = c_triggers[j].split(":")
                     str_result = str_result + "<i>" + splitter[0] + ":<font color=red>&nbsp;&nbsp;" + splitter[1] + "</font></i><br>";
+                    if (splitter[0].toLowerCase() == "starter" || splitter[0].toLowerCase() == "sema" || splitter[0].toLowerCase() == "prompt")
+                    {
+                        var node_id = splitter[1];
+                        var url = get_Node_Info_Url + "&node_id=" + node_id;
+                        var result = synch_XMLHttpRequest(url).split("\t");
+//                        alert(result[2]);
+                        document.getElementById("Respond").innerHTML = result[2];
+
+                        ws_iframe_api.ext_send(userId + ETX + result[2]);
+
+                        network.selectNodes([node_id], true);
+                    }
                 }
             }
             document.getElementById("Result").innerHTML = str_result;
@@ -559,6 +605,76 @@
         function Hello_World() {
             //            alert("Hello_World was activated!")
         }
+
+
+/// CALL BACKS
+        function ws_onOpen(msg) {
+ //           document.getElementById('qrcode').style.border = "1px solid red";
+        }
+
+        function ws_onClose(msg) {
+            // //           div.innerHTML = div.innerHTML + msg + '<br>';
+            // document.getElementById('connectButton').style.background = "#cccccc";
+            // document.getElementById('connectButton').value = "Connect";
+        }
+
+        function ws_onMessage(msg) {
+            if (msg === "PONG" + ETX + "PING" || msg === "PING" + ETX + "PONG") return;
+            msg = msg.replace(": ", ETX);
+            var particles = msg.split(ETX);
+            if (particles.length === 6) {
+                if (particles[2] === 'BROADCAST') {
+                    ws_disconnect();
+                    session_id = particles[0]
+                    ws_connect()
+                }
+            }
+            if (particles.length === 2) {
+                if (particles[1] === 'DISCONNECTED') {
+                    ws_disconnect();
+                }
+                else{
+                    document.getElementById("Phrase").value = particles[1];
+                    Submit_Phrase();
+                }
+            }
+        }
+
+        function ws_onError(msg) {
+        }
+
+        function ws_onLoad(msg) {
+        }
+
+        /// CALLS
+
+        function ws_on_off(checked)
+        {
+            if (checked)
+            {
+                msg = ws_iframe_api.ext_init(userId, token, session_id, ws_Server);
+                if (msg != "0" && msg != undefined) { }
+            }else{
+                ws_disconnect();
+            }
+        }
+
+        function ws_connect() {
+                msg = ws_iframe_api.ext_init(userId, token, session_id, ws_Server);
+                if (msg != "0" && msg != undefined) { }
+        }
+
+        function ws_send_Q() {
+            msg = document.getElementById('qId').value;
+            div.innerHTML = div.innerHTML + "<font color='blue'>" + msg + '</font><br>';
+            ws_iframe_api.ext_send(userId + ETX + msg);
+        }
+
+        function ws_disconnect() {
+            ws_iframe_api.ext_close();
+            
+        }
+
     </script>
 
 </body>
