@@ -1,7 +1,7 @@
     var userId = 'NNOD Editor';
     var token = '1f6601c5-05b8-4da5-9774-ea7362a8fa2e';
     var header = 'nnod://chat/'
-    var session_id = 'editor:car';
+    var session_id = 'editor';
     var ETX = String.fromCharCode(3);
     var ws_Server = 'ws://256gl.com:55438';
     var qrcode = new QRCode(document.getElementById("qrcode"), {
@@ -9,6 +9,7 @@
         height: 80
     });
 
+    var connected = false;
     var ws_iframe = document.getElementById('ws_home');
     var ws_iframe_api = ws_iframe.contentWindow;
     var api_url = 'nnod_api.htm?env=web';
@@ -163,6 +164,7 @@
     };
 
     function Page_Loaded() {
+        session_id = session_id + "_" + random(7);
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open("GET", get_Neurons_Url, false);
         xmlHttp.send(null);
@@ -220,11 +222,9 @@
         Init_Draw();
         load_neurons();
         ws_iframe.src = api_url;
-        //          document.getElementById('qrcode').style.border = "1px solid blue";
     }
 
     function Init_Draw() {
-        qrcode.makeCode(header + "ws=" + ws_Server + "&session_id=" + session_id);
         var mynetwork = document.getElementById('nodes');
         var x1 = window.innerWidth - 100;
         var y1 = window.innerHeight - 80;
@@ -443,9 +443,9 @@
                     var result = synch_XMLHttpRequest(url).split("\t");
                     //                        alert(result[2]);
                     document.getElementById("Respond").innerHTML = result[2];
-
-                    ws_iframe_api.ext_send(userId + ETX + result[2]);
-
+                    if (connected) {
+                        ws_iframe_api.ext_send(userId + ETX + result[2]);
+                    }
                     network.selectNodes([node_id], true);
                 }
             }
@@ -556,9 +556,7 @@
 
 
     /// CALL BACKS
-    function ws_onOpen(msg) {
-        //           document.getElementById('qrcode').style.border = "1px solid red";
-    }
+    function ws_onOpen(msg) {}
 
     function ws_onClose(msg) {
         // //           div.innerHTML = div.innerHTML + msg + '<br>';
@@ -597,17 +595,27 @@
         if (checked) {
             msg = ws_iframe_api.ext_init(userId, token, session_id, ws_Server);
             if (msg != "0" && msg != undefined) {}
+            connected = true;
+            var rand_session =
+                qrcode.makeCode(header + "ws=" + ws_Server + "&session_id=" + session_id);
+
         } else {
             ws_disconnect();
+            connected = false;
+            document.getElementById('qrcode').innerHTML = "";
         }
     }
 
     function ws_connect() {
         msg = ws_iframe_api.ext_init(userId, token, session_id, ws_Server);
-        if (msg != "0" && msg != undefined) {}
+        if (msg != "0" && msg != undefined) {
+            connected = false;
+            document.getElementById('qrcode').innerHTML = "";
+        }
     }
 
     function ws_send_Q() {
+        if (connected === false) return;
         msg = document.getElementById('qId').value;
         div.innerHTML = div.innerHTML + "<font color='blue'>" + msg + '</font><br>';
         ws_iframe_api.ext_send(userId + ETX + msg);
@@ -615,5 +623,17 @@
 
     function ws_disconnect() {
         ws_iframe_api.ext_close();
+        connected = false;
+        document.getElementById('qrcode').innerHTML = "";
+    }
 
+    function random(n) {
+        //    let a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        let a = "abcdefghijklmnopqrstuvwxyz1234567890"
+        var s = ""
+        for (i = 0; i < n; i++) {
+            r = Math.floor(Math.random() * a.length);
+            s = s + a.charAt(r);
+        }
+        return s;
     }
