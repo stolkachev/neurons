@@ -7,6 +7,7 @@
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="qrcode.js"></script>
     <script type="text/javascript" src="js/vis.js"></script>
+    <script type="text/javascript" src='neurons/neurons.js'></script>
     <link href="nnod_editor.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -28,9 +29,11 @@
 
     <div id='input_group' style="position:absolute; left:65pt; top:15pt; ">
         <strong style="color: rgba(110, 114, 111, 0.788)">Question:</strong><br>
-        <input type='text' id='qId' size='40' value='' />
-        <button style='position: relative;' onClick='ws_send_Q();'>OK</button>
+        <input type='text' id='Phrase' size='40' value='' onkeydown="if (event.keyCode == 13) Submit_Phrase();" />
+        <button style='position: relative;' onClick='Submit_Phrase();'>OK</button>&nbsp;<input type="button" onclick="Reset();" value="Reset" />
     </div>
+
+    <div id="Result" style="position:absolute; right:3pt; bottom:10pt; height:200px; width:200px;"></div>
 
     <script type="text/javascript">
         var u_id = 1;
@@ -44,6 +47,17 @@
             width: 80,
             height: 80
         });
+
+        var generic_triggers_url = "triggers/triggers_generic.xml";
+        var local_triggers_url = "triggers/triggers_1.xml";
+        var linguistic_URLs = [];
+        var layers = [];
+        var layer = null;
+        var url;
+
+        var words_layer = null;
+        var generic_triggers_layer = null;
+
 
         var nodes = null;
         var edges = null;
@@ -223,6 +237,7 @@
             //     alert(nevres);
 
             Init_Draw();
+            load_neurons();
         }
 
         function Init_Draw() {
@@ -335,13 +350,6 @@
             current_shape = obj.id;
         };
 
-        function ws_send_Q() {
-            msg = document.getElementById('qId').value;
-            // div.innerHTML = div.innerHTML + "<font color='blue'>" + msg + '</font><br>';
-            // ws_iframe_api.ext_send(userId + ETX + msg);
-            document.getElementById('qId').value = "";
-        };
-
         // EVENTS:
         function ondragEnd(params) {
             params.event = "[original event]";
@@ -408,6 +416,148 @@
                 id: node_id,
                 label: decodeURI(arg)
             });
+        }
+        //////////////////// NEURONS
+        function load_neurons() {
+            words_layer = Add_Neuro_Layer(1, -1, 1, 50000, "words");
+            generic_triggers_layer = Build_Neural_Layer(generic_triggers_url);
+            generic_triggers_layer.Disharged_CallBack = Show_Neural_State;
+            layers.push(generic_triggers_layer);
+            Save_Linguistics_URL(generic_triggers_url);
+            linguistic_URLs = Restore_Linguistics_URLs();
+            if (linguistic_URLs != null) {
+                for (var i = 0; i < linguistic_URLs.length; i++) {
+                    url = linguistic_URLs[i];
+                    if (url == generic_triggers_url) continue;
+                    layer = Build_Neural_Layer(url);
+                    layers.push(layer);
+                    Save_Linguistics_URL(url);
+                }
+            }
+            Restore_Neural_State(generic_triggers_layer);
+            for (var i = 0; i < layers.length; i++) {
+                Restore_Neural_State(layers[i]);
+            }
+            Show_Neural_State();
+            linguistic_URLs = Restore_Linguistics_URLs();
+            add_Layer(local_triggers_url);
+        }
+
+        function Show_Neural_State() {
+            var neurons = Get_Excited_Neurons(generic_triggers_layer);
+            var str_result = "";
+            for (var i = 0; i < layers.length; i++) {
+                var layer = layers[i];
+                var c_triggers = Get_Charged_Triggers(layer);
+                str_result = str_result + "<b><font color=black>" + layer.Name + ":</font></b><br>"
+
+                for (var j = 0; j < c_triggers.length; j++) {
+                    var splitter = c_triggers[j].split(":")
+                    str_result = str_result + "<i>" + splitter[0] + ":<font color=red>&nbsp;&nbsp;" + splitter[1] + "</font></i><br>";
+                }
+            }
+            document.getElementById("Result").innerHTML = str_result;
+        }
+
+        function Reset() {
+            Reset_Neurons(null);
+            localStorage.clear();
+            document.getElementById("Result").innerHTML = "";
+            linguistic_URLs = [];
+            layers = [];
+            layer = null;
+
+            Clean_Personal_Neural_Net();
+            load_neurons();
+            Show_Neural_State();
+        }
+
+        function add_Layer(linguistic_triggers_url) {
+            if (linguistic_URLs == null) {
+                layer = Build_Neural_Layer(linguistic_triggers_url);
+                layers.push(layer);
+                Show_Neural_State();
+            } else {
+                for (var k = 0; k < linguistic_URLs.length; k++) {
+                    if (linguistic_URLs[k] == linguistic_triggers_url) return;
+                }
+                layer = Build_Neural_Layer(linguistic_triggers_url);
+                layers.push(layer);
+                Save_Linguistics_URL(linguistic_triggers_url);
+                linguistic_URLs = Restore_Linguistics_URLs();
+                Show_Neural_State();
+            }
+        }
+
+        function check_Controls() {
+            var g_neurons = Get_Excited_Neurons(generic_triggers_layer);
+            if (g_neurons == null) return;
+            for (var i = 0; i < g_neurons.length; i++) {
+                var nl = g_neurons[i];
+                var splitter = nl.Name.split(':');
+
+                // if (nl.Name.toLowerCase() == "health:headache") {
+                //     add_Layer(headache_triggers_url);
+                // }
+
+                // if (nl.Name.toLowerCase() == "shopping:wine") {
+                //     add_Layer(wines_triggers_url);
+                // }
+
+                // if (nl.Name.toLowerCase() == "shopping:car") {
+                //     add_Layer(cars_triggers_url);
+                // }
+
+                if (nl.Name.toLowerCase() == "clear:clear") {
+                    localStorage.clear();
+                    Reset();
+                }
+            }
+        }
+
+        function Submit_Phrase() {
+            //          Reset_Neurons(generic_triggers_layer);
+            for (var i = 0; i < layers.length; i++) {
+                var layer = layers[i];
+                Reset_Half_Charged_Neurons(layer);
+            }
+
+            document.getElementById("Result").innerHTML = "";
+            var phrase = document.getElementById("Phrase").value;
+
+            phrase = phrase.toLowerCase();
+            var l = phrase.length - 1;
+            var q = phrase.indexOf('?');
+
+            Excite_Word(".");
+            if (phrase == "") phrase = "*enter*";
+            phrase = phrase.replace('?', ' ? ');
+            Excite_Phrase(phrase);
+            try {
+                localStorage.removeItem(generic_triggers_layer.Name);
+
+                Save_Neural_State(generic_triggers_layer);
+                for (var i = 0; i < layers.length; i++) {
+                    Save_Neural_State(layers[i]);
+                }
+            } catch (Error) {}
+
+            Show_Neural_State();
+            check_Controls();
+            document.getElementById("Phrase").value = "";
+        }
+
+        // NEURON'S FUNCTIONS
+        function Help() {
+            Save_Neural_State(generic_triggers_layer);
+            for (var i = 0; i < layers.length; i++) {
+                Save_Neural_State(layers[i]);
+            }
+            //            window.open("http://www.256gl.com");
+        }
+
+        function Hello_World() {
+            //            alert("Hello_World was activated!")
         }
     </script>
 

@@ -226,7 +226,7 @@
   </neuro_trigger>
 
   <neuro_trigger name="Clear" prompt="'clear' or 'clean'">
-    <state name="Clearn" func="Clean">
+    <state name="Clear" func="Clean">
       <item word="clear" weight="1.0"></item>
       <item word="clean" weight="1.0"></item>
     </state>
