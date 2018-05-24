@@ -8,3 +8,4 @@ var add_Node_Url = "/slq_add_neuron.php?u_id=" + u_id;
 var add_Edge_Url = "/slq_add_nerve.php?u_id=" + u_id;
 var get_Node_Info_Url = "/slq_get_neuron_info.php?u_id=" + u_id;
 var nnod_node_Url = "nnod_node.php?u_id=" + u_id;
+var update_Node_Url = "/slq_update_Node.php?u_id=" + u_id;

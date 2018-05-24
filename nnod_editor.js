@@ -554,6 +554,39 @@
         //            alert("Hello_World was activated!")
     }
 
+    function Update_Node_Data(current_field, node_id, parm) {
+        if (current_field == "Node_Name") Update_Node_Name(node_id, parm);
+        if (current_field == "Triggers") Update_Triggers(node_id, parm);
+        if (current_field == "Prompts") Update_Prompt(node_id, parm);
+    }
+
+    function Update_Node_Name(node_id, parm) {
+        var arg = parm.value;
+        r = /'/g;
+        arg = arg.replace(r, "''");
+        arg = encodeURIComponent(arg);
+        var url = update_Node_Url + "&node_id=" + node_id + "&l_content=" + arg;
+        var result = synch_XMLHttpRequest(url);
+        change_name_callback(node_id, arg);
+    }
+
+    function Update_Triggers(node_id, parm) {
+        var arg = parm.value;
+        r = /'/g;
+        arg = arg.replace(r, "''");
+        arg = encodeURIComponent(arg);
+        var url = update_Node_Url + "&node_id=" + node_id + "&n_triggers=" + arg;
+        var result = synch_XMLHttpRequest(url);
+    }
+
+    function Update_Prompt(node_id, parm) {
+        var arg = parm.value;
+        r = /'/g;
+        arg = arg.replace(r, "''");
+        arg = encodeURIComponent(arg);
+        var url = update_Node_Url + "&node_id=" + node_id + "&n_prompt=" + arg;
+        var result = synch_XMLHttpRequest(url);
+    }
 
     /// CALL BACKS
     function ws_onOpen(msg) {}
@@ -593,16 +626,15 @@
 
     function ws_on_off(checked) {
         if (checked) {
+            document.getElementById('qrcode').style.visibility = 'visible';
+            qrcode.makeCode(header + "ws=" + ws_Server + "&session_id=" + session_id);
             msg = ws_iframe_api.ext_init(userId, token, session_id, ws_Server);
             if (msg != "0" && msg != undefined) {}
             connected = true;
-            var rand_session =
-                qrcode.makeCode(header + "ws=" + ws_Server + "&session_id=" + session_id);
-
         } else {
             ws_disconnect();
             connected = false;
-            document.getElementById('qrcode').innerHTML = "";
+            document.getElementById('qrcode').style.visibility = 'hidden';
         }
     }
 
@@ -610,7 +642,7 @@
         msg = ws_iframe_api.ext_init(userId, token, session_id, ws_Server);
         if (msg != "0" && msg != undefined) {
             connected = false;
-            document.getElementById('qrcode').innerHTML = "";
+            document.getElementById('qrcode').style.visibility = 'hidden';
         }
     }
 
@@ -624,7 +656,7 @@
     function ws_disconnect() {
         ws_iframe_api.ext_close();
         connected = false;
-        document.getElementById('qrcode').innerHTML = "";
+        document.getElementById('qrcode').style.visibility = 'hidden';
     }
 
     function random(n) {

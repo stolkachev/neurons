@@ -22,47 +22,35 @@ while ($row = $results->fetchArray())
 </head>
 
 <body bgcolor="lightgray">
-
     <script type="text/javascript">
-
         var u_id = "<?php echo $u_id;?>";
         var node_id = "<?php echo $node_id;?>";
-        var update_Node_Url = "/slq_update_Node.php?u_id=" + u_id + "&node_id=" + node_id;
+        var current_field = null;
 
-        function synch_XMLHttpRequest(url) {
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open("GET", url, false);
-            xmlHttp.send(null);
-            var result = xmlHttp.responseText;
-            return result;
+        window.onbeforeunload = closingCode;
+        function closingCode(){
+            if (current_field != null)
+            {
+                var parm = document.getElementById(current_field);
+                window.opener.Update_Node_Data(current_field, node_id, parm);
+            }
+            return null;
         }
 
-        function Update_Node_Name(parm) {
-            var arg = parm.value;
-            r = /'/g;
-            arg = arg.replace(r, "''");
-            arg = encodeURIComponent(arg);
-            var url = update_Node_Url +"&l_content=" + arg;
-            var result = synch_XMLHttpRequest(url);
-            window.opener.change_name_callback(node_id, arg);
+        function Update_Node_Name(parm) 
+        {
+            window.opener.Update_Node_Name(node_id, parm);
+            current_field=null;
         }
 
         function Update_Triggers(parm) {
-            var arg = parm.value;
-            r = /'/g;
-            arg = arg.replace(r, "''");
-            arg = encodeURIComponent(arg);
-            var url = update_Node_Url +"&n_triggers=" + arg;
-            var result = synch_XMLHttpRequest(url);
+            window.opener.Update_Triggers(node_id, parm);
+            current_field=null;
         }
 
         function Update_Prompt(parm) {
-            var arg = parm.value;
-            r = /'/g;
-            arg = arg.replace(r, "''");
-            arg = encodeURIComponent(arg);
-            var url = update_Node_Url +"&n_prompt=" + arg;
-            var result = synch_XMLHttpRequest(url);
+            window.opener.Update_Prompt(node_id, parm);
+            current_field=null;
         }
 
         function prev_card() {
@@ -117,7 +105,7 @@ while ($row = $results->fetchArray())
     <textarea id="Node_Name" align="center"
          style="height:30; width:70%; background-color:lightgray; color:blue; font-family: 'Times New Roman'; 
          font-size:14pt; font-weight:bold; border:0; resize:none;" 
-         onchange="Update_Node_Name(this);"><?php echo $l_content;?></textarea>
+         onchange="Update_Node_Name(this);" onfocus='current_field="Node_Name";' ><?php echo $l_content;?></textarea>
         </th>
     </table>
     
@@ -128,7 +116,7 @@ while ($row = $results->fetchArray())
     </tr>
     <tr>
     <td align="left"><textarea id="Triggers" align="left" style='height:40; width:100%;background-color:white; overflow=auto; font-family:verdana; font-size:8pt;' 
-    onchange='Update_Triggers(this);'><?php echo $n_triggers; ?></textarea>
+    onchange='Update_Triggers(this);' onfocus='current_field="Triggers";' ><?php echo $n_triggers; ?></textarea>
     
     </td>
     </tr>
@@ -146,8 +134,8 @@ while ($row = $results->fetchArray())
     <tr>
     <td align="left">
     <div style='height: 100%; width: 100%'>
-    <textarea id="Prompts" align="left" style='width:100%;background-color:white; overflow=auto; font-family:verdana; font-size:8pt;' 
-    onChange='Update_Prompt(this);'><?php echo $n_prompt; ?></textarea>
+    <textarea id="Prompts" align="left" style='width:100%;background-color:white; overflow=auto; font-family:verdana; font-size:8pt;'
+    onChange='Update_Prompt(this);' onfocus='current_field="Prompts";' ><?php echo $n_prompt; ?></textarea>
     </div>
     </td>
     </tr>

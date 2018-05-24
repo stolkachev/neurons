@@ -3,13 +3,15 @@
     var ws = null;
 </script>
 
-<body onload='load_completed()' onunload='ws.close();'>
+<body onload='load_completed()' onunload='if (ws == null) {ws.close();}'>
     <script type="text/javascript">
         window.addEventListener('beforeunload', function(event) {
+            if (ws == null) return;
             if (ws.readyState == 1) ws.close();
         }, false);
 
         window.onbeforeunload = function() {
+            if (ws == null) return;
             if (ws.readyState == 1) ws.close();
         }
         var env = "";
