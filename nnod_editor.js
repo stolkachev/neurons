@@ -24,9 +24,6 @@
     var words_layer = null;
     var generic_triggers_layer = null;
 
-    var nodes = null;
-    var edges = null;
-    var network = null;
     var exportValue = null;
     var resizeTimeOut;
 
@@ -48,9 +45,12 @@
         "answer": "#AED6F1"
     };
 
+    var nodes = null;
+    var edges = null;
+    var network = null;
+
     var container = document.getElementById('nodes');
     var options = null;
-    var data_nodes = null;
 
     function draw() {
         data = {
@@ -103,20 +103,16 @@
                 },
                 shadow: {
                     enabled: false,
-                    color: 'rgba(0,0,0,0.5)',
-                    size: 2,
-                    x: 1,
-                    y: 1
                 },
             },
-
             autoResize: true,
             physics: {
                 enabled: false
             },
             interaction: {
                 hover: true,
-                zoomView: true
+                zoomView: true,
+                multiselect: true
             },
             manipulation: {
                 enabled: true,
@@ -427,6 +423,7 @@
     }
 
     function Show_Neural_State() {
+        var selected = [];
         var neurons = Get_Excited_Neurons(generic_triggers_layer);
         var str_result = "";
         for (var i = 0; i < layers.length; i++) {
@@ -446,9 +443,11 @@
                     if (connected) {
                         ws_iframe_api.ext_send(userId + ETX + result[2]);
                     }
-                    network.selectNodes([node_id], true);
+                    selected.push(node_id);
                 }
             }
+            network.selectNodes(selected, true);
+ //           network.selectNodes([node_id], true);
         }
         document.getElementById("Result").innerHTML = str_result;
     }
