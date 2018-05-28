@@ -445,10 +445,11 @@ function Show_Neural_State() {
                 var node_id = splitter[1];
                 var url = get_Node_Info_Url + "&node_id=" + node_id;
                 var result = synch_XMLHttpRequest(url).split("\t");
-                //                        alert(result[2]);
-                document.getElementById("Respond").innerHTML = result[2];
+                evl_result = perform_script(result[2]);
+                alert(evl_result)
+                document.getElementById("Respond").innerHTML = evl_result;
                 if (connected) {
-                    ws_iframe_api.ext_send(userId + ETX + result[2]);
+                    ws_iframe_api.ext_send(userId + ETX + evl_result);
                 }
                 selected.push(node_id);
             }
@@ -524,7 +525,6 @@ function Submit_Phrase() {
 
     document.getElementById("Result").innerHTML = "";
     var phrase = document.getElementById("Phrase").value;
-
     phrase = phrase.toLowerCase();
     var l = phrase.length - 1;
     var q = phrase.indexOf('?');

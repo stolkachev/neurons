@@ -194,6 +194,16 @@
       <item word="sure" weight="1"></item>
       <item word="да" weight="1"></item>
   </state>
+  <state name="1061">
+      <item word="*reset*" weight="1"></item>
+      <item word="reset" weight="1"></item>
+      <item word="rst" weight="1"></item>
+      <item word="сначала" weight="1"></item>
+      <item word="сбросить" weight="1"></item>
+      <item word="снова" weight="1"></item>
+      <item word="сброс" weight="1"></item>
+      <item word="tst" weight="1"></item>
+  </state>
   </neuro_trigger>
 
 </neuro_triggers>
