@@ -446,7 +446,7 @@ function Show_Neural_State() {
                 var url = get_Node_Info_Url + "&node_id=" + node_id;
                 var result = synch_XMLHttpRequest(url).split("\t");
                 evl_result = perform_script(result[2]);
-                alert(evl_result)
+ //               alert(evl_result)
                 document.getElementById("Respond").innerHTML = evl_result;
                 if (connected) {
                     ws_iframe_api.ext_send(userId + ETX + evl_result);

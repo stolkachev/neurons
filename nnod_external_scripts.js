@@ -59,24 +59,19 @@ function reset_Other_Tokens() {
 /////////////////////////////////////////////////
 
 function send_notification(phone) {
-    user_id = get_User_ID();
-    url = "/notes/clientbin/common/deepzoom/send_notification.aspx?session_id=" + "alexa-virtual" + "&phone=" + phone;
-    document.getElementById("frm_controll").src = url;
+    var url = "http://256gl.com/notes/clientbin/common/deepzoom/send_notification.aspx?session_id=" + "alexa-virtual" + "&phone=" + phone;
+    var result = synch_XMLHttpRequest(url);
 };
 
-function perform_script(str_script) {
-    var innertext = "";
-    var innerhtml = str_script.toLowerCase();
-    script_start = innerhtml.indexOf("<script>");
-    script_end = innerhtml.indexOf("script>", script_start + 2);
-
-    if (script_start >= 0 && script_end >= 0) {
-        innertext = str_script.substring(0, script_start);
-        innertext = innertext + str_script.substring(script_end + 7, str_script.length);
-        script = str_script.substring(script_start + 8, script_end - 2);
-        eval(script);
-        str_script = str_script.replace("%d_var1%", d_var1);
-        str_script = str_script.replace("%context_Choice%", context_Choice);
-    }
-    return str_script;
+function perform_script(str_script) 
+{
+    var tmp = str_script.toLowerCase();
+    var script_start = tmp.indexOf("<script>");
+    var script_end = tmp.indexOf("script>", script_start + 2);
+    var script = str_script.substring(script_start + 8, script_end - 2);
+    eval(script);
+    var result_text = str_script.slice(0, script_start);
+    result_text = result_text.replace("%d_var1%", d_var1);
+    result_text = result_text.replace("%context_Choice%", context_Choice);
+    return result_text;
 };
