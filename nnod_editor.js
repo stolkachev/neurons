@@ -148,8 +148,6 @@ function draw() {
         // alert(JSON.stringify(params, null, 4))
         var node_id = params.nodes[0];
         if (node_id == undefined) return;
-        var url = get_Node_Info_Url + "&node_id=" + node_id;
-        var result = synch_XMLHttpRequest(url);
         var nnod_node = window.open(nnod_node_Url + "&node_id=" + node_id, "nnod_node", "width=500,height=500");
     });
 
@@ -185,6 +183,13 @@ function Page_Loaded() {
             return;
         }
         var grp = parts[2].toLowerCase();
+        if (grp == "contexter") 
+        {
+            var url = get_Node_Info_Url + "&node_id=" + parts[0];
+            var result = synch_XMLHttpRequest(url);
+            var splits = result.split("\t");
+            linguistic_URLs.push(splits[2]);
+        }
         if (grp == "question") grp = "prompt";
         nodes.add({
             id: parts[0],
@@ -410,7 +415,7 @@ function load_neurons() {
     generic_triggers_layer.Disharged_CallBack = Show_Neural_State;
     layers.push(generic_triggers_layer);
     //   Save_Linguistics_URL(generic_triggers_url);
-    linguistic_URLs = Restore_Linguistics_URLs();
+    // linguistic_URLs = Restore_Linguistics_URLs();
     if (linguistic_URLs != null) {
         for (var i = 0; i < linguistic_URLs.length; i++) {
             url = linguistic_URLs[i];
@@ -425,7 +430,7 @@ function load_neurons() {
         Restore_Neural_State(layers[i]);
     }
     Show_Neural_State();
-    linguistic_URLs = Restore_Linguistics_URLs();
+    //linguistic_URLs = Restore_Linguistics_URLs();
     add_Layer(local_triggers_url);
 }
 
@@ -485,7 +490,7 @@ function add_Layer(linguistic_triggers_url) {
         layer = Build_Neural_Layer(linguistic_triggers_url);
         layers.push(layer);
         //       Save_Linguistics_URL(linguistic_triggers_url);
-        linguistic_URLs = Restore_Linguistics_URLs();
+        // linguistic_URLs = Restore_Linguistics_URLs();
         Show_Neural_State();
     }
 }

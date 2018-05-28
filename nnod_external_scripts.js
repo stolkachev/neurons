@@ -34,7 +34,7 @@ function unset_Context(contexts) {
 };
 
 function context_Search() {
-    excited_Nodes = slv_DialoqueEditor_Ctl.Content.SVL_DialogueEditor.Get_Excited_Nodes_CR();
+    // excited_Nodes = slv_DialoqueEditor_Ctl.Content.SVL_DialogueEditor.Get_Excited_Nodes_CR();
     var res = excited_Nodes.replace(/\n/g, ETX)
     return res;
 };
