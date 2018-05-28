@@ -119,7 +119,7 @@ function draw() {
         interaction: {
             hover: true,
             zoomView: true,
-            multiselect: true
+            multiselect: false
         },
         manipulation: {
             enabled: true,
@@ -409,7 +409,7 @@ function load_neurons() {
     generic_triggers_layer = Build_Neural_Layer(generic_triggers_url);
     generic_triggers_layer.Disharged_CallBack = Show_Neural_State;
     layers.push(generic_triggers_layer);
-    Save_Linguistics_URL(generic_triggers_url);
+    //   Save_Linguistics_URL(generic_triggers_url);
     linguistic_URLs = Restore_Linguistics_URLs();
     if (linguistic_URLs != null) {
         for (var i = 0; i < linguistic_URLs.length; i++) {
@@ -417,7 +417,7 @@ function load_neurons() {
             if (url == generic_triggers_url) continue;
             layer = Build_Neural_Layer(url);
             layers.push(layer);
-            Save_Linguistics_URL(url);
+            //           Save_Linguistics_URL(url);
         }
     }
     Restore_Neural_State(generic_triggers_layer);
@@ -446,7 +446,7 @@ function Show_Neural_State() {
                 var url = get_Node_Info_Url + "&node_id=" + node_id;
                 var result = synch_XMLHttpRequest(url).split("\t");
                 evl_result = perform_script(result[2]);
- //               alert(evl_result)
+                //               alert(evl_result)
                 document.getElementById("Respond").innerHTML = evl_result;
                 if (connected) {
                     ws_iframe_api.ext_send(userId + ETX + evl_result);
@@ -484,7 +484,7 @@ function add_Layer(linguistic_triggers_url) {
         }
         layer = Build_Neural_Layer(linguistic_triggers_url);
         layers.push(layer);
-        Save_Linguistics_URL(linguistic_triggers_url);
+        //       Save_Linguistics_URL(linguistic_triggers_url);
         linguistic_URLs = Restore_Linguistics_URLs();
         Show_Neural_State();
     }

@@ -29,32 +29,13 @@
         var words_layer = null;
         var generic_triggers_layer = null;
 
-
         function load_completed() {
             words_layer = Add_Neuro_Layer(1, -1, 1, 50000, "words");
             generic_triggers_layer = Build_Neural_Layer(generic_triggers_url);
             generic_triggers_layer.Disharged_CallBack = Show_Neural_State;
             layers.push(generic_triggers_layer);
-            Save_Linguistics_URL(generic_triggers_url);
-
-            linguistic_URLs = Restore_Linguistics_URLs();
-
-            if (linguistic_URLs != null) {
-                for (var i = 0; i < linguistic_URLs.length; i++) {
-                    url = linguistic_URLs[i];
-                    if (url == generic_triggers_url) continue;
-                    layer = Build_Neural_Layer(url);
-                    layers.push(layer);
-                    Save_Linguistics_URL(url);
-                }
-            }
-
-            Restore_Neural_State(generic_triggers_layer);
-            for (var i = 0; i < layers.length; i++) {
-                Restore_Neural_State(layers[i]);
-            }
+            linguistic_URLs.push(generic_triggers_url);
             Show_Neural_State();
-            linguistic_URLs = Restore_Linguistics_URLs();
         }
 
         function Reset() {
@@ -64,27 +45,19 @@
             linguistic_URLs = [];
             layers = [];
             layer = null;
-
             Clean_Personal_Neural_Net();
             load_completed();
             Show_Neural_State();
         }
 
-        function add_Layer(linguistic_triggers_url) {
-            if (linguistic_URLs == null) {
-                layer = Build_Neural_Layer(linguistic_triggers_url);
-                layers.push(layer);
-                Show_Neural_State();
-            } else {
-                for (var k = 0; k < linguistic_URLs.length; k++) {
-                    if (linguistic_URLs[k] == linguistic_triggers_url) return;
-                }
-                layer = Build_Neural_Layer(linguistic_triggers_url);
-                layers.push(layer);
-                Save_Linguistics_URL(linguistic_triggers_url);
-                linguistic_URLs = Restore_Linguistics_URLs();
-                Show_Neural_State();
+        function add_Layer(url) {
+            for (var k = 0; k < linguistic_URLs.length; k++) {
+                if (linguistic_URLs[k] == url) return;
             }
+            layer = Build_Neural_Layer(url);
+            layers.push(layer);
+            linguistic_URLs.push(url);
+            Show_Neural_State();
         }
 
         function check_Controls() {
@@ -107,7 +80,6 @@
                 }
 
                 if (nl.Name.toLowerCase() == "clear:clear") {
-                    localStorage.clear();
                     document.getElementById("Phrase").value = "";
                     document.getElementById("Result").innerHTML = "";
                 }
@@ -115,7 +87,6 @@
         }
 
         function Submit_Phrase() {
-            //          Reset_Neurons(generic_triggers_layer);
             for (var i = 0; i < layers.length; i++) {
                 var layer = layers[i];
                 Reset_Half_Charged_Neurons(layer);
@@ -148,6 +119,7 @@
         function Show_Neural_State() {
             var neurons = Get_Excited_Neurons(generic_triggers_layer);
             var str_result = "";
+            var l = layers.length;
             for (var i = 0; i < layers.length; i++) {
                 var layer = layers[i];
                 var c_triggers = Get_Charged_Triggers(layer);

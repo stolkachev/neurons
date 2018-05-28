@@ -78,11 +78,13 @@ class Personal_Neural_Net
     neurons: Neuron[];
     nerves: Nerve[];
     neuro_Layers: Neuro_Layer[];
+    LocalStorage;
     constructor()
     {
         this.neurons = [];
         this.nerves = [];
         this.neuro_Layers = [];
+        this.LocalStorage = false;
     }
 }
 
@@ -646,7 +648,7 @@ function Build_Neural_Layer(layer_url: string)
 function Save_Linguistics_URL(url: String)
 {
     if (url == null || url == undefined) return;
-    if (typeof (Storage) !== "undefined")
+    if (typeof (Storage) !== "undefined" && personal_Neural_Net.LocalStorage)
     {
         var loaded = localStorage.getItem("neuro_layers_url");
         var urls = JSON.parse(loaded);
@@ -678,7 +680,7 @@ function Save_Linguistics_URL(url: String)
 
 function Restore_Linguistics_URLs()
 {
-    if (typeof (Storage) !== "undefined")
+    if (typeof (Storage) !== "undefined" && personal_Neural_Net.LocalStorage)
     {
         var loaded = localStorage.getItem("neuro_layers_url");
         var urls = JSON.parse(loaded);
@@ -690,7 +692,7 @@ function Restore_Linguistics_URLs()
 function Save_Neural_State(neuro_layer: Neuro_Layer)
 {
     if (neuro_layer == null || neuro_layer == undefined) return;
-    if (typeof (Storage) !== "undefined")
+    if (typeof (Storage) !== "undefined" && personal_Neural_Net.LocalStorage)
     {
         var neurons = Get_Excited_Neurons(neuro_layer);
         var serialized;
@@ -705,7 +707,7 @@ function Save_Neural_State(neuro_layer: Neuro_Layer)
 function Restore_Neural_State(neuro_layer: Neuro_Layer)
 {
     if (neuro_layer == null || neuro_layer == undefined) return;
-    if (typeof (Storage) !== "undefined")
+    if (typeof (Storage) !== "undefined" && personal_Neural_Net.LocalStorage)
     {
         var loaded = localStorage.getItem(neuro_layer.Name);
         var neurons = JSON.parse(loaded);

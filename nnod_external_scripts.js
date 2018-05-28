@@ -44,7 +44,7 @@ function open_the_gate(l_element_id) {
 };
 
 function Reset_Dialog_From_Starter(msg) {
-    slv_DialoqueEditor_Ctl.Content.SVL_DialogueEditor.Reset_Dialog_From_Starter(msg);
+    //   slv_DialoqueEditor_Ctl.Content.SVL_DialogueEditor.Reset_Dialog_From_Starter(msg);
 };
 
 function reset_Dialog() {
@@ -59,18 +59,22 @@ function reset_Other_Tokens() {
 /////////////////////////////////////////////////
 
 function send_notification(phone) {
-    var url = "http://256gl.com/notes/clientbin/common/deepzoom/send_notification.aspx?session_id=" + "alexa-virtual" + "&phone=" + phone;
+    var url = "nnod_send_sms.php?phone=" + phone;
     var result = synch_XMLHttpRequest(url);
 };
 
-function perform_script(str_script) 
-{
+function perform_script(str_script) {
     var tmp = str_script.toLowerCase();
+
     var script_start = tmp.indexOf("<script>");
     var script_end = tmp.indexOf("script>", script_start + 2);
+
+    var result_text = str_script;
     var script = str_script.substring(script_start + 8, script_end - 2);
-    eval(script);
-    var result_text = str_script.slice(0, script_start);
+    if (script_start != -1 && script_end != -1) {
+        eval(script);
+        result_text = str_script.slice(0, script_start);
+    }
     result_text = result_text.replace("%d_var1%", d_var1);
     result_text = result_text.replace("%context_Choice%", context_Choice);
     return result_text;
