@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE neuro_triggers 
+[
+  <!ELEMENT neuro_triggers (neuro_trigger+)>
+  <!ATTLIST neuro_triggers name CDATA #REQUIRED>
+  <!ELEMENT neuro_trigger (state+)>
+  <!ATTLIST neuro_trigger name CDATA #REQUIRED>
+  <!ATTLIST neuro_trigger prompt CDATA #IMPLIED>
+  <!ELEMENT state (item+)>
+  <!ATTLIST state name CDATA #REQUIRED>
+  <!ATTLIST state discharge CDATA #IMPLIED>
+  <!ATTLIST state func CDATA #IMPLIED>
+  <!ATTLIST state url CDATA #IMPLIED>
+  <!ELEMENT item (#PCDATA)>
+  <!ATTLIST item word CDATA #REQUIRED>
+  <!ATTLIST item weight CDATA #REQUIRED>
+]>
+
+<neuro_triggers name="Headache">
+
+  <neuro_trigger name="Emotional" prompt="Weather, Work...">
+    <state name="Depressed">
+      <item word="depressed" weight="1.0"></item>
+      <item word="sad" weight="1.0"></item>
+    </state>
+    <state name="Happy">
+      <item word="hapy" weight="1.0"></item>
+    </state>
+    <state name="OK">
+      <item word="ok" weight="0.5"></item>
+      <item word="i" weight="0.5"></item>
+      <item word="am" weight="0.5"></item>
+      <item word="everything" weight="0.5"></item>
+      <item word="fine" weight="0.5"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Onset" prompt="Morning, Evening...">
+    <state name="Morning">
+      <item word="morning" weight="1.0"></item>
+    </state>
+    <state name="Day">
+      <item word="day" weight="1.0"></item>
+    </state>
+    <state name="Evening">
+      <item word="evening" weight="1.0"></item>
+    </state>
+    <state name="Night">
+      <item word="night" weight="1.0"></item>
+    </state>
+    <state name="Today">
+      <item word="today" weight="1.0"></item>
+      <item word="now" weight="1.0"></item>
+    </state>
+    <state name="Yesterday">
+      <item word="yesterday" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Activities" prompt="Weather, Work...">
+    <state name="Weather">
+      <item word="weather" weight="1.0"></item>
+    </state>
+    <state name="Work">
+      <item word="work" weight="1.0"></item>
+    </state>
+    <state name="Social">
+      <item word="social" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Pain" prompt="Minor, Acute, 1, 9...">
+    <state name="1">
+      <item word="1" weight="1.0"></item>
+      <item word="mild" weight="1.0"></item>
+      <item word="minor" weight="1.0"></item>
+    </state>
+    <state name="2">
+      <item word="2" weight="1.0"></item>
+      <item word="discomforting" weight="1.0"></item>
+    </state>
+    <state name="3">
+      <item word="3" weight="1.0"></item>
+      <item word="tolerable" weight="1.0"></item>
+    </state>
+    <state name="4">
+      <item word="4" weight="1.0"></item>
+      <item word="distressing" weight="1.0"></item>
+    </state>
+    <state name="5">
+      <item word="5" weight="1.0"></item>
+      <item word="moderate" weight="1.0"></item>
+    </state>
+    <state name="6">
+      <item word="6" weight="1.0"></item>
+      <item word="intense" weight="1.0"></item>
+      <item word="acute" weight="1.0"></item>
+    </state>
+    <state name="7">
+      <item word="7" weight="1.0"></item>
+      <item word="very" weight="0.5"></item>
+      <item word="intense" weight="0.5"></item>
+    </state>
+    <state name="8">
+      <item word="8" weight="1.0"></item>
+      <item word="unbearable" weight="1.0"></item>
+    </state>
+    <state name="9">
+      <item word="9" weight="1.0"></item>
+      <item word="severe" weight="1.0"></item>
+      <item word="crying" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Trigger" prompt="Alcohol, Stress, Weather">
+    <state name="Caffeine">
+      <item word="coffee" weight="1.0"></item>
+    </state>
+    <state name="Alcohol">
+      <item word="alcohol" weight="1.0"></item>
+      <item word="drink" weight="1.0"></item>
+      <item word="drinks" weight="1.0"></item>
+      <item word="wine" weight="1.0"></item>
+      <item word="drink" weight="1.0"></item>
+    </state>
+    <state name="Chocolate">
+      <item word="chocolate" weight="1.0"></item>
+    </state>
+    <state name="Menses">
+      <item word="menses" weight="1.0"></item>
+    </state>
+    <state name="Stress">
+      <item word="stress" weight="1.0"></item>
+    </state>
+    <state name="Sleep">
+      <item word="sleep" weight="1.0"></item>
+    </state>
+    <state name="Barometric Changes">
+      <item word="weather" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+  <neuro_trigger name="Location" prompt="Side, Front...">
+    <state name="Side">
+      <item word="side" weight="1.0"></item>
+    </state>
+    <state name="Back">
+      <item word="back" weight="1.0"></item>
+    </state>
+    <state name="Front">
+      <item word="front" weight="1.0"></item>
+    </state>
+  </neuro_trigger>
+
+</neuro_triggers>
+

@@ -65,7 +65,7 @@ function reset_Other_Tokens() {
 /////////////////////////////////////////////////
 
 function send_notification(phone) {
-    var url = "nnod_send_sms.php?phone=" + phone;
+    var url = "nnod_editor_send_sms.php?phone=" + phone;
     var result = synch_XMLHttpRequest(url);
 };
 

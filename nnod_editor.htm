@@ -1,52 +1,5 @@
-<!doctype html>
-<html>
-
-<head>
-    <title>NNOD Dialog Editor</title>
-    <script type="text/javascript" src="jquery.min.js"></script>
-    <script type="text/javascript" src="qrcode.js"></script>
-    <script type="text/javascript" src="js/vis.js"></script>
-    <script type="text/javascript" src='neurons/neurons.js'></script>
-    <script type="text/javascript" src='nnod_external_scripts.js'></script>
-
-    <link href="nnod_editor.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body onload="Page_Loaded();">
-    <img src="img/256gl.png" height="70" width="270" style="position: absolute; top: 0px; right: 0px;">
-
-    <div id="shapes">
-        <img id="starter" src="img/starter.png" height="60" width="60" style="position: absolute; top: 20px; left: 10px; 
-        border-color: gray; " onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
-        <img id="prompt" src="img/prompt.png" height="60" width="60" style="position: absolute; top: 90px; left: 10px; border-color: rgb(211, 209, 209);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
-        <img id="sema" src="img/sema.png" height="60" width="60" style="position: absolute; top: 160px; left: 10px; border-color: rgb(169, 231, 167);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
-        <img id="contexter" src="img/contexter.png" height="60" width="60" style="position: absolute; top: 240px; left: 10px; border-color: rgb(253, 47, 47);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
-        <img id="answer" src="img/answer.png" height="60" width="60" style="position: absolute; top: 320px; left: 10px; border-color: rgb(174, 214, 241);" onmouseover="over_image(this);" onmouseout="out_image(this);" onmouseup="click_on_image(this);">
-    </div>
-
-    <div id="nodes"></div>
-
-    <label class="switch" style="position:absolute; left:3pt; bottom:82pt;">
-        <input class="switch-input" type="checkbox" onchange="ws_on_off(this.checked);" />
-        <span class="switch-label" data-on="On" data-off="Off"></span> <span class="switch-handle"></span> </label>
-
-    <div id="qrcode" style="position:absolute; left:3pt; bottom:12pt; width: 85; height: 85;"></div>
-    <div style="position:absolute; width: 100%; text-align: center; top:5pt; "><strong><font color="grey">NNOD Editor</font></strong></div>
-    <div id='input_group' style="position:absolute; left:65pt; top:5pt; ">
-        <strong style="color:blue;">Question:</strong><br>
-        <input type='text' id='Phrase' size='40' value='' onkeydown="if (event.keyCode == 13) Submit_Phrase();" />
-        <button style='position: relative;' onClick='Submit_Phrase();'>OK</button>&nbsp;<input type="button" onclick="Reset();" value="Reset" />
-        <br>
-        <div id="Respond" style="font-size: small; color: blue; padding: 3px;"></div>
-    </div>
-
-    <div id="Result" style="position:absolute; right:15pt; bottom:15pt; height:200px; width:200px;  overflow: auto;"></div>
-
-    <iframe id='ws_home' style='width:0;height:0;border:0; border:none;'></iframe>
-
-    <script type="text/javascript" src="nnod_editor.js"></script>
-    <script type="text/javascript" src="js/editor_demo.js"></script>
-
-</body>
-
-</html>
+<script>
+    var str = window.location.toString();
+    str = str.replace("nnod_editor.htm", "editor/index.html");
+    window.location = str;
+</script>

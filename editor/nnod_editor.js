@@ -1,11 +1,3 @@
-var l_url = new URL(location);
-var token = l_url.searchParams.get("token");
-var u_id = '17';
-if (token != null) {
-    var get_uid_Url = "/slq_get_uid.php?token=" + token;
-    u_id = synch_XMLHttpRequest(get_uid_Url);
-}
-
 var userId = 'NNOD Editor';
 var header = 'nnod://chat/'
 var session_id = 'editor';
@@ -23,6 +15,7 @@ var api_url = 'nnod_api.htm?env=web';
 
 var generic_triggers_url = "triggers/triggers_generic.xml";
 var local_triggers_url = "triggers/triggers_1.xml";
+
 var linguistic_URLs = [];
 var layers = [];
 var layer = null;
@@ -389,16 +382,6 @@ function onAddNode(nodeData, callback) {
     nodeData.color = shapes_colors[current_shape];
     nodeData.label = current_shape;
     callback(nodeData);
-}
-
-// HTTP Requests:
-
-function synch_XMLHttpRequest(url) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    var result = xmlHttp.responseText;
-    return result;
 }
 
 function change_name_callback(node_id, arg) {

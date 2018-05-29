@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE neuro_triggers 
+[
+  <!ELEMENT neuro_triggers (neuro_trigger+)>
+  <!ATTLIST neuro_triggers name CDATA #REQUIRED>
+  <!ELEMENT neuro_trigger (state+)>
+  <!ATTLIST neuro_trigger name CDATA #REQUIRED>
+  <!ATTLIST neuro_trigger prompt CDATA #IMPLIED>
+  <!ELEMENT state (item+)>
+  <!ATTLIST state name CDATA #REQUIRED>
+  <!ATTLIST state discharge CDATA #IMPLIED>
+  <!ATTLIST state func CDATA #IMPLIED>
+  <!ATTLIST state url CDATA #IMPLIED>
+  <!ELEMENT item (#PCDATA)>
+  <!ATTLIST item word CDATA #REQUIRED>
+  <!ATTLIST item weight CDATA #REQUIRED>
+]>
+
+<neuro_triggers name="Dialog">
+
+  <neuro_trigger name="Starter">
+    <state name="164">
+      <item word="*begin*" weight="1"></item>
+      <item word="start" weight="1"></item>
+      <item word="начало" weight="1"></item>
+      <item word="1" weight="1"></item>
+    </state>
+
+    <state name="167">
+      <item word="hi" weight="1"></item>
+      <item word="hello" weight="1"></item>
+      <item word="你好" weight="1"></item>
+    </state>
+
+    <state name="639">
+      <item word="headache" weight="1"></item>
+      <item word="pain" weight="1"></item>
+    </state>
+
+    <state name="907">
+      <item word="car" weight="1"></item>
+      <item word="looking" weight="1"></item>
+      <item word="cars" weight="1"></item>
+      <item word="vehicle" weight="1"></item>
+    </state>
+
+    <state name="1005">
+      <item word="help" weight="1"></item>
+    </state>
+
+    <state name="1006">
+      <item word="hackers" weight="1"></item>
+    </state>
+
+    <state name="1014">
+      <item word="where" weight="1"></item>
+      <item word="sergey" weight="1"></item>
+      <item word="sergei" weight="1"></item>
+      <item word="alisa" weight="1"></item>
+    </state>
+
+    <state name="1017">
+      <item word="wine" weight="1"></item>
+    </state>
+
+    <state name="1022">
+      <item word="afternoon" weight="1"></item>
+    </state>
+
+    <state name="1025">
+      <item word="day" weight="1"></item>
+      <item word="one" weight="1"></item>
+      <item word="test" weight="1"></item>
+      <item word="gobi" weight="1"></item>
+    </state>
+
+    <state name="1029">
+      <item word="neural" weight="1"></item>
+      <item word="networks" weight="1"></item>
+      <item word="neuron" weight="1"></item>
+      <item word="network" weight="1"></item>
+    </state>
+
+    <state name="1032">
+      <item word="restaurant" weight="1"></item>
+      <item word="restaurants" weight="1"></item>
+    </state>
+
+    <state name="1033">
+      <item word="где" weight="1"></item>
+      <item word="сергей" weight="1"></item>
+      <item word="алиса" weight="1"></item>
+    </state>
+
+    <state name="1034">
+      <item word="abdominal" weight="1"></item>
+      <item word="problem" weight="1"></item>
+    </state>
+
+    <state name="1035">
+      <item word="владимир" weight="1"></item>
+    </state>
+
+    <state name="1037">
+      <item word="привет" weight="1"></item>
+      <item word="здравствуйте" weight="1"></item>
+      <item word="здравствуй" weight="1"></item>
+    </state>
+
+    <state name="1043">
+      <item word="one" weight="1"></item>
+      <item word="two" weight="1"></item>
+      <item word="three" weight="1"></item>
+    </state>
+
+    <state name="1044">
+      <item word="анекдот" weight="1"></item>
+      <item word="шутка" weight="1"></item>
+    </state>
+
+    <state name="1045">
+      <item word="joke" weight="1"></item>
+    </state>
+
+    <state name="1049">
+      <item word="patent" weight="1"></item>
+    </state>
+
+    <state name="1050">
+      <item word="вино" weight="1"></item>
+    </state>
+
+    <state name="1051">
+      <item word="education" weight="1"></item>
+      <item word="study" weight="1"></item>
+    </state>
+
+    <state name="1096">
+      <item word="keywords" weight="1"></item>
+      <item word="ml" weight="1"></item>
+      <item word="phrases" weight="1"></item>
+    </state>
+    
+  </neuro_trigger>
+
+  <neuro_trigger name="Sema">
+    <state name="1062">
+        <item word="higher" weight="1"></item>
+  </state>
+
+  <state name="1041">
+      <item word="high" weight="1"></item>
+  </state>
+  <state name="1040">
+      <item word="да" weight="1"></item>
+  </state>
+  <state name="1016">
+      <item word="нет" weight="1"></item>
+  </state>
+  <state name="1007">
+      <item word="yes" weight="1"></item>
+      <item word="sure" weight="1"></item>
+  </state>
+  <state name="1002">
+      <item word="no" weight="1"></item>
+  </state>
+  <state name="1001">
+      <item word="no" weight="1"></item>
+  </state>
+  <state name="993">
+      <item word="yes" weight="1"></item>
+  </state>
+  <state name="992">
+        <item word="new" weight="1"></item>
+  </state>
+  <state name="878">
+      <item word="used" weight="1"></item>
+      <item word="use" weight="1"></item>
+      <item word="preowned" weight="1"></item>
+      <item word="owned" weight="1"></item>
+  </state>
+  <state name="877">
+      <item word="no" weight="1"></item>
+      <item word="not" weight="1"></item>
+      <item word="yet" weight="1"></item>
+  </state>
+  <state name="170">
+    <item word="yes" weight="1"></item>
+  </state>
+  <state name="169">
+      <item word="no нет" weight="1"></item>
+  </state>
+  <state name="165">
+      <item word="yes" weight="1"></item>
+      <item word="sure" weight="1"></item>
+      <item word="да" weight="1"></item>
+  </state>
+  <state name="1061">
+      <item word="*reset*" weight="1"></item>
+      <item word="reset" weight="1"></item>
+      <item word="rst" weight="1"></item>
+      <item word="сначала" weight="1"></item>
+      <item word="сбросить" weight="1"></item>
+      <item word="снова" weight="1"></item>
+      <item word="сброс" weight="1"></item>
+      <item word="tst" weight="1"></item>
+  </state>
+  </neuro_trigger>
+
+</neuro_triggers>
+
