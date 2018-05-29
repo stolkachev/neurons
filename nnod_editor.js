@@ -183,8 +183,7 @@ function Page_Loaded() {
             return;
         }
         var grp = parts[2].toLowerCase();
-        if (grp == "contexter") 
-        {
+        if (grp == "contexter") {
             var url = get_Node_Info_Url + "&node_id=" + parts[0];
             var result = synch_XMLHttpRequest(url);
             var splits = result.split("\t");
@@ -467,14 +466,9 @@ function Show_Neural_State() {
 
 function Reset() {
     Reset_Neurons(null);
-    localStorage.clear();
     document.getElementById("Result").innerHTML = "";
-    linguistic_URLs = [];
-    layers = [];
-    layer = null;
-
-    Clean_Personal_Neural_Net();
-    load_neurons();
+    document.getElementById("Phrase").innerHTML = "";
+    document.getElementById("Respond").innerHTML = "";
     Show_Neural_State();
 }
 

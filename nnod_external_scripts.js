@@ -17,6 +17,12 @@ var fuzzy_h = 0.5;
 var fuzzy_m = 0.5;
 var fuzzy_l = 0.5;
 
+function httpGet(theUrl) {
+    var url = getHTTP_Url + "?url=" + theUrl;
+    var result = synch_XMLHttpRequest(url);
+    return result;
+};
+
 function unset_Context(contexts) {
     var splitContexts = contexts.split(",");
     excited_Nodes = slv_DialoqueEditor_Ctl.Content.SVL_DialogueEditor.Get_Excited_Nodes_CR();
@@ -64,6 +70,7 @@ function send_notification(phone) {
 };
 
 function perform_script(str_script) {
+    if (str_script == undefined) return "";
     var tmp = str_script.toLowerCase();
 
     var script_start = tmp.indexOf("<script>");
