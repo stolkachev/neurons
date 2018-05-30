@@ -454,6 +454,8 @@ function Build_Neural_Layer(layer_url) {
     var words_layer = Find_Neuro_Layer_By_Name("words");
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", layer_url, false);
+    //    xmlhttp.responseType = 'document';
+    xmlhttp.overrideMimeType('text/xml');
     xmlhttp.send();
     var xmlDoc = xmlhttp.responseXML;
     var neuro_triggers = xmlDoc.getElementsByTagName("neuro_triggers");

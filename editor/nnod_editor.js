@@ -14,7 +14,6 @@ var ws_iframe_api = ws_iframe.contentWindow;
 var api_url = 'nnod_api.htm?env=web';
 
 var generic_triggers_url = "triggers/triggers_generic.xml";
-var local_triggers_url = "triggers/triggers_1.xml";
 
 var linguistic_URLs = [];
 var layers = [];
@@ -227,7 +226,7 @@ function Page_Loaded() {
 function Init_Draw() {
     var mynetwork = document.getElementById('nodes');
     var x1 = window.innerWidth - 100;
-    var y1 = window.innerHeight - 80;
+    var y1 = window.innerHeight - 90;
     mynetwork.style.width = x1 + "px";
     mynetwork.style.height = y1 + "px";
     mynetwork.style.left = "90px";
@@ -238,7 +237,7 @@ function Init_Draw() {
 function Redraw() {
     var mynetwork = document.getElementById('nodes');
     var x1 = window.innerWidth - 100;
-    var y1 = window.innerHeight - 80;
+    var y1 = window.innerHeight - 90;
     mynetwork.style.width = x1 + "px";
     mynetwork.style.height = y1 + "px";
     mynetwork.style.left = "90px";

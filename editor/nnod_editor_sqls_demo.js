@@ -9,3 +9,4 @@ var get_Node_Info_Url = "/nnod_sql/slq_get_neuron_info.php?u_id=" + u_id;
 var nnod_node_Url = "nnod_editor_node.php?u_id=" + u_id;
 var update_Node_Url = "/nnod_sql/slq_update_Node_d.php?u_id=" + u_id;
 var getHTTP_Url = "nnod_editor_getHTTP.php";
+var local_triggers_url = "/nnod_sql/slq_get_nn_network.php?u_id=" + u_id;
