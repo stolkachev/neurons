@@ -395,15 +395,12 @@ function load_neurons() {
     generic_triggers_layer = Build_Neural_Layer(generic_triggers_url);
     generic_triggers_layer.Disharged_CallBack = Show_Neural_State;
     layers.push(generic_triggers_layer);
-    //   Save_Linguistics_URL(generic_triggers_url);
-    // linguistic_URLs = Restore_Linguistics_URLs();
     if (linguistic_URLs != null) {
         for (var i = 0; i < linguistic_URLs.length; i++) {
             url = linguistic_URLs[i];
             if (url == generic_triggers_url) continue;
             layer = Build_Neural_Layer(url);
             layers.push(layer);
-            //           Save_Linguistics_URL(url);
         }
     }
     Restore_Neural_State(generic_triggers_layer);
@@ -411,7 +408,6 @@ function load_neurons() {
         Restore_Neural_State(layers[i]);
     }
     Show_Neural_State();
-    //linguistic_URLs = Restore_Linguistics_URLs();
     add_Layer(local_triggers_url);
 }
 
@@ -465,8 +461,6 @@ function add_Layer(linguistic_triggers_url) {
         }
         layer = Build_Neural_Layer(linguistic_triggers_url);
         layers.push(layer);
-        //       Save_Linguistics_URL(linguistic_triggers_url);
-        // linguistic_URLs = Restore_Linguistics_URLs();
         Show_Neural_State();
     }
 }
@@ -477,19 +471,6 @@ function check_Controls() {
     for (var i = 0; i < g_neurons.length; i++) {
         var nl = g_neurons[i];
         var splitter = nl.Name.split(':');
-
-        // if (nl.Name.toLowerCase() == "health:headache") {
-        //     add_Layer(headache_triggers_url);
-        // }
-
-        // if (nl.Name.toLowerCase() == "shopping:wine") {
-        //     add_Layer(wines_triggers_url);
-        // }
-
-        // if (nl.Name.toLowerCase() == "shopping:car") {
-        //     add_Layer(cars_triggers_url);
-        // }
-
         if (nl.Name.toLowerCase() == "clear:clear") {
             localStorage.clear();
             Reset();
@@ -498,7 +479,6 @@ function check_Controls() {
 }
 
 function Submit_Phrase() {
-    //          Reset_Neurons(generic_triggers_layer);
     for (var i = 0; i < layers.length; i++) {
         var layer = layers[i];
         Reset_Half_Charged_Neurons(layer);
@@ -514,18 +494,33 @@ function Submit_Phrase() {
     if (phrase == "") phrase = "*enter*";
     phrase = phrase.replace('?', ' ? ');
     Excite_Phrase(phrase);
-    try {
-        localStorage.removeItem(generic_triggers_layer.Name);
-
-        Save_Neural_State(generic_triggers_layer);
-        for (var i = 0; i < layers.length; i++) {
-            Save_Neural_State(layers[i]);
-        }
-    } catch (Error) {}
-
     Show_Neural_State();
     check_Controls();
     document.getElementById("Phrase").value = "";
+ //   ms_Bot_Answer(phrase);
+}
+
+// MS BOT
+function ms_Bot_Answer(phrase) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var obj = JSON.parse(this.responseText)
+            if (obj.answers[0].answer == "No good match found in KB.")
+            {
+                return;
+            }else{
+                document.getElementById("Respond").innerHTML = obj.answers[0].answer;
+                if (connected) {
+                    ws_iframe_api.ext_send(userId + ETX + obj.answers[0].answer);
+                }
+            }
+        }
+    };
+    xhttp.open("POST", "https://claudine.azurewebsites.net/qnamaker/knowledgebases/9c55a088-885e-462a-8aa7-a76f8dddbda9/generateAnswer", true);
+    xhttp.setRequestHeader("Authorization", "EndpointKey 6e78c816-f731-447f-8b1c-d0d36234d4c4");
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send('{"question":"' + phrase + '"}');
 }
 
 // NEURON'S FUNCTIONS

@@ -51,17 +51,15 @@
             generic_triggers_layer = Build_Neural_Layer(generic_triggers_url);
             generic_triggers_layer.Disharged_CallBack = Show_Neural_State;
             layers.push(generic_triggers_layer);
-            Save_Linguistics_URL(generic_triggers_url);
-
-            linguistic_URLs = Restore_Linguistics_URLs();
-
+            
+            linguistic_URLs.push(generic_triggers_url);
             if (linguistic_URLs != null) {
                 for (var i = 0; i < linguistic_URLs.length; i++) {
                     url = linguistic_URLs[i];
                     if (url == generic_triggers_url) continue;
                     layer = Build_Neural_Layer(url);
                     layers.push(layer);
-                    Save_Linguistics_URL(url);
+                    // Save_Linguistics_URL(url);
                 }
             }
 
@@ -70,7 +68,6 @@
                 Restore_Neural_State(layers[i]);
             }
             Show_Neural_State();
-            linguistic_URLs = Restore_Linguistics_URLs();
         }
 
         function Reset() {
@@ -87,22 +84,22 @@
             Show_Neural_State();
         }
 
-        function add_Layer(linguistic_triggers_url) {
-            if (linguistic_URLs == null) {
-                layer = Build_Neural_Layer(linguistic_triggers_url);
-                layers.push(layer);
-                Show_Neural_State();
-            } else {
-                for (var k = 0; k < linguistic_URLs.length; k++) {
-                    if (linguistic_URLs[k] == linguistic_triggers_url) return;
-                }
-                layer = Build_Neural_Layer(linguistic_triggers_url);
-                layers.push(layer);
-                Save_Linguistics_URL(linguistic_triggers_url);
-                linguistic_URLs = Restore_Linguistics_URLs();
-                Show_Neural_State();
-            }
+function add_Layer(linguistic_triggers_url) {
+    if (linguistic_URLs == null) {
+        layer = Build_Neural_Layer(linguistic_triggers_url);
+        layers.push(layer);
+        Show_Neural_State();
+    } else {
+        for (var k = 0; k < linguistic_URLs.length; k++) {
+            if (linguistic_URLs[k] == linguistic_triggers_url) return;
         }
+        layer = Build_Neural_Layer(linguistic_triggers_url);
+        layers.push(layer);
+
+        linguistic_URLs.push(linguistic_triggers_url);
+        Show_Neural_State();
+    }
+}
 
         function check_Controls() {
             var g_neurons = Get_Excited_Neurons(generic_triggers_layer);
@@ -137,8 +134,14 @@
                 if (this.readyState == 4 && this.status == 200) {
 
                     var obj = JSON.parse(this.responseText)
+                    if (obj.answers[0].answer == "No good match found in KB.")
+                    {
+                    chat.innerHTML = chat.innerHTML + "<font color=red>" + phrase + '</font><br>';
+                    chat.innerHTML = chat.innerHTML + "<font color=red>" + obj.answers[0].answer + '</font><br><br>';
+                    }else{
                     chat.innerHTML = chat.innerHTML + "<font color=red>" + phrase + '</font><br>';
                     chat.innerHTML = chat.innerHTML + "<font color=blue>" + obj.answers[0].answer + '</font><br><br>';
+                    }
                 }
             };
             xhttp.open("POST", "https://claudine.azurewebsites.net/qnamaker/knowledgebases/9c55a088-885e-462a-8aa7-a76f8dddbda9/generateAnswer", true);
@@ -151,8 +154,6 @@
 
             var phrase = document.getElementById("Phrase").value;
             generateAnswer(phrase)
-
-            //          Reset_Neurons(generic_triggers_layer);
             for (var i = 0; i < layers.length; i++) {
                 var layer = layers[i];
                 Reset_Half_Charged_Neurons(layer);
@@ -167,15 +168,6 @@
             if (phrase == "") phrase = "*enter*";
             phrase = phrase.replace('?', ' ? ');
             Excite_Phrase(phrase);
-            try {
-                localStorage.removeItem(generic_triggers_layer.Name);
-
-                Save_Neural_State(generic_triggers_layer);
-                for (var i = 0; i < layers.length; i++) {
-                    Save_Neural_State(layers[i]);
-                }
-            } catch (Error) {}
-
             Show_Neural_State();
             check_Controls();
             document.getElementById("Phrase").value = "";
