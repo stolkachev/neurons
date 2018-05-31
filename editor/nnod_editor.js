@@ -27,7 +27,7 @@ var exportValue = null;
 var resizeTimeOut;
 
 var neurons = null;
-var nevres = null;
+var nerves = null;
 var current_shape = null;
 var shapes = {
     "starter": "ellipse",
@@ -164,9 +164,9 @@ function Page_Loaded() {
     neurons = xmlHttp.responseText;
     xmlHttp.open("GET", get_Nerves_Url, false);
     xmlHttp.send(null);
-    nevres = xmlHttp.responseText;
+    nerves = xmlHttp.responseText;
     var a_neurons = neurons.split("\n");
-    var a_nerves = nevres.split("\n");
+    var a_nerves = nerves.split("\n");
 
     nodes = new vis.DataSet();
     a_neurons.forEach(function(element) {
@@ -440,6 +440,15 @@ function Show_Neural_State() {
         //           network.selectNodes([node_id], true);
     }
     document.getElementById("Result").innerHTML = str_result;
+
+
+    // var neuro_Layer = Find_Neuro_Layer_By_Name("D-Elegance");
+    // var neuron_from = Find_Neuron_Id_By_Name("Starter:164", neuro_Layer);
+    // var neuron_to = Find_Neuron_Id_By_Name("Sema:992", neuro_Layer);
+    // var neuron_de = Get_Excited_Neurons(neuro_Layer);
+    // //    Propagate(neuron_from);
+    // if (neuron_to == null || neuron_from == null || neuro_Layer == null) return;
+    // // Add_Nerve(neuron_from, neuron_to, 1.0)
 }
 
 function Reset() {
@@ -497,7 +506,7 @@ function Submit_Phrase() {
     Show_Neural_State();
     check_Controls();
     document.getElementById("Phrase").value = "";
- //   ms_Bot_Answer(phrase);
+    //   ms_Bot_Answer(phrase);
 }
 
 // MS BOT
@@ -506,10 +515,9 @@ function ms_Bot_Answer(phrase) {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var obj = JSON.parse(this.responseText)
-            if (obj.answers[0].answer == "No good match found in KB.")
-            {
+            if (obj.answers[0].answer == "No good match found in KB.") {
                 return;
-            }else{
+            } else {
                 document.getElementById("Respond").innerHTML = obj.answers[0].answer;
                 if (connected) {
                     ws_iframe_api.ext_send(userId + ETX + obj.answers[0].answer);
@@ -525,10 +533,6 @@ function ms_Bot_Answer(phrase) {
 
 // NEURON'S FUNCTIONS
 function Help() {
-    Save_Neural_State(generic_triggers_layer);
-    for (var i = 0; i < layers.length; i++) {
-        Save_Neural_State(layers[i]);
-    }
     //            window.open("http://www.256gl.com");
 }
 
