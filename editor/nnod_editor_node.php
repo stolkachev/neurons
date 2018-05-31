@@ -2,7 +2,7 @@
 $u_id = $_GET['u_id'];
 $node_id = $_GET['node_id'];
 $ETX = "\t";
-$db = new SQLite3('../../nnod_sql/256notes.db') or die('Unable to open database'); 
+$db = new SQLite3('../../256notes.db') or die('Unable to open database'); 
 $sql = "SELECT * FROM l_elements where id = " . $node_id . " and user_id = " . $u_id;
 $results = $db->query($sql) or die('Query failed');
 while ($row = $results->fetchArray())
