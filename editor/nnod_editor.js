@@ -26,6 +26,9 @@ var generic_triggers_layer = null;
 var exportValue = null;
 var resizeTimeOut;
 
+var a_neurons = null;
+var a_nerves = null;
+
 var neurons = null;
 var nerves = null;
 var current_shape = null;
@@ -165,8 +168,8 @@ function Page_Loaded() {
     xmlHttp.open("GET", get_Nerves_Url, false);
     xmlHttp.send(null);
     nerves = xmlHttp.responseText;
-    var a_neurons = neurons.split("\n");
-    var a_nerves = nerves.split("\n");
+    a_neurons = neurons.split("\n");
+    a_nerves = nerves.split("\n");
 
     nodes = new vis.DataSet();
     a_neurons.forEach(function(element) {
@@ -403,12 +406,25 @@ function load_neurons() {
             layers.push(layer);
         }
     }
-    Restore_Neural_State(generic_triggers_layer);
-    for (var i = 0; i < layers.length; i++) {
-        Restore_Neural_State(layers[i]);
-    }
     Show_Neural_State();
     add_Layer(local_triggers_url);
+
+    // var neuro_Layer = Find_Neuro_Layer_By_Name("D-Elegance");
+    // a_nerves.forEach(function(element) {
+    //     var parts = element.split("\t");
+    //     if (parts.length < 3) {
+    //         return;
+    //     }
+    //     var neuron_from = Find_Neuron_By_Name("Starter:" + parts[1], neuro_Layer);
+    //     if (neuron_from == null)
+    //     {
+    //         neuron_from = Find_Neuron_By_Name("Sema:" + parts[1], neuro_Layer);
+    //     }
+    //     var neuron_to = Find_Neuron_Id_By_Name(parts[2], neuro_Layer);
+    //     if (neuron_from == null || neuron_to == -1) return;
+    //     tmp = tmp + neuron_from.Id  + " : " + neuron_to + "\n";
+    //     Add_Nerve(neuron_from.Id, neuron_to, 1);
+    // })
 }
 
 function Show_Neural_State() {
@@ -440,15 +456,6 @@ function Show_Neural_State() {
         //           network.selectNodes([node_id], true);
     }
     document.getElementById("Result").innerHTML = str_result;
-
-
-    // var neuro_Layer = Find_Neuro_Layer_By_Name("D-Elegance");
-    // var neuron_from = Find_Neuron_Id_By_Name("Starter:164", neuro_Layer);
-    // var neuron_to = Find_Neuron_Id_By_Name("Sema:992", neuro_Layer);
-    // var neuron_de = Get_Excited_Neurons(neuro_Layer);
-    // //    Propagate(neuron_from);
-    // if (neuron_to == null || neuron_from == null || neuro_Layer == null) return;
-    // // Add_Nerve(neuron_from, neuron_to, 1.0)
 }
 
 function Reset() {
