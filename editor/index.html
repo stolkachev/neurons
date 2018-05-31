@@ -46,7 +46,7 @@
         var token = l_url.searchParams.get("token");
         var u_id = '-1';
         if (token == null) token = "";
-        var get_uid_Url = "/nnod_sql/slq_get_uid.php?token=" + token;
+        var get_uid_Url = "/editor/php/slq_get_uid.php?token=" + token;
         var res = synch_XMLHttpRequest(get_uid_Url);
         var splitter = res.split("\t");
         u_id = splitter[0];
